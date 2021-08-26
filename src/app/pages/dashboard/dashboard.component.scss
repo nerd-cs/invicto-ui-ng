@@ -1,0 +1,31 @@
+.main-container.collapsed {
+    padding-right: 40px !important;
+}
+
+.left-side {
+    overflow-y: scroll;
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none;  /* Internet Explorer 10+ */
+}
+.left-side::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.w-88 {
+    width: 352px;
+}
+
+.user-card {
+    @apply border rounded-lg border-black border-opacity-10 max-w-md h-64 py-4 px-8 mr-4 mb-4 cursor-pointer xl:mb-0;
+}
+
+.attendance-card {
+    @apply border rounded-lg border-black border-opacity-10 max-w-md h-64 py-4 px-8;
+}
+
+.radial-bar {
+    position: absolute;
+    bottom: 20px;
+    right: 16px;
+}

@@ -1,0 +1,60 @@
+<div class="card-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Edit</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="cardForm" class="px-4">
+        <p class="text-title-sm col-black mb-2">Card Validity</p>
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form">
+                <mat-label>Activation Date</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="activationDate" [min]="activationMinDate" readonly class="cursor-pointer" (click)="dp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form">
+                <mat-label>Expiration Date</mat-label>
+                <input matInput [matDatepicker]="dpExp" formControlName="expirationDate" [min]="expirationMinDate" readonly class="cursor-pointer" (click)="dpExp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dpExp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dpExp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-checkbox color="primary" formControlName="noExpiration" value="" (click)="setNoExpiration()">No expiration
+        </mat-checkbox>
+
+        <div class="card-status py-6">
+            <div class="grid grid-cols-2">
+                <div class="header-title"> Card </div>
+                <div class="grid grid-cols-2 gap-x-4">
+                    <div class="header-title">Created</div>
+                    <div class="header-title">Status</div>
+                </div>
+            </div>
+            <div class="grid grid-cols-2">
+                <div class="content-label"> {{cardInfo.type}} </div>
+                <div class="grid grid-cols-2 gap-x-4">
+                    <div class="content-label">{{cardInfo.createdAt | date : 'mediumDate'}}</div>
+                    <div class="content-label">
+                        <mat-slide-toggle formControlName="status"></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button class="btn secondary-outline-btn pl-1 pr-2" (click)="delete()">
+            <mat-icon>delete_outline</mat-icon> Delete
+        </button>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="!cardForm.valid" (click)="saveCard()">Save</button>
+    </div>
+</div>

@@ -1,0 +1,30 @@
+::ng-deep {
+    .card-edit {
+        width: 476px;
+        height: 100vh;
+    }
+}
+
+.card-status {
+    border-bottom: 2px solid #E0E0E0;
+    > div {
+        border-bottom: 1px solid #E0E0E0;
+        height: 40px;
+    }
+
+    .header-title {
+        height: 24px;
+        color: rgba(0,0,0,0.4);
+        font-size: 14px;
+        font-weight: 500;
+        letter-spacing: 0.1px;
+        line-height: 24px;
+    }
+
+    .content-label {
+        @apply flex items-center h-full text-black;
+        font-size: 14px;
+        letter-spacing: 0.25px;
+        line-height: 20px;
+    }
+}

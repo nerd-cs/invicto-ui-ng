@@ -1,0 +1,14 @@
+::ng-deep {
+    .control-tab {
+        .mat-tab-body-wrapper {
+            height: calc(100vh - 260px);
+            padding-top: 20px;
+            overflow: visible !important;
+        }
+
+        .mat-tab-body,
+        .mat-tab-body-content {
+            overflow: visible !important;
+        }
+    }
+}

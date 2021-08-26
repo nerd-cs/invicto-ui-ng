@@ -1,0 +1,20 @@
+<app-signin-step>
+    <p class="signin-step-title h6 col-black text-center">Check your text messages for a 6-digit code</p>
+    <p class="signin-step-description text-body-sm col-black-light text-center mt-2">
+        Enter the code we sent to your phone number ending in 85.
+        Didn't get it? <span class="underline cursor-pointer" (click)="resendCode()">Resend code.</span>
+    </p>
+    <div class="submit-form mt-6" [formGroup]="twoFAForm">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1 code-input">
+            <mat-label></mat-label>
+            <input type="text" pattern="\d*" maxlength="6" matInput placeholder="Enter your code" formControlName="code" appAutoFocus>
+            <mat-error *ngIf="twoFAForm.controls['code'].invalid">Please enter the 6-digit code</mat-error>
+        </mat-form-field>
+        <div class="h-14 rounded flex items-center pl-4" style="background-color: #E2F2FF;">
+            <mat-checkbox color="primary" formControlName="remember" value="">
+                <span class="text-title-sm col-black">Remember this device for 30 days</span>
+            </mat-checkbox>
+        </div>
+        <button class="btn primary-btn w-full h-14 mt-5" [disabled]="!twoFAForm.valid" (click)="send()">SEND</button>
+    </div>
+</app-signin-step>

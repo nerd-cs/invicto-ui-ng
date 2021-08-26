@@ -1,0 +1,129 @@
+<div class="main-container-detail overflow-auto pt-7">
+
+    <section class="back w-48 h-10 flex items-center mb-8 mt-10 cursor-pointer" (click)="location.back()">
+        <span class="material-icons icon-40"> arrow_back </span>
+        <span class="h5 pl-4 col-black">My Account</span>
+    </section>
+
+    <div class="profile bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black">Profile</div>
+            <div class="actions">
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="edit()">
+                    <mat-icon fontSet="material-icons-outlined">edit</mat-icon> EDIT
+                </button>
+            </div>
+        </div>
+        <div class="profile-contents flex flex-wrap items-end">
+            <section class="user-info mb-6 flex w-full">
+                <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full">
+                <div class="ml-4 flex flex-col justify-center">
+                    <p class="h6 mb-1 col-black w-max">{{account.fullName}} </p>
+                    <p class="text-body-sm col-blue">Update Photo</p>
+                </div>
+            </section>
+            <div class="item mr-8">
+                <p class="text-overline item-label">JOB TITLE</p>
+                <p class="text-title-lg col-black">{{account.jobTitle}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">COMPANY ACCOUNT</p>
+                <p class="text-title-lg col-black">{{account.company.name}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">COUNTRY</p>
+                <p class="text-title-lg col-black">{{account.country}}</p>
+            </div>
+        </div>
+    </div>
+
+    <section class="grid grid-flow-col gap-4  mb-20 mr-10 xl:mr-30 login-com ">
+        <div class="p-10 border-login-com rounded-md bg-white">
+            <div class="h6 col-black mb-10">Login & Security</div>
+            <div class="h-16 item-wrap px-3 flex justify-between">
+                <div class="flex flex-col justify-center">
+                    <p class="item-label text-overline">EMAIL ADDRESS </p>
+                    <p class="item-value text-title-lg">{{account.email}} </p>
+                </div>
+                <div class="flex-center">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+            <div class="h-16 item-wrap px-3 flex justify-between">
+                <div class="flex flex-col justify-center">
+                    <p class="item-label text-overline">PASSWORD</p>
+                    <p class="item-value text-title-lg">.........</p>
+                </div>
+                <div class="flex-center">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+            <div class="h-16 item-wrap px-3 flex justify-between" (click)="googleAccount()">
+                <div class="flex flex-col justify-center">
+                    <p class="item-label text-overline">LINKED ACCOUNT</p>
+                    <p class="item-value text-title-lg">Connected with Google </p>
+                </div>
+                <div class="flex-center">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+            <div class="h-16 item-wrap px-3 flex justify-between">
+                <div class="flex flex-col justify-center">
+                    <p class="item-label text-overline">TWO STEPS AUTHENTICATION</p>
+                    <p class="item-value text-title-lg">{{account.twoStepAuth ? 'Activated' : 'Deactivated'}} </p>
+                </div>
+                <div class="flex-center">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+            <div class="h-16 item-wrap px-3 flex justify-between">
+                <div class="flex flex-col justify-center">
+                    <p class="item-label text-overline">Account Activity</p>
+                    <p class="item-value text-title-lg">check recent activities </p>
+                </div>
+                <div class="flex-center">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+        </div>
+        <div>
+            <div class="border-login-com p-10 rounded-md bg-white">
+                <div class="h6 col-black mb-10">Communication</div>
+                <div class="h-16 item-wrap px-3 flex justify-between">
+                    <div class="flex flex-col justify-center">
+                        <p class="item-label text-overline">FREQUENCE </p>
+                        <p class="item-value text-title-lg">Monthly </p>
+                    </div>
+                </div>
+                <div class="h-16 item-wrap px-3 flex justify-between">
+                    <div class="flex flex-col justify-center">
+                        <p class="item-label text-overline">PREFERENCE </p>
+                        <p class="item-value text-title-lg">Email </p>
+                    </div>
+                </div>
+                <div class="h-16 item-wrap px-3 flex justify-between">
+                    <div class="flex flex-col justify-center">
+                        <p class="item-label text-overline">NEWSLETTER </p>
+                        <p class="item-value text-title-lg">Yes </p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-login-com p-10 mt-10 rounded-md bg-white">
+                <div class="h6 col-black mb-10">Settings</div>
+                <div class="h-16 item-wrap px-3 flex justify-between">
+                    <div class="flex flex-col justify-center">
+                        <p class="item-label text-overline">LANGUAGE </p>
+                        <p class="item-value text-title-lg">English </p>
+                    </div>
+                </div>
+                <div class="h-16 item-wrap px-3 flex justify-between">
+                    <div class="flex flex-col justify-center">
+                        <p class="item-label text-overline">TIME ZONE </p>
+                        <p class="item-value text-title-lg">GTM </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>

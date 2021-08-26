@@ -1,0 +1,73 @@
+<div class="main-container overflow-auto pr-10 pt-7 pb-4" [class.collapsed]="sidenavCollapsed">
+    <div class="top-section flex-center-between h-12 mb-6">
+        <div class="h5 col-black">
+            Dashboard
+        </div>
+        <button class="btn primary-outline-btn px-3" (click)="addUser()">
+            <mat-icon>add</mat-icon> ADD USER
+        </button>
+    </div>
+
+    <div class="table-section users-nav flex flex-col">
+        <div class="flex h-available w-100">
+            <div style="flex-grow: 2" class="left-side flex flex-col overflow-auto">
+                <div class="users-attendance flex flex-col xl:flex-row">
+                    <div class="w-88 user-card" (click)="gotoUsers()">
+                        <div class="h6 mb-7">Users</div>
+                        <div class="total-users pl-3 mb-9 border-l-4 border-blue-400">
+                            <p class="text-title-lg opacity-38">Total Users</p>
+                            <p class="h4">234</p>
+                        </div>
+                        <div class="new-users">
+                            <p class="text-title-lg mb-2">
+                                <span class="col-blue">5 new</span> users added
+                            </p>
+                        </div>
+                        <div class="avatar-groups flex">
+                            <img src="/assets/images/user.png" alt="">
+                            <img src="/assets/images/user.png" alt="" class="-ml-4">
+                            <img src="/assets/images/user.png" alt="" class="-ml-4">
+                        </div>
+                    </div>
+                    <div class="w-88 attendance-card relative">
+                        <div class="h6 mb-7">Today's Attendance</div>
+                        <div class="present pl-3 mb-9 border-l-4 border-blue-400">
+                            <p class="text-title-lg opacity-38">Present</p>
+                            <p class="h4">234</p>
+                        </div>
+                        <div class="absent pl-3 mb-9 border-l-4 border-blue-600">
+                            <p class="text-title-lg opacity-38">Absent</p>
+                            <p class="h4">65</p>
+                        </div>
+                        <div class="radial-bar">
+                            <circle-progress
+                                [percent]="82"
+                                [maxPercent]="100"
+                                [showSubtitle]="false"
+                                [showBackground]="false"
+                                [showInnerStroke]="false"
+                                [radius]="50"
+                                [showInnerStroke]="true"
+                                [outerStrokeWidth]="10"
+                                [innerStrokeWidth]="10"
+                                [space]="-10"
+                                [backgroundStrokeWidth]="0"
+                                [outerStrokeColor]="'#0293FF'"
+                                [innerStrokeColor]="'#146BCA'"
+                                [animation]="true"
+                                [animationDuration]="300"
+                          ></circle-progress>
+                        </div>
+                    </div>
+                </div>
+                <div class="border rounded-lg border-black border-opacity-10 mt-4 h-available" style="min-height: 420px;">
+                    <app-user-graph></app-user-graph>
+                </div>
+            </div>
+            <div style="flex-grow: 1; min-width: 352px;" class="cursor-pointer border rounded-lg border-black border-opacity-10 ml-4 p-4"
+                (click)="gotoActivities()">
+                <app-user-activities></app-user-activities>
+            </div>
+        </div>
+    </div>
+</div>

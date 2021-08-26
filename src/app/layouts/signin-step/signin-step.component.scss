@@ -1,0 +1,25 @@
+.main-box {
+    @apply rounded-lg bg-white;
+    width: 536px;
+    padding: 76px 70px 70px;
+    box-shadow: 0 1px 1px 0 rgba(0, 0, 0, 0.14), 0 2px 1px -1px rgba(0, 0, 0, 0.12), 0 1px 3px 0 rgba(0, 0, 0, 0.2);
+}
+
+.help-lang {
+    width: 536px;
+}
+
+.title {
+    color: #212121;
+    font-family: Montserrat;
+    font-size: 24px;
+    font-weight: 600;
+    letter-spacing: 0.18px;
+    line-height: 29px;
+}
+
+::ng-deep {
+    .select-lang.mat-select {
+        width: 100px !important;
+    }
+}

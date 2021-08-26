@@ -1,0 +1,48 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Edit Basic Info</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="googleForm" class="px-4">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Old Password</mat-label>
+            <input matInput placeholder="Password" formControlName="old" required class="password">
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>New Password</mat-label>
+            <input matInput placeholder="Password" formControlName="password" required class="password"
+                [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide" class="col-black-light cursor-pointer">
+                {{hide ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+            <mat-error>
+                <span *ngIf="googleForm.controls['password'].hasError('required')">
+                    You must enter a value
+                </span>
+                <span *ngIf="googleForm.controls['password'].hasError('minlength') ||
+                    googleForm.controls['password'].hasError('hasNumber') ||
+                    googleForm.controls['password'].hasError('hasSpecialCharacters') ||
+                    googleForm.controls['password'].hasError('hasSmallCase') ||
+                    googleForm.controls['password'].hasError('hasCapitalCase')">
+                    Must include Number, Uppercase/Lowercase, and Special Characters
+                </span>
+            </mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Confirm Password</mat-label>
+            <input matInput placeholder="Password" formControlName="confirm" required class="password"
+                [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide" class="col-black-light cursor-pointer">
+                {{hide ? 'visibility_off' : 'visibility'}}
+            </mat-icon>
+        </mat-form-field>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="update()">UPDATE</button>
+    </div>
+</div>

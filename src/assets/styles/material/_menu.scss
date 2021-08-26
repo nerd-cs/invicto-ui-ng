@@ -1,0 +1,38 @@
+.mat-menu-content {
+    padding-bottom: 0 !important;
+}
+
+.mat-menu-panel {
+    .mat-menu-item {
+        @apply flex items-center justify-start h-8;
+        @include app-font(14px, 20px, 400, 0.25px);
+        color: $font-black;
+    }
+}
+
+.actions-menu.mat-menu-panel {
+    margin-top: 8px;
+    .mat-menu-item {
+        width: 140px !important;
+    }
+}
+
+.user-menu.mat-menu-panel {
+    margin-bottom: -74px !important;
+    margin-left: 64px;
+    .mat-menu-item {
+        width: 198px !important;
+    }
+}
+
+.user-setting-menu.mat-menu-panel {
+    margin-bottom: -36px !important;
+    margin-left: 60px;
+
+    &.expand-menu {
+        margin-left: 280px !important;
+    }
+    .mat-menu-item {
+        width: 260px !important;
+    }
+}

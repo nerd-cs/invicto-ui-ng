@@ -1,0 +1,148 @@
+<div class="main-nav-container flex flex-col pl-4 h-screen" [class.collapsed]="collapsed">
+    <div class="nav-header flex items-center cursor-pointer pl-4 -ml-4 bg-white">
+        <div class="nav-icon" [routerLink]="['/dashboard']">
+            <img src="/assets/images/Logo.svg" alt="">
+        </div>
+        <div class="nav-contents">
+            <p class="app-name text-2xl font-semibold col-grey">Invicto</p>
+        </div>
+    </div>
+
+    <div class="nav-main mt-5" *ngIf="!hideSide">
+        <div class="nav-item" [routerLink]="['/dashboard']" routerLinkActive="active" matRipple [matRippleColor]="rippleColor">
+            <div class="nav-icon"><img src="/assets/images/nav/home.svg" alt=""></div>
+            <div class="nav-contents">
+                <p class="col-grey text-title-sm">Dashboard</p>
+            </div>
+        </div>
+
+        <!-- <div class="nav-item" [routerLink]="['/users']" routerLinkActive="active" [routerLinkActiveOptions]="{exact: false}"> -->
+        <div class="nav-item user-case" [class.expanded]="!collapsed" [class.active]="router.isActive('/users',false)" matRipple [matRippleColor]="rippleColor">
+            <div class="nav-icon" #userTrigger="matMenuTrigger" [matMenuTriggerFor]="menu" (click)="menuTrigger()">
+                <img src="/assets/images/nav/user.svg" alt="">
+            </div>
+            <div class="nav-contents">
+                <div class="users flex-center-between" [class.active]="dropdownActive" (click)="dropdownActive = !dropdownActive">
+                    <p class="col-grey text-title-sm">Users</p>
+                    <div class="icon-wrap-40">
+                        <mat-icon *ngIf="!dropdownActive">keyboard_arrow_right</mat-icon>
+                        <mat-icon *ngIf="dropdownActive">keyboard_arrow_down</mat-icon>
+                    </div>
+                </div>
+            </div>
+            <mat-menu #menu="matMenu" class="user-menu" yPosition="above">
+                <button mat-menu-item matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'all-users']">
+                    All users
+                </button>
+                <button mat-menu-item matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'tier-admins']">
+                    Tier Admins
+                </button>
+                <button mat-menu-item matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'admins']">
+                    Admins
+                </button>
+            </mat-menu>
+        </div>
+        <div class="user-types opacity-0 overflow-hidden h-0" [class.show]="dropdownActive">
+            <div class="all" matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'all-users']" routerLinkActive="active">
+                All users
+            </div>
+            <div class="tier-admins" matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'tier-admins']" routerLinkActive="active">
+                Tier Admins
+            </div>
+            <div class="admins" matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'admins']" routerLinkActive="active">
+                Admins
+            </div>
+        </div>
+        <div class="nav-item" [routerLink]="['/control-access']" routerLinkActive="active" matRipple
+            [matRippleColor]="rippleColor">
+            <div class="nav-icon"><img src="/assets/images/nav/lock.svg" alt=""></div>
+            <div class="nav-contents">
+                <p class="col-grey text-title-sm">Control Access</p>
+            </div>
+        </div>
+        <div class="nav-item" [routerLink]="['/activities']" routerLinkActive="active" matRipple
+            [matRippleColor]="rippleColor">
+            <div class="nav-icon"><img src="/assets/images/nav/activity.svg" alt=""></div>
+            <div class="nav-contents">
+                <p class="col-grey text-title-sm">Activities</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-other mt-auto" *ngIf="!hideSide">
+        <div class="nav-item" [routerLink]="['/configuration']" routerLinkActive="active" matRipple [matRippleColor]="rippleColor">
+            <div class="nav-icon"><img src="/assets/images/nav/grid.svg" alt=""></div>
+            <div class="nav-contents">
+                <p class="col-grey text-title-sm">Configuration</p>
+            </div>
+        </div>
+        <div class="nav-item" [routerLink]="['/help']" routerLinkActive="active" matRipple [matRippleColor]="rippleColor">
+            <div class="nav-icon"><img src="/assets/images/nav/help.svg" alt=""></div>
+            <div class="nav-contents">
+                <p class="col-grey text-title-sm">Help</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="nav-footer w-full flex items-center justify-start cursor-pointer mx-0 mt-4 mb-7"
+        [matMenuTriggerFor]="userSetting" *ngIf="!hideSide">
+        <div class="account-init flex-center h6 w-10 h-10 my-0 mx-2 rounded-full" style="color: #212121; background-color: #EEEFF0;">
+            {{loggedInUser.fullName.charAt(0)}}
+        </div>
+        <div class="nav-contents account-name flex-center-between">
+            <p class="ml-4 mr-24 col-blue w-available">{{loggedInUser.fullName}}</p>
+            <div class="icon-wrap-40 pr-2 text-title-sm col-black-light">
+                <mat-icon>keyboard_arrow_right</mat-icon>
+            </div>
+        </div>
+
+        <mat-menu #userSetting="matMenu" [class]="collapsed ? 'user-setting-menu' : 'user-setting-menu expand-menu'">
+            <button mat-menu-item class="mb-2" matRipple [matRippleColor]="rippleColor" [routerLink]="['/management', 'user-management']">
+                User management <mat-icon class="ml-auto">person_outline</mat-icon>
+            </button>
+            <button mat-menu-item class="mb-2" matRipple [matRippleColor]="rippleColor">
+                Subscription & Billing <mat-icon class="ml-auto">payment</mat-icon>
+            </button>
+            <button mat-menu-item class="mb-2" matRipple [matRippleColor]="rippleColor">
+                Workspaces <mat-icon class="ml-auto" fontSet="material-icons-outlined">dashboard</mat-icon>
+            </button>
+        </mat-menu>
+    </div>
+</div>
+
+<div class="main-section pl-10 overflow-hidden" [class.collapsed]="collapsed">
+    <div class="top-nav flex items-center -ml-10 bg-white" [class.pl-10]="!hideSide">
+        <p class="app-name text-2xl font-semibold col-grey ml-3 cursor-pointer" *ngIf="hideSide" [routerLink]="['/']">
+            Invicto
+        </p>
+        <div class="icon-wrap-40 mr-12" *ngIf="!hideSide">
+            <mat-icon class="font-medium cursor-pointer" (click)="expandNav()">menu</mat-icon>
+        </div>
+        <div class="search flex items-center mr-auto pl-4 rounded-md h-12" *ngIf="!hideSide">
+            <mat-icon>search</mat-icon>
+            <input class="search-input pl-4 bg-transparent col-black-light w-96" (keyup)="applyFilter($event)"
+                [(ngModel)]="filterKey" placeholder="Search" #input>
+        </div>
+        <div class="icon-wrap-40 mr-3" [class.ml-auto]="hideSide">
+            <mat-icon class="font-medium cursor-pointer" fontSet="material-icons-outlined">notifications</mat-icon>
+        </div>
+        <div class="icon-wrap-40" [class.ml-auto]="hideSide">
+            <mat-icon class="font-medium cursor-pointer" fontSet="material-icons-outlined">settings</mat-icon>
+        </div>
+        <div class="user-info flex items-center mr-10 ml-3 rounded-3xl h-12 cursor-pointer"
+            (click)="openAccount($event)">
+            <div class="name-role ml-2">
+                <div class="name h-6 font-grey text-title-sm">{{loggedInUser.fullName}}</div>
+                <div class="role font-black-light h-4 text-caption text-right" style="color: rgba(18,18,18,0.38);">{{role}}
+                </div>
+            </div>
+            <div class="user-img flex-center w-10 h-10 ml-3">
+                <img src="/assets/images/user.png" alt="">
+            </div>
+        </div>
+    </div>
+
+    <div class="router" [class.full-router]="hideSide">
+        <router-outlet class="h-full"></router-outlet>
+    </div>
+</div>

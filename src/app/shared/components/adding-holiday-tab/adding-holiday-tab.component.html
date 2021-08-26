@@ -1,0 +1,66 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Adding Holiday </div>
+    <mat-icon mat-dialog-close>close</mat-icon>
+</div>
+<div class="dialog-content p-10 flex flex-col">
+    <mat-tab-group mat-align-tabs="center" color="accent" class="items-center" dynamicHeight>
+        <mat-tab label="LIST">
+            <div class="search flex items-center rounded-md h-12 mx-auto px-4 my-6" style="background-color: #EEEFF0;">
+                <mat-icon>search</mat-icon>
+                <input class="search-input pl-4 bg-transparent col-black-light w-80" placeholder="Search" #input
+                    [(ngModel)]="searchKey">
+            </div>
+            <div class="holiday-lists flex flex-col">
+                <div class="item" *ngFor="let holiday of holidays | filter: searchKey : 'name'">
+                    {{holiday.name}}
+                    <mat-checkbox [(ngModel)]="holiday.checked" color="accent">
+                    </mat-checkbox>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="NEW">
+            <div [formGroup]="holidayForm" class="mt-10">
+                <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="" formControlName="name" required>
+                    <mat-error *ngIf="holidayForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+                    <mat-label>Recurrence</mat-label>
+                    <mat-select formControlName="recurrence">
+                        <mat-option value="Every year">Every year</mat-option>
+                        <mat-option value="test">test</mat-option>
+                        <mat-option value="test">test</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <div class="flex-center-between">
+                    <mat-form-field appearance="outline" color="accent" class="mb-1 date-form mr-1">
+                        <mat-label>Start Date</mat-label>
+                        <input matInput [matDatepicker]="dp" formControlName="startDate" [min]="startMinDate" readonly class="cursor-pointer" (click)="dp.open()">
+                        <mat-datepicker-toggle matSuffix [for]="dp">
+                            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dp [calendarHeaderComponent]="customCalendarHeader">
+                        </mat-datepicker>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" color="accent" class="mb-1 date-form ml-1">
+                        <mat-label>End Date</mat-label>
+                        <input matInput [matDatepicker]="dpExp" formControlName="endDate" [min]="endMinDate" readonly class="cursor-pointer" (click)="dpExp.open()">
+                        <mat-datepicker-toggle matSuffix [for]="dpExp">
+                            <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                        </mat-datepicker-toggle>
+                        <mat-datepicker #dpExp [calendarHeaderComponent]="customCalendarHeader">
+                        </mat-datepicker>
+                    </mat-form-field>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<div class="dialog-footer">
+    <button class="btn secondary-btn w-20 ml-auto mr-4" mat-dialog-close>Close</button>
+    <button class="btn primary-btn w-24" (click)="add()">Add</button>
+</div>

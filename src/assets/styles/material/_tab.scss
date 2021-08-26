@@ -1,0 +1,17 @@
+div[role="tab"][aria-selected="true"] {
+    .mat-tab-label-content {
+        color: #0291FF !important;
+    }
+}
+
+div.mat-tab-label-active {
+    opacity: 1 !important;
+}
+
+.mat-tab-header {
+    width: fit-content;
+}
+
+.mat-tab-body-wrapper {
+    width: 100%;
+}

@@ -1,0 +1,53 @@
+<div class="edit-group-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Edit</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <form [formGroup]="accessForm" class="flex flex-col-reverse px-4">
+        <ng-container formArrayName="accessItems" *ngFor="let item of controlsArray; index as idx">
+            <div [formGroupName]="idx" class="access-wrap">
+                <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+                    <mat-label>Select location</mat-label>
+                    <mat-select formControlName="location">
+                        <mat-option *ngFor="let loc of locations" [value]="loc" (click)="setLocation(idx)">{{loc}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" color="accent" class="w-full mb-1 group-wrap">
+                    <mat-label>Add Access Group</mat-label>
+                    <mat-select formControlName="group" multiple class="group-select" panelClass="panel-group">
+                        <mat-select-trigger>
+                            {{accessItemsArray(idx) ? accessItemsArray(idx)[0] : ''}}
+                            <span *ngIf="accessItemsArray(idx)?.length > 1">
+                                (+{{accessItemsArray(idx).length - 1}}
+                                {{accessItemsArray(idx)?.length === 2 ? 'other' : 'others'}})
+                            </span>
+                        </mat-select-trigger>
+                        <mat-option class="flex flex-row-reverse" *ngFor="let gp of groups" [value]="gp">{{gp}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-chip-list>
+                    <mat-chip *ngFor="let item of accessItemsArray(idx)" removable selectable>
+                        {{item}} <mat-icon class="col-grey ml-2 mi-18" (click)="removeChip(item, idx)">cancel</mat-icon>
+                    </mat-chip>
+                </mat-chip-list>
+
+                <div class="mb-5"></div>
+
+                <button class="btn secondary-outline-btn px-2 my-4" (click)="removeItem(idx)" *ngIf="controlsArray && controlsArray.length > 1">
+                    <mat-icon>delete_outline</mat-icon> Delete
+                </button>
+            </div>
+        </ng-container>
+    </form>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button class="btn secondary-outline-btn pl-1 pr-2" (click)="addItem()">
+            <mat-icon>add</mat-icon> ADD LOCATION
+        </button>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="accessForm.invalid">Save</button>
+    </div>
+</div>

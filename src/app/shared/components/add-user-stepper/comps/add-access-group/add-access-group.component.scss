@@ -1,0 +1,19 @@
+::ng-deep {
+    .mat-select.group-select {
+        padding: 0;
+        border: none;
+        outline: none;
+        line-height: 1.125rem;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}
+
+.access-wrap {
+    &:not(:first-child) {
+        padding-bottom: 16px;
+        margin-bottom: 16px;
+        border-bottom: 1px solid #C2C2C2;
+    }
+}

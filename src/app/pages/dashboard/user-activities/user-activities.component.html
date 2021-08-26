@@ -1,0 +1,52 @@
+<div class="activities-header flex my-3">
+    <div class="h6 mr-auto">Activities</div>
+    <mat-select [(value)]="selected" class="location-select">
+        <mat-option value="All locations">All locations</mat-option>
+        <mat-option value="Option1">Option1</mat-option>
+    </mat-select>
+</div>
+
+<div class="table-section flex flex-col">
+    <table mat-table [dataSource]="dataSource" matSort class="w-full mb-auto">
+        <ng-container matColumnDef="name">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="photo-name flex flex-row">
+                    <img src="/assets/images/user.png" alt="">
+                    <div class="name-role flex flex-col justify-center items-start ml-4">
+                        <p class="name h-6 text-title-sm col-grey">{{element.name}}</p>
+                        <p class="role font-black-light h-4 text-body-sm">{{'8h02 AM'}}</p>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="statusL">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header class="flex justify-end" style="border: none;"> Last Activity </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="status flex justify-end items-center">
+                    <div class="label flex-center mr-2.5">
+                        {{element.status}}
+                    </div>
+                    <div class="icon flex-center">
+                        <ng-container *ngIf="element.status === 'Check-in' else noActive">
+                            <mat-icon class="check">check</mat-icon>
+                        </ng-container>
+                        <ng-template #noActive>
+                            <ng-container *ngIf="element.status === 'Check-out' else block">
+                                <mat-icon class="inactive">schedule</mat-icon>
+                            </ng-container>
+                        </ng-template>
+                        <ng-template #block>
+                            <mat-icon class="block">block</mat-icon>
+                        </ng-template>
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr appHoverClass mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+    </table>
+
+</div>

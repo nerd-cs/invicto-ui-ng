@@ -1,0 +1,18 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> New Card Added! </div>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
+
+<div class="dialog-content p-20">
+    <div class="img-wrap flex-center">
+        <img src="assets/images/vector/vc2.png" alt="" style="width: 190px;">
+    </div>
+</div>
+
+<div class="dialog-footer">
+    <button class="btn secondary-outline-btn px-2 mr-auto" (click)="gotoStep(3)">
+        Create Other Card
+    </button>
+    <button class="btn secondary-btn w-24 mr-2" (click)="sendLater()">Send Later</button>
+    <button class="btn primary-btn px-2" (click)="sendInvitation()">Send Invitation</button>
+</div>

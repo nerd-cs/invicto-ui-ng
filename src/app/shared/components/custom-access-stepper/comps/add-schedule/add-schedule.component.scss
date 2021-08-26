@@ -1,0 +1,39 @@
+.schedule-item {
+    background-color: #E2F2FF;
+    @apply inline-block mr-2 rounded-3xl h-8 text-sm leading-8 px-2 overflow-ellipsis whitespace-nowrap overflow-hidden cursor-pointer;
+    min-width: 90px;
+    max-width: 90px;
+    &:hover {
+        border: 1px solid #36A1FFBB;
+    }
+    &.disable {
+        pointer-events: none;
+        background-color: #EEEFF0;
+    }
+}
+
+:host {
+    .dialog-header {
+        width: 476px;
+    }
+}
+
+.list-contents .item {
+    p.day {
+        min-width: 80px;
+    }
+    .status {
+        min-width: 44px;
+    }
+
+    .time-wrap {
+        max-width: 220px;
+        overflow-x: scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    }
+    .time-wrap::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+}

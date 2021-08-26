@@ -1,0 +1,27 @@
+<app-signin-step>
+    <p class="signin-step-title h6 col-black text-center">{{'auth.Sign in your Invicto account' | translate}} </p>
+    <form class="submit-form mt-6" [formGroup]="loginForm">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Email</mat-label>
+            <input matInput placeholder="name@company.com" formControlName="email" required>
+            <mat-error *ngIf="loginForm.controls['email'].invalid">{{emailInValidMessage}}</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Password</mat-label>
+            <input matInput placeholder="Password" autocomplete="on" formControlName="password" required class="password" [type]="hide ? 'password' : 'text'">
+            <mat-icon matSuffix (click)="hide = !hide" class="col-black-light cursor-pointer">{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            <mat-hint class="cursor-pointer" (click)="resetPassword()">
+                {{'auth.Lost Password ?' | translate}}
+            </mat-hint>
+        </mat-form-field>
+
+        <button class="btn primary-btn w-full h-14 mt-5" [class.inactive]="!loginForm.valid" (click)="login()">
+            {{'@.SIGN IN' | translate}}
+        </button>
+        <p class="text-title-lg col-black text-center my-4">{{'@.or' | translate}}</p>
+        <button class="btn primary-outline-btn w-full h-14" (click)="googleSignIn()">
+            {{'@.SIGN IN WITH GOOGLE ACCOUNT' | translate}}
+        </button>
+    </form>
+
+</app-signin-step>

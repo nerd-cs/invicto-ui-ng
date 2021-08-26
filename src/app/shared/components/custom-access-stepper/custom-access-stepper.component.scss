@@ -1,0 +1,10 @@
+::ng-deep {
+    .custom-access-stepper {
+        .mat-dialog-container {
+            padding: 0;
+            border-radius: 8px;
+            max-height: 95vh !important;
+        }
+    }
+
+}

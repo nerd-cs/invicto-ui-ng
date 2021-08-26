@@ -1,0 +1,65 @@
+<div class="signup-wrap flex">
+    <div class="left-section h-100 flex flex-col">
+        <p class="h6 col-black mb-4">Setup your invicto account</p>
+        <p class="text-caption">
+            Password must be at least 8 characters and contain at least one capital letter, one lower case letter, and
+            one number
+        </p>
+        <div class="submit-form mt-6" [formGroup]="signupForm">
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+                <mat-label>Create Password</mat-label>
+                <input matInput placeholder="Password" formControlName="password" required class="password"
+                    [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide" class="col-black-light cursor-pointer">
+                    {{hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+                <mat-error>
+                    <span *ngIf="signupForm.controls['password'].hasError('required')">
+                        You must enter a value
+                    </span>
+                    <span *ngIf="signupForm.controls['password'].hasError('minlength') ||
+                                signupForm.controls['password'].hasError('hasNumber') ||
+                                signupForm.controls['password'].hasError('hasSpecialCharacters') ||
+                                signupForm.controls['password'].hasError('hasSmallCase') ||
+                                signupForm.controls['password'].hasError('hasCapitalCase')">
+                        Must include Number, Uppercase/Lowercase, and Special Characters
+                    </span>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+                <mat-label>Confirm Password</mat-label>
+                <input matInput placeholder="Password" formControlName="confirm" required class="password"
+                    [type]="hide ? 'password' : 'text'">
+                <mat-icon matSuffix (click)="hide = !hide" class="col-black-light cursor-pointer">
+                    {{hide ? 'visibility_off' : 'visibility'}}
+                </mat-icon>
+            </mat-form-field>
+
+            <p class="text-title-lg col-black text-center mb-4">or</p>
+            <button class="btn primary-outline-btn w-full h-14" (click)="googleSignIn()">
+                {{'@.SIGN IN WITH GOOGLE ACCOUNT' | translate}}
+            </button>
+
+            <p class="text-caption mt-4 mb-16">
+                By clicking next you agree to our
+                <span class="col-blue cursor-pointer hover:underline" (click)="termsService()">Terms of Service, </span>
+                <span class="col-blue cursor-pointer hover:underline" (click)="privacyPolicy()">Privacy Policy,</span>
+                and to receive marketing communications from Invicto
+            </p>
+
+            <button class="btn primary-btn w-20 ml-auto h-14 mt-5" [disabled]="!signupForm.valid" (click)="signUp()">
+                NEXT
+            </button>
+        </div>
+    </div>
+    <div class="right-section h-100 relative flex">
+        <div class="h4 col-white pl-8 pr-10 mt-11">
+            Control access system made simple
+        </div>
+        <div class="logo-title flex absolute bottom-10 left-8">
+            <img src="/assets/images/Logo.svg" alt="">
+            <p class="invicto ml-3"> Invicto</p>
+        </div>
+    </div>
+</div>

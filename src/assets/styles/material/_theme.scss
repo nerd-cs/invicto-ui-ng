@@ -1,0 +1,42 @@
+@import "~@angular/material/theming";
+@include mat-core();
+$invicto-mat-blue: (
+  50: #EDF2FF,
+  100: #BADDFF,
+  200: #8DC8FF,
+  300: #5DB2FF,
+  400: #36A1FF,
+  500: #0291FF,
+  600: #0F83F0,
+  700: #1371DD,
+  800: #145FCA,
+  900: #1440AB,
+  contrast: (
+    50: #EDF2FFDD,
+    100: #BADDFFDD,
+    200: #8DC8FFDD,
+    300: #5DB2FFDD,
+    400: #36A1FFDD,
+    500: #0291FFDD,
+    600: #0F83F0DD,
+    700: #1371DDDD,
+    800: #145FCADD,
+    900: #1440ABDD,
+  )
+);
+
+$invicto-app-primary: mat-palette($mat-grey, 900);
+$invicto-app-accent: mat-palette($invicto-mat-blue, 500);
+$invicto-app-theme: mat-light-theme($invicto-app-primary, $invicto-app-accent);
+
+@include angular-material-theme($invicto-app-theme);
+
+// USAGE
+// Define your application's custom theme.
+// TODO - define custom color
+// $invicto-custom-primary: mat-palette($mat-indigo);
+// $invicto-custom-accent: mat-palette($mat-pink);
+// $invicto-custom-theme: mat-light-theme($invicto-custom-primary, $invicto-custom-accent);
+// .custom-class-name {
+//   @include angular-material-theme($invicto-custom-theme);
+// }

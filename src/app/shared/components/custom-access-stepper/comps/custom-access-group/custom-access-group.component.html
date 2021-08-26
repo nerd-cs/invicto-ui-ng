@@ -1,0 +1,66 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Add Access Group </div>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
+
+<div class="dialog-content p-10">
+    <div [formGroup]="accessGroupForm">
+        <p class="text-title-sm col-black mb-2">Information</p>
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1 mr-2">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Name" formControlName="name" required>
+                <mat-error *ngIf="accessGroupForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1 ml-2">
+                <mat-label>Description</mat-label>
+                <mat-select formControlName="description" name="description">
+                    <mat-option value="Optional">Optional</mat-option>
+                    <mat-option value="Optional">Optional</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+        <div class="flex-center-between border-b border-black border-opacity-10 pb-5 mb-8">
+            <p class="w-full text-title-sm col-black-lighter mr-2">Zone & Door</p>
+            <p class="w-full text-title-sm col-black-lighter ml-2">Schedule</p>
+        </div>
+        <ng-container formArrayName="lines" *ngFor="let item of controlsArray; index as idx">
+            <div class="flex-center-between" [formGroupName]="idx">
+                <mat-form-field appearance="outline" color="accent" class="w-full mr-2">
+                    <mat-label>Zone & Door</mat-label>
+                    <mat-select formControlName="zonedoor" name="zone-door">
+                        <mat-option value="Office 1">Office 1</mat-option>
+                        <mat-option value="Office 2">Office 2</mat-option>
+                        <mat-option value="Office 3">Office 3</mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" color="accent" class="w-full ml-2">
+                    <mat-label>Schedule</mat-label>
+                    <mat-select formControlName="schedule" name="schedule">
+                        <mat-option value="9am-11am">9am-11am</mat-option>
+                        <mat-option value="All day">All day</mat-option>
+                        <mat-option value="Weekend">Weekend</mat-option>
+                        <mat-option value="Sunday">Sunday</mat-option>
+                        <mat-option value="9am-5pm">9am-5pm</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+            <button class="btn secondary-outline-btn px-2 w-19 ml-auto mb-2" (click)="removeLine(idx)">Remove</button>
+        </ng-container>
+
+
+        <button class="btn secondary-outline-btn px-2 mt-6" (click)="addLine()">
+            <mat-icon>add</mat-icon> ADD LINE
+        </button>
+    </div>
+</div>
+
+<div class="dialog-footer">
+    <button class="btn secondary-outline-btn px-2 mr-auto" (click)="gotoStep(1)">
+        <mat-icon>add</mat-icon> ADD CUSTOM ACCESS
+    </button>
+    <button class="btn secondary-btn w-24 mr-3" (click)="close()">Cancel</button>
+    <button class="btn primary-btn px-2 w-16" (click)="saveGroup()" [disabled]="!accessGroupForm.valid">Save</button>
+</div>

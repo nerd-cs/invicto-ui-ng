@@ -1,0 +1,39 @@
+.main-container-detail {
+    height: calc(100vh - 82px);
+    padding: 0 !important;
+    padding-right: 98px !important;
+
+    @media (min-width: 1598.98px) {
+        padding-right: 198px !important;
+        padding-left: 100px !important;
+    }
+}
+
+.profile,
+.border-login-com {
+    border: 1px solid #EEEFF0;
+}
+
+.item-label {
+    color: rgba(0,0,0,0.6);
+}
+
+.profile .profile-contents {
+    > div {
+        width: calc(33.33% - 22px);
+        margin-bottom: 24px;
+    }
+
+    .item {
+        height: 68px;
+        padding: 14px 0;
+
+        @apply border-b border-black border-opacity-10;
+    }
+}
+
+.login-com {
+    .item-wrap {
+        @apply border-b border-black border-opacity-10 mb-4 cursor-pointer;
+    }
+}

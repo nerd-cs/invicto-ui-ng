@@ -1,0 +1,13 @@
+.remove-btn {
+    color: #0291FF;
+    background-color: rgba(2, 145, 255, 0.04);
+
+    &:hover {
+        border: 1px solid #0291FF55;
+    }
+}
+
+.divider {
+    height: 1px;
+    background-color: #c2c2c2;
+}

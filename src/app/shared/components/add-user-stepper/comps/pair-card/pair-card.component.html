@@ -1,0 +1,26 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Pair your card </div>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
+
+<div class="dialog-content p-10">
+    <div class="temp flex-center mx-auto mb-8 rounded-full opacity-20"
+        style="width: 192px; height: 192px; background-color: #4CD07B;">
+        <mat-icon class="cursor-pointer col-black">done</mat-icon>
+    </div>
+    <p class="text-title-sm col-black mb-2">Scan card</p>
+    <p class="text-caption mb-4">Please open your scanner and scan card</p>
+    <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+        <mat-label>Card number</mat-label>
+        <input matInput placeholder="Card number">
+        <mat-error *ngIf="false">{{'TODO: confirm'}}</mat-error>
+    </mat-form-field>
+</div>
+
+<div class="dialog-footer">
+    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="gotoStep(3)">Previous</button>
+    <button class="btn primary-outline-btn px-2 mr-4" (click)="gotoStep(5)">
+        Skip
+    </button>
+    <button class="btn primary-btn w-24" (click)="gotoStep(5)">Next Step</button>
+</div>

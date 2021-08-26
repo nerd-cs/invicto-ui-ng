@@ -1,0 +1,10 @@
+::ng-deep {
+    .code-input {
+        input {
+            box-shadow: none !important;
+        }
+        .mat-form-field-infix {
+            padding-top: 0.6em !important;
+        }
+    }
+}

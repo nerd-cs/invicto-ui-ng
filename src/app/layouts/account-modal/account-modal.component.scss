@@ -1,0 +1,25 @@
+::ng-deep {
+    .account-modal-backdrop {
+        background-color: transparent !important;
+    }
+
+    .account-modal {
+        .mat-dialog-container {
+            padding: 0;
+        }
+    }
+}
+
+.profile-avatar {
+    height: 72px;
+    width: 72px;
+    object-fit: contain;
+}
+
+p.email {
+    color: rgba(18, 18, 18, 0.38) !important;
+}
+
+button {
+    width: 218px !important;
+}

@@ -1,0 +1,105 @@
+<div class="main-container-detail overflow-auto pt-7" [class.collapsed]="sidenavCollapsed">
+
+    <section class="back w-48 h-10 flex items-center mb-8 cursor-pointer" (click)="gotoUserList()">
+        <span class="material-icons icon-40"> arrow_back </span>
+        <span class="h5 pl-4 col-black">Users List</span>
+    </section>
+
+    <div class="profile bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black">Profile</div>
+            <div class="actions">
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="profileEdit()">
+                    <mat-icon fontSet="material-icons-outlined">edit</mat-icon> EDIT
+                </button>
+            </div>
+        </div>
+        <div class="profile-contents flex flex-wrap items-end">
+            <div class="user-info mr-8 flex">
+                <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full">
+                <div class="ml-4 flex flex-col justify-center">
+                    <p class="h6 mb-1 col-black">{{userData.fullName}}</p>
+                    <p class="text-body-sm col-black-light">{{userData.company}}</p>
+                </div>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">ROLE</p>
+                <p class="text-title-lg col-black">{{userData.roles[0] | literal}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">STATUS</p>
+                <p class="text-title-lg col-black">{{userData.status | literal}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">EMAIL</p>
+                <p class="text-title-lg col-black">{{userData.email}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">COMPANY</p>
+                <p class="text-title-lg col-black">{{userData.company}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">CREATED</p>
+                <p class="text-title-lg col-black">{{userData.createdAt | date : 'mediumDate'}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">MOBILE</p>
+                <p class="text-title-lg col-black">{{userData.phoneNumber}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">DEPARTMENT</p>
+                <p class="text-title-lg col-black">{{userData.department}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">UPDATED</p>
+                <p class="text-title-lg col-black">{{userData.updatedAt | date : 'mediumDate'}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">EMPLOYEE NUMBER</p>
+                <p class="text-title-lg col-black">{{userData.employeeNumber}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">COST CENTER</p>
+                <p class="text-title-lg col-black">{{userData?.costCenter || 'IT Department'}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="access-groups bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black ">Access Groups</div>
+            <div class="actions flex">
+                <button class="btn secondary-outline-btn mr-2 px-6" (click)="customAccess()"> ADD CUSTOM ACCESS </button>
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="addGroup()">
+                    <mat-icon>add</mat-icon> ADD GROUP
+                </button>
+            </div>
+        </div>
+        <app-access-groups-table [accessGroups]="userData.accessGroups" [userId]="userData.id" (groupUpdated)="updateUserData($event)"></app-access-groups-table>
+    </div>
+
+    <div class="cards bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black">Cards</div>
+            <div class="actions">
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="addCard()">
+                    <mat-icon>add</mat-icon> CARD
+                </button>
+            </div>
+        </div>
+        <app-cards-table [cards]="userData.cards" [userId]="userData.id" (cardUpdated)="updateUserData($event)"></app-cards-table>
+    </div>
+
+    <div class="activities bg-white rounded-md p-10 mb-10 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black">Activities</div>
+            <div class="actions">
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="exportActivities()">
+                    <mat-icon>north_east</mat-icon> EXPORT
+                </button>
+            </div>
+        </div>
+        <app-activities-table (data)="getActivitiesData($event)"></app-activities-table>
+    </div>
+
+</div>

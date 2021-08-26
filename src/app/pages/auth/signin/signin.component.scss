@@ -1,0 +1,15 @@
+::ng-deep {
+    .password {
+        box-shadow: none !important;
+    }
+
+    .mat-hint {
+        color: #0291FF !important;
+    }
+}
+
+.inactive {
+    color: rgba(255, 255, 255, 0.38);
+    pointer-events: none;
+    cursor: auto;
+}

@@ -1,0 +1,57 @@
+@import "variables";
+
+.quick-view-container {
+    .user .name-edit {
+        .name {
+            height: 26px;
+        }
+    }
+
+    .user-info {
+        .info-section {
+            height: 64px;
+            padding: 12px 0 14px;
+            border-bottom: 1px solid $border-grey;
+            .info-title {
+                height: 16px;
+                color: $font-black-light;
+                font-size: 10px;
+                font-weight: 500;
+                letter-spacing: 1.5px;
+                line-height: 16px;
+            }
+
+            .info-content {
+                height: 24px;
+                color: $font-black;
+                font-size: 16px;
+                letter-spacing: 0.15px;
+                line-height: 24px;
+            }
+        }
+    }
+
+    .card-status {
+        border-bottom: 2px solid $border-grey;
+        > div {
+            border-bottom: 1px solid $border-grey;
+            height: 40px;
+        }
+
+        .header-title {
+            height: 24px;
+            color: rgba(0,0,0,0.4);
+            font-size: 14px;
+            font-weight: 500;
+            letter-spacing: 0.1px;
+            line-height: 24px;
+        }
+
+        .content-label {
+            @apply flex items-center h-full text-black;
+            font-size: 14px;
+            letter-spacing: 0.25px;
+            line-height: 20px;
+        }
+    }
+}

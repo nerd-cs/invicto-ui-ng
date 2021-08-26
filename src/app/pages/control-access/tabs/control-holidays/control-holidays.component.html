@@ -1,0 +1,60 @@
+<div class="table-section h-full flex flex-col">
+    <table mat-table [dataSource]="dataSource" matSort class="w-full mb-auto">
+
+        <ng-container matColumnDef="nameS">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+            <td mat-cell *matCellDef="let element">
+                <p class="name">{{element.name}}</p>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="fromToDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Date </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="from-to grey-col">{{element.startDate | date: 'mediumDate'}} - {{element.endDate | date: 'mediumDate'}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="recurrence">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Recurrence </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="recurrence grey-col">{{element.recurrence | literal}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastUpdated">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last activity </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="last-activity grey-col">{{element.updatedAt | date: 'mediumDate'}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element" (click)="$event.preventDefault(); $event.stopPropagation()">
+                <div class="action flex-center cursor-pointer">
+                    <mat-icon [matMenuTriggerFor]="actions">more_vert</mat-icon>
+                    <mat-menu #actions="matMenu" class="actions-menu" xPosition="before">
+                        <button mat-menu-item (click)="edit(element)">Edit</button>
+                        <button mat-menu-item (click)="deleteHoliday(element)">Delete</button>
+                    </mat-menu>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr appHoverClass mat-row *matRowDef="let element; columns: displayedColumns;" (click)="edit(element)"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5">No data matching the filter</td>
+        </tr>
+    </table>
+
+    <div class="table-paginator flex items-center justify-end py-3">
+        <mat-paginator #paginator [pageSize]="7" [pageSizeOptions]="[5, 7, 10, 15]"></mat-paginator>
+        <div class="add-fab w-14 h-14 rounded-full flex-center cursor-pointer control-add-fab" (click)="addHoliday()">
+            <mat-icon>add</mat-icon>
+        </div>
+    </div>
+</div>

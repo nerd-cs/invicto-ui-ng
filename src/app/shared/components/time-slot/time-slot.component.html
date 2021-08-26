@@ -1,0 +1,58 @@
+<div class="dialog-header">
+    <div class="h6 col-black">
+        <ng-container *ngIf="mode === 'edit' else add"> Edit time </ng-container>
+        <ng-template #add> Add time </ng-template>
+    </div>
+    <mat-icon (click)="cancel()">close</mat-icon>
+</div>
+
+<div class="dialog-content p-10">
+    <p class="text-title-sm col-black mb-2">Time</p>
+    <div [formGroup]="timeSlotForm">
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1 date-form mr-2">
+                <mat-label>Starting</mat-label>
+                <mat-select formControlName="starting" panelClass="time-slot-option" [disableOptionCentering]="true">
+                    <ng-container *ngFor="let time of options">
+                        <mat-option [value]="time">{{time}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1 date-form ml-2">
+                <mat-label>Period</mat-label>
+                <mat-select formControlName="sPeriod">
+                    <mat-option value="AM">AM</mat-option>
+                    <mat-option value="PM">PM</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1 date-form mr-2">
+                <mat-label>Ending</mat-label>
+                <mat-select formControlName="ending" panelClass="time-slot-option" [disableOptionCentering]="true">
+                    <ng-container *ngFor="let time of options">
+                        <mat-option [value]="time">{{time}}</mat-option>
+                    </ng-container>
+                </mat-select>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="w-full mb-1 date-form ml-2">
+                <mat-label>Period</mat-label>
+                <mat-select formControlName="ePeriod">
+                    <mat-option value="AM">AM</mat-option>
+                    <mat-option value="PM">PM</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+
+<div class="dialog-footer">
+    <button class="btn secondary-outline-btn px-2" (click)="delete()" *ngIf="mode === 'edit'">
+        <mat-icon>delete_outline</mat-icon> Delete
+    </button>
+    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="cancel()">Cancel</button>
+    <button class="btn primary-btn w-24" (click)="save()" [disabled]="timeSlotForm.invalid">Save</button>
+</div>

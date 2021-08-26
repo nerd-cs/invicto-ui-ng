@@ -1,0 +1,60 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Add Zone & Door </div>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
+<div class="dialog-content p-10 flex flex-col">
+    <mat-tab-group mat-align-tabs="center" color="accent" class="items-center" dynamicHeight>
+        <mat-tab label="ZONES">
+            <div class="search flex items-center rounded-md h-12 mx-auto px-4 my-6" style="background-color: #EEEFF0;">
+                <mat-icon>search</mat-icon>
+                <input class="search-input pl-4 bg-transparent col-black-light w-80" placeholder="Search" #input [(ngModel)]="searchKey">
+            </div>
+            <div class="zone-lists flex flex-col">
+                <div class="item" *ngIf="!searchKey">
+                    <p class="text-title-lg">{{zone.name}}</p>
+                    <mat-checkbox class="example-margin"
+                                  [checked]="allComplete"
+                                  color="accent"
+                                  [indeterminate]="someComplete()"
+                                  (change)="setAll($event.checked)">
+                    </mat-checkbox>
+                </div>
+                <div class="item" *ngFor="let zoneItem of zone.zoneList | filter: searchKey : 'name'">
+                    {{zoneItem.name}}
+                    <mat-checkbox [(ngModel)]="zoneItem.completed"
+                                  color="accent"
+                                  (ngModelChange)="updateAllComplete()">
+                    </mat-checkbox>
+                </div>
+            </div>
+        </mat-tab>
+        <mat-tab label="DOORS">
+            <div class="search flex items-center rounded-md h-12 mx-auto px-4 my-6" style="background-color: #EEEFF0;">
+                <mat-icon>search</mat-icon>
+                <input class="search-input pl-4 bg-transparent col-black-light w-80" placeholder="Search" #input [(ngModel)]="searchKey">
+            </div>
+            <div class="zone-lists flex flex-col">
+                <div class="item" *ngIf="!searchKey">
+                    <p class="text-title-lg">{{zone.name}}</p>
+                    <mat-checkbox class="example-margin"
+                                  [checked]="allComplete"
+                                  color="accent"
+                                  [indeterminate]="someComplete()"
+                                  (change)="setAll($event.checked)">
+                    </mat-checkbox>
+                </div>
+                <div class="item" *ngFor="let zoneItem of zone.zoneList | filter: searchKey : 'name'">
+                    {{zoneItem.name}}
+                    <mat-checkbox [(ngModel)]="zoneItem.completed"
+                                  color="accent"
+                                  (ngModelChange)="updateAllComplete()">
+                    </mat-checkbox>
+                </div>
+            </div>
+        </mat-tab>
+    </mat-tab-group>
+</div>
+<div class="dialog-footer">
+    <button class="btn secondary-btn w-20 ml-auto mr-4" (click)="close()">Cancel</button>
+    <button class="btn primary-btn w-24" (click)="next()">Add</button>
+</div>

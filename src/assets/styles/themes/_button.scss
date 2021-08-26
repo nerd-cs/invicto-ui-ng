@@ -1,0 +1,64 @@
+button {
+    display: flex !important;
+    @apply items-center justify-center h-9 rounded;
+    @apply focus:outline-none;
+    &:focus {
+        outline: none !important;
+    }
+    transition: ease-out 300ms;
+}
+.btn {
+    @include app-font(14px, 16px, 500, 1.25px);
+    border: 1px solid transparent;
+
+    .mat-icon {
+        margin-right: 5px;
+    }
+
+    &.primary-btn {
+        color: #FFFFFF;
+        border: 1px solid $primary-blue;
+        background-color: $primary-blue;
+
+        &:hover, &.active {
+            border: 1px solid $secondary-blue;
+            background-color: $secondary-blue;
+        }
+    }
+
+    &.primary-outline-btn {
+        color: $primary-blue;
+        border: 1px solid $secondary-blue;
+
+        &:hover, &.active {
+            border: 1px solid $primary-blue;
+            background-color: rgba(2, 145, 255, 0.12);
+        }
+    }
+
+    &.secondary-btn {
+        border: 1px solid rgba(0, 0, 0, 0.12);
+
+        &:hover, &.active {
+            background-color: rgba(2, 145, 255, 0.12);
+        }
+    }
+
+    &.secondary-outline-btn {
+        color: $primary-blue;
+        .mat-icon {
+            color: $font-grey;
+        }
+        &:hover, &.active {
+            border: 1px solid rgba(2, 145, 255, 0.12);
+            background-color: rgba(2, 145, 255, 0.12);
+        }
+    }
+
+    &.disabled, &:disabled, &[disabled] {
+        pointer-events: none;
+        color: rgba(0, 0, 0, 0.38);
+        background-color: rgba(255, 255, 255, 0.12);
+        border-color: rgba(0, 0, 0, 0.12);
+    }
+}

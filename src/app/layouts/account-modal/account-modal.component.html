@@ -1,0 +1,12 @@
+<div class="wrapper">
+    <div class="managed-by flex-center h-9 rounded mx-2 mt-2 mb-10" style="background-color: #E2F2FF; width: 335px;">
+        <p class="text-caption">This account is managed by {{company}}</p>
+    </div>
+    <div class="profile flex-center flex-col">
+        <img src="/assets/images/avatar.jpg" alt="" class="profile-avatar">
+        <p class="name text-title-lg mt-3">{{user.fullName}}</p>
+        <p class="email text-caption">{{user.email}}</p>
+    </div>
+    <button class="btn primary-outline-btn mx-auto mt-10" (click)="viewAccount()">VIEW ACCOUNT</button>
+    <button class="btn secondary-btn mx-auto mt-4" (click)="signOut()">SIGN OUT</button>
+</div>

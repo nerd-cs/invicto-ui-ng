@@ -1,0 +1,32 @@
+.right-side-panel {
+    width: 476px;
+    height: 100vh;
+    .mat-dialog-container {
+        border-top-right-radius: 0;
+        border-bottom-right-radius: 0;
+    }
+}
+
+.dialog-header {
+    background-color: rgba(33,33,33,0.06);
+    @apply h-20 px-10 flex items-center justify-between;
+    .mat-icon {
+        cursor: pointer;
+    }
+}
+
+.dialog-footer {
+    height: 120px;
+    @apply flex items-center mx-10;
+    border-top: 1px solid #C2C2C2;
+}
+
+.app-snack-bar {
+    span.mat-button-wrapper {
+        color: white;
+        font-size: 18px;
+    }
+    .mat-simple-snackbar > span {
+        @include app-font(14px, 20px, 400, 0.25px);
+    }
+}

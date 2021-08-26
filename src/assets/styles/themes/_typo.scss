@@ -1,0 +1,73 @@
+// h1, .h1 {
+//     @include app-font(96px, 112px, 300, -1.5px);
+// }
+
+// h2, .h2 {
+//     @include app-font(60px, 72px, 300, -0.5px);
+// }
+
+// h3, .h3 {
+//     @include app-font(48px, 56px, 400, 0);
+// }
+
+h4, .h4 {
+    @include app-font(34px, 36px, 400, 0);
+}
+
+h5, .h5 {
+    @include app-font(24px, 24px, 400, 0.18px);
+}
+
+h6, .h6 {
+    @include app-font(20px, 24px, 500, 0.15px);
+}
+
+.text-title-lg {
+    @include app-font(16px, 24px, 400, 0.15px);
+}
+.text-title-sm {
+    @include app-font(14px, 24px, 500, 0.1px);
+}
+.text-body-lg {
+    @include app-font(16px, 24px, 400, 0.5px);
+}
+.text-body-sm {
+    @include app-font(14px, 20px, 400, 0.25px);
+}
+.text-caption {
+    @include app-font(12px, 16px, 400, 0.4px);
+    color: rgba(18, 18, 18);
+}
+.text-overline {
+    @include app-font(10px, 16px, 500, 1.5px);
+}
+
+// Opacity 87 - 60 - 38
+.col-black {
+    color: $font-black;
+}
+.col-black-light {
+    color: $font-black-light;
+}
+.col-black-lighter {
+    color: $font-black-lighter;
+}
+
+.col-white {
+    color: $font-white;
+}
+.col-white-light {
+    color: $font-white-light;
+}
+.col-white-lighter {
+    color: $font-white-lighter;
+}
+// -----------
+
+
+.col-grey {
+    color: $font-grey;
+}
+.col-blue {
+    color: $primary-blue;
+}

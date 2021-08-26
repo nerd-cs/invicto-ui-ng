@@ -1,0 +1,21 @@
+
+::ng-deep {
+    .control-add-zone {
+        .mat-dialog-container {
+            width: 476px;
+            padding: 0;
+            border-radius: 8px;
+            max-height: 95vh !important;
+        }
+    }
+
+    .mat-select.group-select {
+        padding: 0;
+        border: none;
+        outline: none;
+        line-height: 1.125rem;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+}

@@ -1,0 +1,13 @@
+.mat-form-field-appearance-outline .mat-form-field-outline {
+    color: rgba(0, 0, 0, 0.38);
+}
+
+.mat-form-field-flex:hover {
+    .mat-form-field-outline.mat-form-field-outline-thick {
+        color: $secondary-blue;
+    }
+}
+
+.mat-form-field-appearance-outline.mat-form-field-invalid.mat-form-field-invalid .mat-form-field-outline-thick {
+    color: #f44336;
+}

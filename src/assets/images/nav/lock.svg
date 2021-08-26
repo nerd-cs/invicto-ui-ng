@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>096E650B-7207-4459-B6D8-05D0C82A19AD</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.007843 0 0 0 0 0.576471 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <path d="M19,10 L18,10 L18,7 C18,3.7 15.3,1 12,1 C8.7,1 6,3.7 6,7 L6,10 L5,10 C3.3,10 2,11.3 2,13 L2,20 C2,21.7 3.3,23 5,23 L19,23 C20.7,23 22,21.7 22,20 L22,13 C22,11.3 20.7,10 19,10 Z M8,7 C8,4.8 9.8,3 12,3 C14.2,3 16,4.8 16,7 L16,10 L8,10 L8,7 Z M20,20 C20,20.6 19.6,21 19,21 L5,21 C4.4,21 4,20.6 4,20 L4,13 C4,12.4 4.4,12 5,12 L19,12 C19.6,12 20,12.4 20,13 L20,20 Z" id="path-2"></path>
+    </defs>
+    <g id="Users" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="User-List-Collapsed-Light" transform="translate(-32.000000, -218.000000)">
+            <g id="Nav-Drawer/_Collapsed" transform="translate(16.000000, 110.000000)">
+                <g id="1️⃣-Line-item-Copy-2" transform="translate(0.000000, 96.000000)">
+                    <g id="📍-Icon" transform="translate(16.000000, 12.000000)" filter="url(#filter-1)">
+                        <g>
+                            <mask id="mask-3" fill="white">
+                                <use xlink:href="#path-2"></use>
+                            </mask>
+                            <use id="Mask" fill="#000000" fill-rule="nonzero" xlink:href="#path-2"></use>
+                            <g id="Icon-Color" mask="url(#mask-3)" fill="#000000">
+                                <rect id="Shape" x="0" y="0" width="24" height="24"></rect>
+                            </g>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

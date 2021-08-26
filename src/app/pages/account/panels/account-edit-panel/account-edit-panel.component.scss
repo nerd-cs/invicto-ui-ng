@@ -1,0 +1,14 @@
+::ng-deep {
+    .profile-edit {
+        width: 476px;
+        height: 100vh;
+    }
+}
+
+.profile-edit-container {
+    .user .name-edit {
+        .name {
+            height: 26px;
+        }
+    }
+}

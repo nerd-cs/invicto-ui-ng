@@ -1,0 +1,47 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Create Card </div>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
+
+<div class="dialog-content p-10">
+    <p class="text-title-sm col-black mb-2">Add card</p>
+    <div [formGroup]="cardForm">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Card Type</mat-label>
+            <mat-select formControlName="type">
+                <mat-option value="Key card">Key card</mat-option>
+                <mat-option value="Mobile card">Mobile card</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form">
+                <mat-label>Activation Date</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="activationDate" [min]="activationMinDate" readonly class="cursor-pointer" (click)="dp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form">
+                <mat-label>Expiration Date</mat-label>
+                <input matInput [matDatepicker]="dpExp" formControlName="expirationDate" [min]="expirationMinDate" readonly class="cursor-pointer" (click)="dpExp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dpExp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dpExp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+        <mat-checkbox formControlName="noExpiration" value="" (click)="setNoExpiration()">No expiration</mat-checkbox>
+    </div>
+</div>
+
+<div class="dialog-footer">
+    <button class="btn secondary-outline-btn px-2" (click)="gotoStep(5)">
+        Skip Card Creation
+    </button>
+    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="gotoStep(2)">Previous</button>
+    <button class="btn primary-btn w-24" (click)="gotoStep(4)" [disabled]="cardForm.invalid">Next Step</button>
+</div>

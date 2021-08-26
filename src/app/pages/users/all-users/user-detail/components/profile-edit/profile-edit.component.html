@@ -1,0 +1,101 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Edit</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div class="user flex items-center ml-4 mb-10">
+        <div class="user-avatar w-24 h-24 mr-4">
+            <img src="/assets/images/avatar.jpg" alt="">
+        </div>
+        <div class="name-edit">
+            <p class="name col-black h6 mb-1">Chris Stampleton</p>
+            <p class="edit col-blue h-5 cursor-pointer text-body-sm">Delete photo</p>
+        </div>
+    </div>
+    <div [formGroup]="profileForm" class="px-4">
+
+        <p class="text-title-sm col-black pl-2 pb-2">Info</p>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" formControlName="name" required>
+            <mat-error *ngIf="profileForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Email</mat-label>
+            <input readonly matInput placeholder="test@invicto.ca" formControlName="email" required>
+            <mat-error *ngIf="profileForm.controls['email'].invalid">{{emailInValidMessage}}</mat-error>
+        </mat-form-field>
+
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 mr-1 w-48">
+                <mat-label>Status</mat-label>
+                <mat-select formControlName="status">
+                    <mat-option value="ACTIVE">Active</mat-option>
+                    <mat-option value="INACTIVE">Inactive</mat-option>
+                </mat-select>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
+                <mat-label>Role</mat-label>
+                <mat-select formControlName="role">
+                    <mat-option value="GUESS">Guess</mat-option>
+                    <mat-option value="MEMBER">Member</mat-option>
+                    <mat-option value="TIER_ADMIN">Tier-admin</mat-option>
+                    <mat-option value="ADMIN">Admin</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 mr-1 w-48">
+                <mat-label>Mobile Number</mat-label>
+                <input matInput formControlName="phone" mask="(000) 000-0000" prefix="+1 " [showMaskTyped]="true"
+                    placeHolderCharacter="#" required>
+                <mat-error *ngIf="profileForm.controls['phone'].invalid">{{'Phone number is required'}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
+                <mat-label>Company</mat-label>
+                <input matInput placeholder="Invicto" formControlName="company" required>
+                <!-- <mat-select formControlName="company">
+                    <mat-option value="Invicto">Invicto</mat-option>
+                    <mat-option value="Company 1">Company 1</mat-option>
+                </mat-select> -->
+            </mat-form-field>
+        </div>
+
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 mr-1 w-48">
+                <mat-label>Employee Number</mat-label>
+                <input matInput placeholder="" formControlName="employeeNum" required [maxlength]="9">
+                <mat-error *ngIf="profileForm.controls['employeeNum'].invalid">{{'This field is required'}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
+                <mat-label>Department</mat-label>
+                <mat-select formControlName="department">
+                    <mat-option value="All department">All department</mat-option>
+                    <mat-option value="Department 1">Department 1</mat-option>
+                    <mat-option value="Department 2">Department 2</mat-option>
+                </mat-select>
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Cost Center</mat-label>
+            <mat-select formControlName="costCenter">
+                <mat-option value="Quebec Office">Quebec Office</mat-option>
+                <mat-option value="Option 1">Option 1</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button class="btn secondary-outline-btn pl-1 pr-2" (click)="resetPassword()">
+            <mat-icon>refresh</mat-icon>
+            Reset Password
+        </button>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="updateUserData()">SAVE</button>
+    </div>
+</div>

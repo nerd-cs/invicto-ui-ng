@@ -1,0 +1,48 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Add Holiday </div>
+    <mat-icon (click)="cancel()">close</mat-icon>
+</div>
+<div class="dialog-content p-10 flex flex-col">
+    <div [formGroup]="holidayForm">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="" formControlName="name" required>
+            <mat-error *ngIf="holidayForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Recurrence</mat-label>
+            <mat-select formControlName="recurrence">
+                <mat-option value="EVERY_YEAR">Every year</mat-option>
+                <mat-option value="EVERY_MONTH">Every month</mat-option>
+                <mat-option value="ONCE">Once</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form mr-1">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="startDate" [min]="startMinDate" readonly class="cursor-pointer" (click)="dp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form ml-1">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="dpExp" formControlName="endDate" [min]="endMinDate" readonly class="cursor-pointer" (click)="dpExp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dpExp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dpExp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</div>
+<div class="dialog-footer">
+    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="cancel()">Cancel</button>
+    <button class="btn primary-btn w-24" (click)="save()">Save</button>
+</div>

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>C9598A5C-EE7A-4EE7-98E7-49CEF7317A21</title>
+    <defs>
+        <filter color-interpolation-filters="auto" id="filter-1">
+            <feColorMatrix in="SourceGraphic" type="matrix" values="0 0 0 0 0.007843 0 0 0 0 0.576471 0 0 0 0 1.000000 0 0 0 1.000000 0"></feColorMatrix>
+        </filter>
+        <path d="M21.6,8.21679909 L12.6,1.22474461 C12.2,0.925085131 11.7,0.925085131 11.4,1.22474461 L2.4,8.21679909 C2.1,8.41657208 2,8.71623156 2,9.01589103 L2,20.0034052 C2,21.7014756 3.3,23 5,23 L19,23 C20.7,23 22,21.7014756 22,20.0034052 L22,9.01589103 C22,8.71623156 21.9,8.41657208 21.6,8.21679909 Z M14,21.0022701 L10,21.0022701 L10,13.0113507 L14,13.0113507 L14,21.0022701 Z M20,20.0034052 C20,20.6027242 19.6,21.0022701 19,21.0022701 L16,21.0022701 L16,12.0124858 C16,11.4131669 15.6,11.0136209 15,11.0136209 L9,11.0136209 C8.4,11.0136209 8,11.4131669 8,12.0124858 L8,21.0022701 L5,21.0022701 C4.4,21.0022701 4,20.6027242 4,20.0034052 L4,9.5153235 L12,3.32236095 L20,9.5153235 L20,20.0034052 Z" id="path-2"></path>
+    </defs>
+    <g id="Users" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="User-List-Collapsed-Light" transform="translate(-32.000000, -122.000000)">
+            <g id="Nav-Drawer/_Collapsed" transform="translate(16.000000, 110.000000)">
+                <g id="📍-Icon" transform="translate(16.000000, 12.000000)" filter="url(#filter-1)">
+                    <g>
+                        <mask id="mask-3" fill="white">
+                            <use xlink:href="#path-2"></use>
+                        </mask>
+                        <use id="Mask" fill="#000000" fill-rule="nonzero" xlink:href="#path-2"></use>
+                        <g id="Icon-Color" mask="url(#mask-3)" fill="#000000">
+                            <rect id="Shape" x="0" y="0" width="24" height="24"></rect>
+                        </g>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

@@ -1,0 +1,64 @@
+<div class="access-group-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Edit</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="accessGroupForm" class="px-4">
+        <p class="text-title-sm col-black mb-2">Information</p>
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 mr-1">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="" formControlName="name" required>
+                <mat-error *ngIf="accessGroupForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 ml-1">
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="" formControlName="description" required>
+                <mat-error *ngIf="accessGroupForm.controls['description'].invalid">{{'This field is required'}}</mat-error>
+            </mat-form-field>
+        </div>
+
+        <div class="divider mt-4 mb-8"></div>
+
+        <ng-container formArrayName="zoneDoorItems" *ngFor="let item of zoneDoorArray; index as idx" class="flex flex-col-reverse">
+            <div [formGroupName]="idx" class="access-form-array">
+                <div class="flex-center-between">
+                    <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 mr-1">
+                        <mat-label>Zone & Door</mat-label>
+                        <mat-select formControlName="zoneDoor">
+                            <mat-option value="Office 1">Office 1</mat-option>
+                            <mat-option value="Office 2">Office 2</mat-option>
+                            <mat-option value="Office 3">Office 3</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 ml-1">
+                        <mat-label>Schedule</mat-label>
+                        <mat-select formControlName="schedule">
+                            <mat-option value="9am-11am">9am-11am</mat-option>
+                            <mat-option value="10am-11am">10am-11am</mat-option>
+                            <mat-option value="8am-10am">8am-10am</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+
+                <button class="btn remove-btn px-2 ml-auto mb-1" (click)="removeItem(idx)" *ngIf="zoneDoorArray && zoneDoorArray.length > 1">
+                    remove
+                </button>
+            </div>
+        </ng-container>
+
+        <button class="btn secondary-outline-btn px-2 mr-auto my-3" (click)="addItem()">
+            <mat-icon>add</mat-icon> ADD ACCESS GROUP
+        </button>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button class="btn secondary-outline-btn pl-1 pr-2" (click)="delete()">
+            <mat-icon>delete_outline</mat-icon> Delete
+        </button>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="!accessGroupForm.valid">Save</button>
+    </div>
+</div>

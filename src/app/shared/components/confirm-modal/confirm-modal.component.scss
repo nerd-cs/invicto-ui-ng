@@ -1,0 +1,23 @@
+::ng-deep {
+    .confirm-modal-panel {
+        position: absolute !important;
+        top: 90px !important;
+
+        .mat-dialog-container {
+            padding: 0;
+        }
+
+        .confirm-modal-wrap {
+            @apply flex items-center rounded;
+            padding: 6px 16px;
+            background-color: rgba(0, 0, 0, 0.87);
+        }
+
+        .btn-cancel {
+            color: rgba(255, 255, 255, 0.38);
+            &:hover {
+                border-color: rgba(255, 255, 255, 0.38) !important;
+            }
+        }
+    }
+}

@@ -1,0 +1,11 @@
+<div class="stepper-container" [ngSwitch]="true">
+    <div *ngSwitchCase="step === 1">
+        <app-add-zone-door (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-add-zone-door>
+    </div>
+    <div *ngSwitchCase="step === 2">
+        <app-add-schedule (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-add-schedule>
+    </div>
+    <div *ngSwitchCase="step === 3">
+        <app-custom-access-group (stepUpdate)="stepUpdate($event)" (save)="save($event)" (cancel)="cancel($event)"></app-custom-access-group>
+    </div>
+</div>

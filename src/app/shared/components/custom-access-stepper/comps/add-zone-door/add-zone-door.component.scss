@@ -1,0 +1,11 @@
+.zone-lists {
+    .item {
+        @apply h-12 flex items-center justify-between px-3 border-b border-black border-opacity-10;
+    }
+}
+
+:host {
+    .dialog-header {
+        width: 476px;
+    }
+}

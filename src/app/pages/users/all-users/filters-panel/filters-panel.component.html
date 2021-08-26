@@ -1,0 +1,72 @@
+<div class="filters-panel-container">
+    <div class="top-section flex items-center px-4 pt-3 pb-8">
+        <div class="h6">Filter</div>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CLEAR</button>
+        <button class="btn primary-btn w-20 ml-4">APPLY</button>
+    </div>
+    <div class="divider -mx-6 overflow-hidden"></div>
+    <div class="search flex items-center rounded-md h-12 mx-auto px-4 mt-10 mb-8">
+        <mat-icon>search</mat-icon>
+        <input class="search-input pl-4 bg-transparent col-black-light w-80" placeholder="Search" #input>
+    </div>
+    <div [formGroup]="filterForm" class="px-4">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Status</mat-label>
+            <mat-select formControlName="status">
+                <mat-option value="Active">Active</mat-option>
+                <mat-option value="Inactive">Inactive</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Department</mat-label>
+            <mat-select formControlName="department">
+                <mat-option value="All department">All department</mat-option>
+                <mat-option value="Department 1">Department 1</mat-option>
+                <mat-option value="Department 2">Department 2</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Locations</mat-label>
+            <mat-select formControlName="locations">
+                <mat-option value="Quebec">Quebec</mat-option>
+                <mat-option value="Location 1">Location 1</mat-option>
+                <mat-option value="Location 2">Location 2</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Access Group</mat-label>
+            <mat-select formControlName="accessGroup">
+                <mat-option value="24/7 All day">24/7 All day</mat-option>
+                <mat-option value="Option 1">Option 1</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Cost Center</mat-label>
+            <mat-select formControlName="costCenter">
+                <mat-option value="Quebec Office">Quebec Office</mat-option>
+                <mat-option value="Option 1">Option 1</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form">
+                <mat-label>Start Date</mat-label>
+                <input matInput [matDatepicker]="dp" formControlName="startDate" [min]="startMinDate" readonly class="cursor-pointer" (click)="dp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" color="accent" class="mb-1 date-form">
+                <mat-label>End Date</mat-label>
+                <input matInput [matDatepicker]="dpExp" formControlName="endDate" [min]="endMinDate" readonly class="cursor-pointer" (click)="dpExp.open()">
+                <mat-datepicker-toggle matSuffix [for]="dpExp">
+                    <mat-icon matDatepickerToggleIcon>keyboard_arrow_down</mat-icon>
+                </mat-datepicker-toggle>
+                <mat-datepicker #dpExp [calendarHeaderComponent]="customCalendarHeader">
+                </mat-datepicker>
+            </mat-form-field>
+        </div>
+    </div>
+</div>

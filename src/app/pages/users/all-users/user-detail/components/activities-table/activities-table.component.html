@@ -1,0 +1,75 @@
+<div class="table-section flex flex-col">
+    <table mat-table [dataSource]="dataSource" matSort class="w-full mb-auto">
+        <ng-container matColumnDef="door">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Door </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="door">{{element.door}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="lastActivity">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Last activity </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="last-activity grey-col">{{element.lastActivity}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="activitiesAccessGroups">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Access groups </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="access-groups grey-col">{{element.accessGroups}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="activitiesZone">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Zone </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="zone grey-col">{{element.zone}}</div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="status">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Access </th>
+            <td mat-cell *matCellDef="let element">
+                <div class="status flex items-center">
+                    <div class="icon flex-center">
+                        <ng-container *ngIf="element.access === 'Granted' else denied">
+                            <mat-icon class="check">check</mat-icon>
+                        </ng-container>
+                        <ng-template #denied>
+                            <mat-icon class="block">block</mat-icon>
+                        </ng-template>
+                    </div>
+                    <div class="label flex-center ml-2.5">
+                        {{element.access}}
+                    </div>
+                </div>
+            </td>
+        </ng-container>
+
+        <ng-container matColumnDef="actions">
+            <th mat-header-cell *matHeaderCellDef></th>
+            <td mat-cell *matCellDef="let element">
+                <div class="action flex-center cursor-pointer">
+                    <mat-icon [matMenuTriggerFor]="actions">more_vert</mat-icon>
+                    <mat-menu #actions="matMenu" class="actions-menu" xPosition="before">
+                        <button mat-menu-item (click)="viewActivities(element)">View</button>
+                        <button mat-menu-item (click)="export(element)">Export</button>
+                    </mat-menu>
+                </div>
+            </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr appHoverClass mat-row *matRowDef="let element; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="5">No data matching the filter</td>
+        </tr>
+    </table>
+
+    <div class="table-paginator flex items-center justify-end py-3">
+        <mat-paginator #paginator [pageSizeOptions]="[5, 10]"></mat-paginator>
+    </div>
+</div>

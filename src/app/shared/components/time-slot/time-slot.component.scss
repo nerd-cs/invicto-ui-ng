@@ -1,0 +1,15 @@
+::ng-deep {
+    .time-slot-modal {
+        .mat-dialog-container {
+            width: 476px;
+            padding: 0;
+            border-radius: 8px;
+        }
+    }
+
+    .time-slot-option {
+        margin-top: 40px;
+        min-width: 124px !important;
+        margin-left: 70px;
+    }
+}

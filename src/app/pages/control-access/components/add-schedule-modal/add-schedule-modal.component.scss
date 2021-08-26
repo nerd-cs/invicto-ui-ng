@@ -1,0 +1,53 @@
+.schedule-item {
+    background-color: #E2F2FF;
+    @apply inline-block mr-2 rounded-3xl h-8 text-sm leading-8 px-2 overflow-ellipsis whitespace-nowrap overflow-hidden cursor-pointer;
+    min-width: 137px;
+    max-width: 137px;
+    &:hover {
+        border: 1px solid #36A1FFBB;
+    }
+    &.disable {
+        pointer-events: none;
+        background-color: #EEEFF0;
+    }
+}
+
+::ng-deep {
+    .control-add-schedule {
+        .mat-dialog-container {
+            padding: 0;
+            border-radius: 8px;
+            max-height: 95vh !important;
+        }
+    }
+}
+:host {
+    .dialog-header {
+        width: 754px;
+    }
+}
+
+.weekdays .list-contents {
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.list-contents .item {
+    p.day {
+        min-width: 80px;
+    }
+    .status {
+        min-width: 44px;
+    }
+
+    .time-wrap {
+        max-width: 480px;
+        overflow-x: scroll;
+        scrollbar-width: none; /* Firefox */
+        -ms-overflow-style: none;  /* Internet Explorer 10+ */
+    }
+    .time-wrap::-webkit-scrollbar {
+        width: 0;
+        height: 0;
+    }
+}

@@ -1,0 +1,12 @@
+{
+	"@": {
+		"Help Center": "Centre d'aide",
+		"SIGN IN": "S'IDENTIFIER",
+		"SIGN IN WITH GOOGLE ACCOUNT": "CONNECTEZ-VOUS AVEC UN COMPTE GOOGLE",
+		"or": "ou"
+	},
+	"auth": {
+		"Lost Password ?": "Mot de passe perdu ?",
+		"Sign in your Invicto account": "Connectez-vous à votre compte Invicto"
+	}
+}

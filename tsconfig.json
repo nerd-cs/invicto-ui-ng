@@ -1,0 +1,45 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "resolveJsonModule": true,
+    "allowSyntheticDefaultImports": true,
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "@env/*": ["environments/*"],
+      "@app-core/*": ["src/app/core/*"],
+      "@app-services/*": ["src/app/core/services/*"],
+      "@app-utils/*": ["src/app/core/utils/*"],
+      "@app-models/*": ["src/app/core/models/*"],
+      "@app-layouts/*": ["src/app/layouts/*"],
+      "@app-pages/*": ["src/app/pages/*"],
+      "@app-shared/*": ["src/app/shared/*"],
+      "@app-components/*": ["src/app/shared/components/*"],
+      "@app-directives/*": ["src/app/shared/directives/*"],
+      "@app-pipes/*": ["src/app/shared/pipes/*"]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
+  }
+}

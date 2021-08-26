@@ -1,0 +1,35 @@
+<div class="security-wrap flex">
+    <div class="left-section h-100 flex flex-col">
+        <p class="h6 col-black mb-4">Security</p>
+        <p class="text-caption">
+            2-Step Verification is a tool that provides an extra layer of security for your Invicto Account, protecting
+            your account from unauthorized access.
+        </p>
+        <div class="submit-form mt-6" [formGroup]="securityForm">
+            <div class="h-14 rounded flex items-center pl-4" style="background-color: #E2F2FF;">
+                <mat-checkbox color="primary" formControlName="twoFA" value="">
+                    <span class="text-title-sm col-black">Enable 2-step authentication</span>
+                </mat-checkbox>
+            </div>
+            <mat-form-field appearance="outline" color="accent" class="mt-4 w-full">
+                <mat-label>Mobile</mat-label>
+                <input matInput formControlName="phone" mask="(000) 000-0000" prefix="+1 " [showMaskTyped]="true"
+                    placeHolderCharacter="#" required>
+                <mat-error *ngIf="securityForm.controls['phone'].invalid">{{'Phone number is required'}}</mat-error>
+            </mat-form-field>
+
+            <button class="btn primary-btn w-20 ml-auto h-14 mt-5" [disabled]="!securityForm.valid" (click)="submit()">
+                NEXT
+            </button>
+        </div>
+    </div>
+    <div class="right-section h-100 relative flex">
+        <div class="h4 col-white pl-8 pr-10 mt-11">
+            Control access system made simple
+        </div>
+        <div class="logo-title flex absolute bottom-10 left-8">
+            <img src="/assets/images/Logo.svg" alt="">
+            <p class="invicto ml-3"> Invicto</p>
+        </div>
+    </div>
+</div>

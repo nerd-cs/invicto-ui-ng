@@ -1,0 +1,19 @@
+<div class="signin-step-wrap h-full flex-center flex-col items-center py-3" style="background-color: #F7F9FA;">
+    <div class="main-box">
+        <div class="logo-section flex-center mb-11">
+            <img src="/assets/images/Logo.svg" alt="">
+            <span class="title ml-3">Invicto</span>
+        </div>
+        <ng-content select=".signin-step-title"></ng-content>
+        <ng-content select=".signin-step-description"></ng-content>
+        <ng-content select=".submit-form"></ng-content>
+    </div>
+
+    <div class="help-lang flex-center-between mt-6">
+        <p class="text=body-lg col-blue cursor-pointer">{{'@.Help Center' | translate}}</p>
+        <mat-select [(value)]="selected" class="select-lang">
+            <mat-option value="English" (click)="setLanguage(i18nService.enUS)">English</mat-option>
+            <mat-option value="Français" (click)="setLanguage(i18nService.frCA)">Français</mat-option>
+        </mat-select>
+    </div>
+</div>

@@ -1,0 +1,16 @@
+.holiday-lists {
+    .item {
+        @apply h-12 flex items-center justify-between px-3 border-b border-black border-opacity-10;
+    }
+}
+
+::ng-deep {
+    .adding-holiday-tab {
+        .mat-dialog-container {
+            width: 476px;
+            padding: 0;
+            border-radius: 8px;
+            max-height: 95vh !important;
+        }
+    }
+}

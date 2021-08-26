@@ -1,0 +1,95 @@
+<div class="quick-view-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Quick View</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div class="user flex items-center mx-4 mb-10">
+        <div class="user-avatar w-24 h-24 mr-4">
+            <img src="/assets/images/avatar.jpg" alt="">
+        </div>
+        <div class="name-edit">
+            <p class="name col-black h6 mb-1">{{userData.fullName}}</p>
+            <p class="edit col-blue h-5 cursor-pointer text-body-sm" (click)="editProfile()">Edit Profile</p>
+        </div>
+    </div>
+
+    <div class="user-info px-4">
+        <p class="info h-6 col-black text-title-sm">Info</p>
+        <div class="info-section">
+            <div class="info-title">EMAIL</div>
+            <div class="info-content">{{userData.email}}</div>
+        </div>
+        <div class="info-section">
+            <div class="info-title">MOBILE</div>
+            <div class="info-content">{{userData.phoneNumber}}</div>
+        </div>
+
+        <div class="info-section-wrap grid grid-cols-2 gap-x-4">
+            <div class="info-section">
+                <div class="info-title">ROLE</div>
+                <div class="info-content">{{userData.roles[0] | literal}}</div>
+            </div>
+            <div class="info-section">
+                <div class="info-title">STATUS</div>
+                <div class="info-content">{{userData.status | literal}}</div>
+            </div>
+            <!-- // TODO: -->
+            <div class="info-section">
+                <div class="info-title">COMPANY</div>
+                <div class="info-content">{{userData.company}}</div>
+            </div>
+            <div class="info-section">
+                <div class="info-title">DEPARTMENT</div>
+                <div class="info-content">{{userData.department}}</div>
+            </div>
+            <div class="info-section">
+                <div class="info-title">EMPLOYEE NUMBER</div>
+                <div class="info-content">{{userData.employeeNumber}}</div>
+            </div>
+            <div class="info-section">
+                <div class="info-title">COST CENTER</div>
+                <div class="info-content">{{'IT Department'}}</div>
+            </div>
+            <div class="info-section">
+                <div class="info-title">CREATED</div>
+                <div class="info-content">{{userData.createdAt | date:'mediumDate'}}</div>
+            </div>
+            <div class="info-section">
+                <div class="info-title">UPDATED</div>
+                <div class="info-content">{{userData.updatedAt | date:'mediumDate'}}</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="card-status py-6 px-4">
+        <div class="grid grid-cols-2">
+            <div class="header-title"> Card </div>
+            <div class="grid grid-cols-2 gap-x-4">
+                <div class="header-title">Created</div>
+                <div class="header-title">Status</div>
+            </div>
+        </div>
+        <!-- TODO: -->
+        <ng-container *ngFor="let card of userData.cards">
+            <div class="grid grid-cols-2">
+                <div class="content-label"> {{card.type}} - {{'card name'}} </div>
+                <div class="grid grid-cols-2 gap-x-4">
+                    <div class="content-label">{{card.createdAt | date:'mediumDate'}}</div>
+                    <div class="content-label">
+                        <mat-slide-toggle [(ngModel)]="card.isActive"></mat-slide-toggle>
+                    </div>
+                </div>
+            </div>
+        </ng-container>
+    </div>
+
+    <div class="btn-group mt-10 px-4 flex items-center">
+        <button class="btn secondary-outline-btn pl-1 pr-2" (click)="resetPassword(userData.id)">
+            <mat-icon>refresh</mat-icon> Reset Password
+        </button>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="save()">SAVE</button>
+    </div>
+</div>
