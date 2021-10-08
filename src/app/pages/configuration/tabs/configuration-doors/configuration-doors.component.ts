@@ -9,22 +9,9 @@ import { GlobalShareService } from '@app-core/services/global-share.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfDoorEditComponent } from '@app-pages/configuration/panels/conf-door-edit/conf-door-edit.component';
 import { RightSideDlgAnimation } from '@app-core/models/common';
+import { DoorResponse, DoorService } from 'src/app/api_codegen';
+import { ToastrService } from 'ngx-toastr';
 
-
-export type Status = 'Pending' | 'Paired' | 'Not pair';
-export interface ConfDoorGroup {
-    id: string;
-    name: string;
-    locations: string;
-    zones: number;
-    lastModified: Date | string;
-    status: Status;
-};
-
-const STATUS: Status[] = [
-    'Pending', 'Paired', 'Not pair'
-];
-const NAMES: string[] = ['Main Entrance', 'ID-546466', 'ID-849512'];
 @Component({
     selector: 'app-configuration-doors',
     templateUrl: './configuration-doors.component.html',
@@ -33,7 +20,7 @@ const NAMES: string[] = ['Main Entrance', 'ID-546466', 'ID-849512'];
 export class ConfigurationDoorsComponent implements OnInit {
 
     displayedColumns: string[] = ['nameSS', 'locations', 'zonesS', 'lastModified', 'status', 'actions'];
-    dataSource: MatTableDataSource<ConfDoorGroup>;
+    dataSource!: MatTableDataSource<DoorResponse>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -42,47 +29,47 @@ export class ConfigurationDoorsComponent implements OnInit {
         private router: Router,
         private route: ActivatedRoute,
         private dialog: NgDialogAnimationService,
-
-
-        private shareService: GlobalShareService
-    ) {
-        const users = Array.from({ length: 50 }, (_, k) => createTableData(k + 1));
-        this.dataSource = new MatTableDataSource(users);
-    }
+        private shareService: GlobalShareService,
+        private doorService: DoorService,
+        private toastr: ToastrService
+    ) { }
 
     ngOnInit(): void {
+        this.doorService.doorControllerGetDoorsPage().subscribe(res => {
+            console.log('doors --- hey', res)
+            this.dataSource = new MatTableDataSource(res.doors);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        })
     }
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-    }
-
-    edit(element: ConfDoorGroup) {
+    async edit(door: DoorResponse) {
+        const doorDetails = await this.doorService.doorControllerGetDoorInfo(door.id).toPromise();
         this.dialog.open(ConfDoorEditComponent, {
             disableClose: false,
             panelClass: 'right-side-panel',
             animation: RightSideDlgAnimation,
             position: {
                 rowStart: '1',
+            },
+            data: {
+                door: doorDetails
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                console.log('res---', res);
+                this.doorService.doorControllerGetDoorsPage().subscribe(res => {
+                    this.dataSource.disconnect();
+                    this.dataSource = new MatTableDataSource(res.doors);
+                    this.dataSource.paginator = this.paginator;
+                    this.dataSource.sort = this.sort;
+                })
             }
         });
     }
-}
 
-function createTableData(id: number): ConfDoorGroup {
-    const name = NAMES[Math.round(Math.random() * 2)];
-
-    return {
-        id: id.toString(),
-        name: name,
-        locations: '211 Rue De La Gauchetiere, Quebec, J7K 0T8',
-        zones: 5,
-        lastModified: moment(new Date()).format('MM-DD-YYYY'),
-        status: STATUS[Math.round(Math.random() * 2)]
-    };
+    testDoor(id: number) {
+        this.doorService.doorControllerTestDoor(id).subscribe(res => {
+            this.toastr.success('Door Testing !');
+        })
+    }
 }

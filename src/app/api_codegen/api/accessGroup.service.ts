@@ -17,6 +17,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { AccessGroup } from '../model/accessGroup';
+import { AccessGroupPage } from '../model/accessGroupPage';
 import { CreateAccessGroupDto } from '../model/createAccessGroupDto';
 import { UpdateAccessGroupDto } from '../model/updateAccessGroupDto';
 
@@ -166,18 +168,12 @@ export class AccessGroupService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public accessGroupControllerGetAccessGroupsPage(page: number, limit: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public accessGroupControllerGetAccessGroupsPage(page: number, limit: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public accessGroupControllerGetAccessGroupsPage(page: number, limit: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public accessGroupControllerGetAccessGroupsPage(page: number, limit: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public accessGroupControllerGetAccessGroupsPage(page?: number, limit?: number, observe?: 'body', reportProgress?: boolean): Observable<AccessGroupPage>;
+    public accessGroupControllerGetAccessGroupsPage(page?: number, limit?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccessGroupPage>>;
+    public accessGroupControllerGetAccessGroupsPage(page?: number, limit?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccessGroupPage>>;
+    public accessGroupControllerGetAccessGroupsPage(page?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling accessGroupControllerGetAccessGroupsPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling accessGroupControllerGetAccessGroupsPage.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
@@ -196,6 +192,7 @@ export class AccessGroupService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -206,7 +203,7 @@ export class AccessGroupService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/accessgroup/list`,
+        return this.httpClient.request<AccessGroupPage>('get',`${this.basePath}/accessgroup/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -224,9 +221,9 @@ export class AccessGroupService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public accessGroupControllerGetAllForLocation(locationId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public accessGroupControllerGetAllForLocation(locationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public accessGroupControllerGetAllForLocation(locationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public accessGroupControllerGetAllForLocation(locationId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AccessGroup>>;
+    public accessGroupControllerGetAllForLocation(locationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AccessGroup>>>;
+    public accessGroupControllerGetAllForLocation(locationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AccessGroup>>>;
     public accessGroupControllerGetAllForLocation(locationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (locationId === null || locationId === undefined) {
@@ -247,6 +244,7 @@ export class AccessGroupService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -257,7 +255,7 @@ export class AccessGroupService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/accessgroup`,
+        return this.httpClient.request<Array<AccessGroup>>('get',`${this.basePath}/accessgroup`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

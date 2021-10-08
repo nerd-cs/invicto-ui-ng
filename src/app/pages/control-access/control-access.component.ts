@@ -3,9 +3,9 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { GlobalShareService } from '@app-core/services/global-share.service';
 import { ConfirmService } from '@app-core/services/confirm.service';
-import { FiltersPanelComponent } from '@app-pages/users/all-users/filters-panel/filters-panel.component';
 import { NgDialogAnimationService } from 'ng-dialog-animation';
 import { RightSideDlgAnimation } from '@app-core/models/common';
+import { ControlAccessFilterPanelComponent } from './components/control-access-filter-panel/control-access-filter-panel.component';
 
 @Component({
     selector: 'app-control-access',
@@ -41,7 +41,7 @@ export class ControlAccessComponent implements OnInit, OnDestroy {
     }
 
     openFilters() {
-        this.dialog.open(FiltersPanelComponent, {
+        this.dialog.open(ControlAccessFilterPanelComponent, {
             disableClose: false,
             panelClass: 'right-side-panel',
             animation: RightSideDlgAnimation,

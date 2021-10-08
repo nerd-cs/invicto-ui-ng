@@ -10,8 +10,9 @@ import { GlobalShareService } from '@app-core/services/global-share.service';
 import moment from 'moment';
 import { EditGroupPanelComponent } from '../edit-group-panel/edit-group-panel.component';
 import { RightSideDlgAnimation } from '@app-core/models/common';
-import { ChangeActivenessDto, UpdateAccessGroupDto, UsersService } from 'src/app/api_codegen';
+import { ChangeActivenessDto, UpdateAccessGroupDto, UsersService, ZoneService } from 'src/app/api_codegen';
 import { ToastrService } from 'ngx-toastr';
+import { AccessGroupPanelComponent } from '@app-pages/control-access/panels/access-group-panel/access-group-panel.component';
 
 @Component({
     selector: 'app-access-groups-table',
@@ -22,6 +23,7 @@ export class AccessGroupsTableComponent implements OnInit, AfterViewInit {
 
     @Input() accessGroups: any[] = [];
     @Input() userId: number = 0;
+    @Input() scheduleList: any[] = [];
     @Output() groupUpdated: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     displayedColumns: string[] = ['location', 'lastActivity', 'zone', 'status', 'actions'];
@@ -36,7 +38,8 @@ export class AccessGroupsTableComponent implements OnInit, AfterViewInit {
         private dialog: NgDialogAnimationService,
         private shareService: GlobalShareService,
         private usersService: UsersService,
-        private toastr: ToastrService
+        private toastr: ToastrService,
+        private zoneService: ZoneService
     ) { }
 
     ngOnInit(): void {
@@ -46,6 +49,7 @@ export class AccessGroupsTableComponent implements OnInit, AfterViewInit {
 
     ngOnChanges(changes: SimpleChanges): void {
         const szAccess = 'accessGroups';
+        const szSchedule = 'scheduleList';
         if (changes.hasOwnProperty(szAccess) && !changes[szAccess].firstChange) {
             this.dataSource.disconnect();
             this.dataSource = new MatTableDataSource(this.accessGroups);
@@ -75,6 +79,30 @@ export class AccessGroupsTableComponent implements OnInit, AfterViewInit {
             }
         });
     }
+
+    // TODO: FIXME: element is different from control access edit mode - no zoneSchedules
+    // async editGroup(element: any) {
+    //     console.log(element, 'hey--element')
+    //     return
+    //     const zones = await this.zoneService.zoneControllerGetAllForLocation(element.location.id).toPromise();
+    //     this.dialog.open(AccessGroupPanelComponent, {
+    //         disableClose: false,
+    //         panelClass: 'right-side-panel',
+    //         animation: RightSideDlgAnimation,
+    //         position: {
+    //             rowStart: '1',
+    //         },
+    //         data: {
+    //             accessGroup: element,
+    //             schedules: this.scheduleList,
+    //             zones: zones
+    //         }
+    //     }).afterClosed().subscribe(res => {
+    //         if (res) {
+    //             this.groupUpdated.emit(true);
+    //         }
+    //     });
+    // }
 
     inactiveAccessGroup(group: any) {
         const body: ChangeActivenessDto = {

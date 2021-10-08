@@ -14,7 +14,5 @@ import { LinkScheduleZoneDto } from './linkScheduleZoneDto';
 export interface UpdateAccessGroupDto { 
     id: number;
     name?: string;
-    description?: string;
-    locationId?: number;
     zoneSchedules?: Array<LinkScheduleZoneDto>;
 }

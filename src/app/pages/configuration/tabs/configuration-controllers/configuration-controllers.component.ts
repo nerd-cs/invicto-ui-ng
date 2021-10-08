@@ -9,23 +9,10 @@ import { GlobalShareService } from '@app-core/services/global-share.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ConfControllerEditComponent } from '@app-pages/configuration/panels/conf-controller-edit/conf-controller-edit.component';
 import { RightSideDlgAnimation } from '@app-core/models/common';
-import { ControllerService } from 'src/app/api_codegen';
+import { ControllerResponse, ControllerService } from 'src/app/api_codegen';
+import { ToastrService } from 'ngx-toastr';
 
 
-export type Status = 'Pending' | 'Paired' | 'No Signal';
-export interface ConfControllerGroup {
-    id: string;
-    name: string;
-    locations: string;
-    doors: number;
-    lastModified: Date | string;
-    status: Status;
-};
-
-const STATUS: Status[] = [
-    'Pending', 'Paired', 'No Signal'
-];
-const NAMES: string[] = ['Desjardins HQ', 'ID-345345345', 'ID-156489562'];
 @Component({
     selector: 'app-configuration-controllers',
     templateUrl: './configuration-controllers.component.html',
@@ -44,24 +31,21 @@ export class ConfigurationControllersComponent implements OnInit {
         private route: ActivatedRoute,
         private dialog: NgDialogAnimationService,
         private controllerService: ControllerService,
-        private shareService: GlobalShareService
+        private shareService: GlobalShareService,
+        private toastr: ToastrService
     ) {
     }
 
     ngOnInit(): void {
-        this.controllerService.controllerControllerGetSchedulesPage(1, 100).subscribe(res => {
+        this.controllerService.controllerControllerGetControllerPage().subscribe(res => {
             console.log('controllers ---', res);
-            this.dataSource = new MatTableDataSource(res);
+            this.dataSource = new MatTableDataSource(res.controllers);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
         })
     }
 
-    ngAfterViewInit() {
-    }
-
-
-    edit(controller: ConfControllerGroup) {
+    edit(controller: ControllerResponse) {
         this.dialog.open(ConfControllerEditComponent, {
             disableClose: false,
             panelClass: 'right-side-panel',
@@ -74,26 +58,20 @@ export class ConfigurationControllersComponent implements OnInit {
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                this.controllerService.controllerControllerGetSchedulesPage(1, 100).subscribe(res => {
+                this.controllerService.controllerControllerGetControllerPage().subscribe(res => {
                     this.dataSource.disconnect();
-                    this.dataSource = new MatTableDataSource(res);
+                    this.dataSource = new MatTableDataSource(res.controllers);
                     this.dataSource.paginator = this.paginator;
                     this.dataSource.sort = this.sort;
                 })
             }
         });
     }
-}
 
-function createTableData(id: number): ConfControllerGroup {
-    const name = NAMES[Math.round(Math.random() * 2)];
+    testController(id: number) {
+        this.controllerService.controllerControllerTestController(id).subscribe(res => {
+            this.toastr.success('Controller Testing ');
+        })
+    }
 
-    return {
-        id: id.toString(),
-        name: name,
-        locations: '211 Rue De La Gauchetiere, Quebec, J7K 0T8',
-        doors: 12,
-        lastModified: moment(new Date()).format('MM-DD-YYYY'),
-        status: STATUS[Math.round(Math.random() * 2)]
-    };
 }

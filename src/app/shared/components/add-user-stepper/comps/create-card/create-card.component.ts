@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
@@ -28,8 +28,10 @@ export class CreateCardComponent implements OnInit, OnDestroy {
 
     private destroy$ = new Subject();
     customCalendarHeader = CustomCalendarHeaderComponent;
+    @Input() fromStep3: boolean = false;
     @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() stepUpdate: EventEmitter<number> = new EventEmitter<number>();
+    @Output() cardData: EventEmitter<any> = new EventEmitter<any>();
 
     cardForm!: FormGroup;
     activationMinDate = new Date();
@@ -37,7 +39,9 @@ export class CreateCardComponent implements OnInit, OnDestroy {
 
     constructor(
         private fb: FormBuilder
-    ) { }
+    ) {
+        console.log('this.fromStep3', this.fromStep3);
+    }
 
     ngOnInit(): void {
         this.cardForm = this.fb.group({
@@ -69,6 +73,14 @@ export class CreateCardComponent implements OnInit, OnDestroy {
         this.cancel.emit(true);
     }
     gotoStep(step: number) {
+        this.cardData.emit(this.cardForm.value)
         this.stepUpdate.emit(step);
+    }
+    nextStep() {
+        if (this.cardForm.controls['type'].value === 'Key card') {
+            this.gotoStep(4);
+        } else {
+            this.gotoStep(5);
+        }
     }
 }

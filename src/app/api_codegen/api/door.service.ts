@@ -17,6 +17,9 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { Door } from '../model/door';
+import { DoorInfo } from '../model/doorInfo';
+import { DoorPage } from '../model/doorPage';
 import { UpdateDoorDto } from '../model/updateDoorDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -62,9 +65,9 @@ export class DoorService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public doorControllerGetAllForLocation(locationId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public doorControllerGetAllForLocation(locationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public doorControllerGetAllForLocation(locationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public doorControllerGetAllForLocation(locationId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Door>>;
+    public doorControllerGetAllForLocation(locationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Door>>>;
+    public doorControllerGetAllForLocation(locationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Door>>>;
     public doorControllerGetAllForLocation(locationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (locationId === null || locationId === undefined) {
@@ -85,6 +88,7 @@ export class DoorService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -95,7 +99,56 @@ export class DoorService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/door`,
+        return this.httpClient.request<Array<Door>>('get',`${this.basePath}/door`,
+            {
+                params: queryParameters,
+                withCredentials: this.configuration.withCredentials,
+                headers: headers,
+                observe: observe,
+                reportProgress: reportProgress
+            }
+        );
+    }
+
+    /**
+     * Get info about selected door
+     * 
+     * @param doorId 
+     * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
+     * @param reportProgress flag to report request and response progress.
+     */
+    public doorControllerGetDoorInfo(doorId: number, observe?: 'body', reportProgress?: boolean): Observable<DoorInfo>;
+    public doorControllerGetDoorInfo(doorId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DoorInfo>>;
+    public doorControllerGetDoorInfo(doorId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DoorInfo>>;
+    public doorControllerGetDoorInfo(doorId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+
+        if (doorId === null || doorId === undefined) {
+            throw new Error('Required parameter doorId was null or undefined when calling doorControllerGetDoorInfo.');
+        }
+
+        let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
+
+        let headers = this.defaultHeaders;
+
+        // authentication (cookie) required
+        if (this.configuration.apiKeys && this.configuration.apiKeys["connect.sid"]) {
+            queryParameters = queryParameters.set('connect.sid', this.configuration.apiKeys["connect.sid"]);
+        }
+
+        // to determine the Accept header
+        let httpHeaderAccepts: string[] = [
+            'application/json'
+        ];
+        const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
+        if (httpHeaderAcceptSelected != undefined) {
+            headers = headers.set('Accept', httpHeaderAcceptSelected);
+        }
+
+        // to determine the Content-Type header
+        const consumes: string[] = [
+        ];
+
+        return this.httpClient.request<DoorInfo>('get',`${this.basePath}/door/${encodeURIComponent(String(doorId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -114,18 +167,12 @@ export class DoorService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public doorControllerGetSchedulesPage(page: number, limit: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public doorControllerGetSchedulesPage(page: number, limit: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public doorControllerGetSchedulesPage(page: number, limit: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public doorControllerGetSchedulesPage(page: number, limit: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public doorControllerGetDoorsPage(page?: number, limit?: number, observe?: 'body', reportProgress?: boolean): Observable<DoorPage>;
+    public doorControllerGetDoorsPage(page?: number, limit?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<DoorPage>>;
+    public doorControllerGetDoorsPage(page?: number, limit?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<DoorPage>>;
+    public doorControllerGetDoorsPage(page?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling doorControllerGetSchedulesPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling doorControllerGetSchedulesPage.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
@@ -144,6 +191,7 @@ export class DoorService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -154,7 +202,7 @@ export class DoorService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/door/list`,
+        return this.httpClient.request<DoorPage>('get',`${this.basePath}/door/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

@@ -29,7 +29,7 @@ export class ConfirmService {
     openSnackBar(message: string, hor?: MatSnackBarHorizontalPosition, ver?: MatSnackBarVerticalPosition, action?: string, time?: number) {
         const horizontalPos: MatSnackBarHorizontalPosition = hor || 'center';
         const verticalPos: MatSnackBarVerticalPosition = ver || 'bottom';
-        const actionString = action || '✖';
+        const actionString = action || '⛌';
         const duration = time || 5000;
         this.snackBar.open(message, actionString, {
             panelClass: 'app-snack-bar',

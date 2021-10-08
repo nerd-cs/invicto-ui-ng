@@ -30,6 +30,7 @@ import { CustomAccessGroupComponent } from './custom-access-stepper/comps/custom
 import { ConfirmModalComponent } from './confirm-modal/confirm-modal.component';
 import { TimeSlotComponent } from './time-slot/time-slot.component';
 import { AddingHolidayTabComponent } from './adding-holiday-tab/adding-holiday-tab.component';
+import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
 
 const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
 
@@ -66,6 +67,7 @@ const options: Partial<IConfig> | (() => Partial<IConfig>) = {};
         MatSlideToggleModule,
         MatCheckboxModule,
         PipesModule,
+        SpinnerModule,
         NgxMaskModule.forRoot(options)
     ]
 })

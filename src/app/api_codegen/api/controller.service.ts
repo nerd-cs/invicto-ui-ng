@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { ControllerPage } from '../model/controllerPage';
 import { UpdateControllerDto } from '../model/updateControllerDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -63,18 +64,12 @@ export class ControllerService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public controllerControllerGetSchedulesPage(page: number, limit: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public controllerControllerGetSchedulesPage(page: number, limit: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public controllerControllerGetSchedulesPage(page: number, limit: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public controllerControllerGetSchedulesPage(page: number, limit: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public controllerControllerGetControllerPage(page?: number, limit?: number, observe?: 'body', reportProgress?: boolean): Observable<ControllerPage>;
+    public controllerControllerGetControllerPage(page?: number, limit?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ControllerPage>>;
+    public controllerControllerGetControllerPage(page?: number, limit?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ControllerPage>>;
+    public controllerControllerGetControllerPage(page?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling controllerControllerGetSchedulesPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling controllerControllerGetSchedulesPage.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
@@ -93,6 +88,7 @@ export class ControllerService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -103,7 +99,7 @@ export class ControllerService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/controller/list`,
+        return this.httpClient.request<ControllerPage>('get',`${this.basePath}/controller/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

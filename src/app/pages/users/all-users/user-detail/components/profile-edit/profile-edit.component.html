@@ -9,7 +9,7 @@
             <img src="/assets/images/avatar.jpg" alt="">
         </div>
         <div class="name-edit">
-            <p class="name col-black h6 mb-1">Chris Stampleton</p>
+            <p class="name col-black h6 mb-1">{{userData.fullName}}</p>
             <p class="edit col-blue h-5 cursor-pointer text-body-sm">Delete photo</p>
         </div>
     </div>
@@ -23,7 +23,7 @@
             <mat-error *ngIf="profileForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1 pointer-events-none">
             <mat-label>Email</mat-label>
             <input readonly matInput placeholder="test@invicto.ca" formControlName="email" required>
             <mat-error *ngIf="profileForm.controls['email'].invalid">{{emailInValidMessage}}</mat-error>
@@ -57,11 +57,12 @@
             </mat-form-field>
             <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
                 <mat-label>Company</mat-label>
-                <input matInput placeholder="Invicto" formControlName="company" required>
-                <!-- <mat-select formControlName="company">
-                    <mat-option value="Invicto">Invicto</mat-option>
-                    <mat-option value="Company 1">Company 1</mat-option>
-                </mat-select> -->
+                <!-- <input matInput placeholder="Invicto" formControlName="company" required> -->
+                <mat-select formControlName="company" [compareWith]="objectCompareWith">
+                    <ng-container *ngFor="let company of companyList">
+                        <mat-option [value]="company">{{company.name}}</mat-option>
+                    </ng-container>
+                </mat-select>
             </mat-form-field>
         </div>
 
@@ -73,10 +74,10 @@
             </mat-form-field>
             <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
                 <mat-label>Department</mat-label>
-                <mat-select formControlName="department">
-                    <mat-option value="All department">All department</mat-option>
-                    <mat-option value="Department 1">Department 1</mat-option>
-                    <mat-option value="Department 2">Department 2</mat-option>
+                <mat-select formControlName="department" [compareWith]="objectCompareWith">
+                    <ng-container *ngFor="let department of departmentList">
+                        <mat-option [value]="department">{{department.name}}</mat-option>
+                    </ng-container>
                 </mat-select>
             </mat-form-field>
         </div>

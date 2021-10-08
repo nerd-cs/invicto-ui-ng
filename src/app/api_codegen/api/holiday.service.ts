@@ -18,6 +18,8 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { CreateHolidayDto } from '../model/createHolidayDto';
+import { Holiday } from '../model/holiday';
+import { HolidayPage } from '../model/holidayPage';
 import { UpdateHolidayDto } from '../model/updateHolidayDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -164,9 +166,9 @@ export class HolidayService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public holidayControllerGetAllHolidays(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public holidayControllerGetAllHolidays(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public holidayControllerGetAllHolidays(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public holidayControllerGetAllHolidays(observe?: 'body', reportProgress?: boolean): Observable<Array<Holiday>>;
+    public holidayControllerGetAllHolidays(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Holiday>>>;
+    public holidayControllerGetAllHolidays(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Holiday>>>;
     public holidayControllerGetAllHolidays(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -180,6 +182,7 @@ export class HolidayService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -190,7 +193,7 @@ export class HolidayService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/holiday`,
+        return this.httpClient.request<Array<Holiday>>('get',`${this.basePath}/holiday`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -209,18 +212,12 @@ export class HolidayService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public holidayControllerGetHolidaysPage(page: number, limit: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public holidayControllerGetHolidaysPage(page: number, limit: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public holidayControllerGetHolidaysPage(page: number, limit: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public holidayControllerGetHolidaysPage(page: number, limit: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public holidayControllerGetHolidaysPage(page?: number, limit?: number, observe?: 'body', reportProgress?: boolean): Observable<HolidayPage>;
+    public holidayControllerGetHolidaysPage(page?: number, limit?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<HolidayPage>>;
+    public holidayControllerGetHolidaysPage(page?: number, limit?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<HolidayPage>>;
+    public holidayControllerGetHolidaysPage(page?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling holidayControllerGetHolidaysPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling holidayControllerGetHolidaysPage.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
@@ -239,6 +236,7 @@ export class HolidayService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -249,7 +247,7 @@ export class HolidayService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/holiday/list`,
+        return this.httpClient.request<HolidayPage>('get',`${this.basePath}/holiday/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

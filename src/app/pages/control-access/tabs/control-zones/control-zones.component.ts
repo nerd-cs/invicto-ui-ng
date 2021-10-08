@@ -9,28 +9,19 @@ import { GlobalShareService } from '@app-core/services/global-share.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { ZonePanelComponent } from '@app-pages/control-access/panels/zone-panel/zone-panel.component';
 import { RightSideDlgAnimation } from '@app-core/models/common';
-import { AddZoneModalComponent } from '@app-pages/control-access/components/add-zone-modal/add-zone-modal.component';
 import { ConfirmService } from '@app-core/services/confirm.service';
+import { LocationService, ZoneService } from 'src/app/api_codegen';
+import { AddZoneStepperComponent } from '@app-pages/control-access/components/add-zone-stepper/add-zone-stepper.component';
 
-
-export interface ControlZone {
-    id: string;
-    name: string;
-    description: string;
-    numberOfDoor: number;
-    lastUpdated: Date | string;
-};
-
-const NAMES: string[] = ['All Doors', 'Lobby', 'Terasse', 'Garage'];
 @Component({
-  selector: 'app-control-zones',
-  templateUrl: './control-zones.component.html',
-  styleUrls: ['./control-zones.component.scss']
+    selector: 'app-control-zones',
+    templateUrl: './control-zones.component.html',
+    styleUrls: ['./control-zones.component.scss']
 })
 export class ControlZonesComponent implements OnInit {
 
-    displayedColumns: string[] = ['nameS', 'description', 'numberOfDoor', 'lastUpdated', 'actions'];
-    dataSource: MatTableDataSource<ControlZone>;
+    displayedColumns: string[] = ['nameS', 'description', 'location', 'updatedAt', 'actions'];
+    dataSource!: MatTableDataSource<any>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
     @ViewChild(MatSort) sort!: MatSort;
@@ -40,55 +31,66 @@ export class ControlZonesComponent implements OnInit {
         private route: ActivatedRoute,
         private dialog: NgDialogAnimationService,
         private confirmService: ConfirmService,
-        private shareService: GlobalShareService
+        private shareService: GlobalShareService,
+        private zoneService: ZoneService,
+        private locationService: LocationService
     ) {
-        const users = Array.from({ length: 50 }, (_, k) => createTableData(k + 1));
-        this.dataSource = new MatTableDataSource(users);
     }
 
     ngOnInit(): void {
+        this.getAllZones()
     }
 
-    ngAfterViewInit() {
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+    ngAfterViewInit() { }
+
+    getAllZones() {
+        this.zoneService.zoneControllerGetZonesPage().subscribe(res => {
+            console.log('zone page list', res)
+            this.dataSource = new MatTableDataSource(res.zones);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+        })
     }
 
-    addControlZone() {
-        this.dialog.open(AddZoneModalComponent, {
+    async addControlZone() {
+        const locations = await this.locationService.locationControllerGetAllForCompany().toPromise();
+        this.dialog.open(AddZoneStepperComponent, {
             disableClose: false,
-            panelClass: 'control-add-zone',
+            panelClass: 'add-zone-stepper',
+            data: {
+                locations: locations
+            }
         }).afterClosed().subscribe(res => {
             if (res) {
-                this.confirmService.openSnackBar('New Zone added ! 🎉🎉🎉');
+                this.getAllZones()
             }
         })
     }
 
-    edit(element: ControlZone) {
+    delete(element: any) {
+        this.zoneService.zoneControllerDeleteZone(element.id).subscribe(res => {
+            if (res) {
+                this.getAllZones();
+            }
+        })
+    }
+
+    edit(element: any) {
         this.dialog.open(ZonePanelComponent, {
             disableClose: false,
             panelClass: 'right-side-panel',
             animation: RightSideDlgAnimation,
             position: {
                 rowStart: '1',
+            },
+            data: {
+                zoneData: element
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                console.log('zone edit res---', res);
+                this.dataSource.disconnect();
+                this.getAllZones();
             }
         });
     }
-}
-
-function createTableData(id: number): ControlZone {
-    const name = NAMES[Math.round(Math.random() * 3)];
-
-    return {
-        id: id.toString(),
-        name: name,
-        description: '24/7 All Floors',
-        numberOfDoor: 49,
-        lastUpdated: moment(new Date()).format('MM-DD-YYYY'),
-    };
 }

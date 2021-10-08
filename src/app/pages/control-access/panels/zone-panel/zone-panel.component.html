@@ -13,17 +13,19 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Description</mat-label>
+            <input matInput placeholder="" formControlName="description" required>
+            <mat-error *ngIf="zoneForm.controls['description'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
             <mat-label>Location</mat-label>
-            <mat-select formControlName="location">
-                <mat-option value="Quebec Office">Quebec Office</mat-option>
-                <mat-option value="location2">location2</mat-option>
-                <mat-option value="location3">location3</mat-option>
-            </mat-select>
+            <input matInput placeholder="" formControlName="location" required readonly>
         </mat-form-field>
 
         <mat-form-field appearance="outline" color="accent" class="w-full mb-1 group-wrap">
             <mat-label>Select Zone & Door</mat-label>
-            <mat-select formControlName="zoneDoors" multiple class="group-select" panelClass="panel-group">
+            <mat-select formControlName="zoneDoors" multiple class="group-select" panelClass="zone-door-group">
                 <mat-select-trigger>
                     {{zoneArrayValue ? zoneArrayValue[0] : ''}}
                     <span *ngIf="zoneArrayValue?.length > 1">
@@ -31,8 +33,12 @@
                         {{zoneArrayValue?.length === 2 ? 'other' : 'others'}})
                     </span>
                 </mat-select-trigger>
-                <mat-option class="flex flex-row-reverse" *ngFor="let zone of zones" [value]="zone">{{zone}}
-                </mat-option>
+
+                <mat-optgroup *ngFor="let group of allZoneDoors" [label]="group.name">
+                  <mat-option *ngFor="let zone of group.zoneDoor" [value]="zone.name">
+                    {{zone.name}}
+                  </mat-option>
+                </mat-optgroup>
             </mat-select>
         </mat-form-field>
 
@@ -48,6 +54,7 @@
             <mat-icon>delete_outline</mat-icon> Delete
         </button>
         <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
-        <button class="btn primary-btn w-20 ml-4" [disabled]="!zoneForm.valid">Save</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="!zoneForm.valid" (click)="updateZone()">Save</button>
     </div>
+    <!-- <app-spinner size="sm" *ngIf="isLoading"></app-spinner> -->
 </div>

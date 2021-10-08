@@ -12,6 +12,7 @@ import { GlobalShareService } from '@app-core/services/global-share.service';
 import { AddUserStepperComponent } from '@app-shared/components/add-user-stepper/add-user-stepper.component';
 import { ConfirmService } from '@app-core/services/confirm.service';
 import { User, UsersService } from 'src/app/api_codegen';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
     selector: 'app-admins',
@@ -24,7 +25,7 @@ export class AdminsComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject();
     sidenavCollapsed!: boolean;
 
-    displayedColumns: string[] = ['name', 'lastActivity', 'permissions', 'status', 'actions'];
+    displayedColumns: string[] = ['name', 'createdAt', 'company', 'permissions', 'status', 'actions'];
     dataSource: MatTableDataSource<User> = new MatTableDataSource();
     totalUsers: number = 0;
     today = new Date();
@@ -38,7 +39,8 @@ export class AdminsComponent implements OnInit, OnDestroy {
         private dialog: NgDialogAnimationService,
         private shareService: GlobalShareService,
         private confirmService: ConfirmService,
-        private usersService: UsersService
+        private usersService: UsersService,
+        private toastr: ToastrService
     ) { }
 
     ngOnInit(): void {
@@ -46,15 +48,7 @@ export class AdminsComponent implements OnInit, OnDestroy {
             this.sidenavCollapsed = res;
         });
 
-        this.isLoading = true;
-        this.usersService.usersControllerGetUsersPage(1, 100, 'ADMIN').subscribe((users: User[]) => {
-            console.log('Admin ---', users);
-            this.totalUsers = users.length;
-            this.dataSource = new MatTableDataSource(users);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-            this.isLoading = false;
-        })
+        this.getUserData();
 
         this.shareService.searchKey$.pipe(
             debounceTime(500),
@@ -75,6 +69,21 @@ export class AdminsComponent implements OnInit, OnDestroy {
         this.destroy$.complete();
     }
 
+    getUserData() {
+        this.isLoading = true;
+        this.usersService.usersControllerGetUsersPage(undefined, undefined, 'ADMIN').subscribe(users => {
+            console.log('Admin ---', users);
+            this.totalUsers = users.total;
+            this.dataSource = new MatTableDataSource(users.users as any);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+            this.isLoading = false;
+        }, err => {
+            this.toastr.error('Fetching user data failed')
+            this.isLoading = false;
+        })
+    }
+
     openSideModal(element: any) {
         return;
     }
@@ -89,6 +98,7 @@ export class AdminsComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(res => {
             console.log('stepper modal response ---', res);
             if (res && res.send) {
+                this.getUserData()
                 this.confirmService.openSnackBar('User has been invited ! 🎉🎉🎉');
             } else if (res && !res.send) {
                 this.confirmService.openSnackBar('Sorry, we are expecting troubles 🤔');
@@ -96,9 +106,30 @@ export class AdminsComponent implements OnInit, OnDestroy {
         })
     }
 
-    gotoAdmin(element: User) {
+    async gotoUserDetail(element: User) {
         const id = element.id;
-        this.router.navigate(['admin-detail'], { queryParams: { id: id }, relativeTo: this.route, state: element });
+        const userData = await this.usersService.usersControllerGetUserInfo(id).toPromise();
+        this.router.navigate(['admin-detail'], { queryParams: { id: id }, relativeTo: this.route, state: userData });
     }
 
+    resetPassword(id: number) {
+        this.usersService.usersControllerResetPasswordForUser(id).subscribe(res => {
+            this.toastr.info('Password Reset Email Sent');
+        })
+    }
+
+    changeUserStatus(user: User, status: any) {
+        const body = { status: status };
+        this.usersService.usersControllerChangeUserStatus(body, user.id).subscribe(res => {
+            console.log('user status changed --', res);
+            if (res && status === 'ARCHIVED') {
+                this.toastr.info('User Status Archived');
+            } else if (res && res.status === 'INACTIVE') {
+                this.toastr.info('User Status Inactive');
+            } else if (res && res.status === 'ACTIVE') {
+                this.toastr.info('User Status ACTIVE');
+            }
+            this.getUserData();
+        })
+    }
 }

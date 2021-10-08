@@ -33,11 +33,16 @@ import { ControlZonesComponent } from './tabs/control-zones/control-zones.compon
 import { ControlHolidaysComponent } from './tabs/control-holidays/control-holidays.component';
 import { AddScheduleModalComponent } from './components/add-schedule-modal/add-schedule-modal.component';
 import { AddHolidayModalComponent } from './components/add-holiday-modal/add-holiday-modal.component';
-import { AddZoneModalComponent } from './components/add-zone-modal/add-zone-modal.component';
 import { AccessGroupPanelComponent } from './panels/access-group-panel/access-group-panel.component';
 import { SchedulePanelComponent } from './panels/schedule-panel/schedule-panel.component';
 import { ZonePanelComponent } from './panels/zone-panel/zone-panel.component';
 import { HolidayPanelComponent } from './panels/holiday-panel/holiday-panel.component';
+import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
+import { AddZoneStepperComponent } from './components/add-zone-stepper/add-zone-stepper.component';
+import { NameLocationComponent } from './components/add-zone-stepper/name-location/name-location.component';
+import { ZoneDoorComponent } from './components/add-zone-stepper/zone-door/zone-door.component';
+import { ZoneConfirmComponent } from './components/add-zone-stepper/zone-confirm/zone-confirm.component';
+import { ControlAccessFilterPanelComponent } from './components/control-access-filter-panel/control-access-filter-panel.component';
 
 @NgModule({
     declarations: [
@@ -48,11 +53,15 @@ import { HolidayPanelComponent } from './panels/holiday-panel/holiday-panel.comp
         ControlHolidaysComponent,
         AddScheduleModalComponent,
         AddHolidayModalComponent,
-        AddZoneModalComponent,
         AccessGroupPanelComponent,
         SchedulePanelComponent,
         ZonePanelComponent,
-        HolidayPanelComponent
+        HolidayPanelComponent,
+        AddZoneStepperComponent,
+        NameLocationComponent,
+        ZoneDoorComponent,
+        ZoneConfirmComponent,
+        ControlAccessFilterPanelComponent,
     ],
     imports: [
         CommonModule,
@@ -77,6 +86,7 @@ import { HolidayPanelComponent } from './panels/holiday-panel/holiday-panel.comp
         MatSlideToggleModule,
         MatCheckboxModule,
         PipesModule,
+        SpinnerModule
     ],
     providers: [
         NgDialogAnimationService,

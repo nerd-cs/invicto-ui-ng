@@ -14,10 +14,11 @@
             </mat-form-field>
 
             <mat-form-field appearance="outline" color="accent" class="w-full mb-1 ml-2">
-                <mat-label>Description</mat-label>
-                <mat-select formControlName="description" name="description">
-                    <mat-option value="Optional">Optional</mat-option>
-                    <mat-option value="Optional">Optional</mat-option>
+                <mat-label>Location</mat-label>
+                <mat-select formControlName="location" name="location" [compareWith]="objectCompareWith" required>
+                    <ng-container *ngFor="let location of locations">
+                        <mat-option [value]="location">{{location.name}}</mat-option>
+                    </ng-container>
                 </mat-select>
             </mat-form-field>
         </div>
@@ -25,25 +26,23 @@
             <p class="w-full text-title-sm col-black-lighter mr-2">Zone & Door</p>
             <p class="w-full text-title-sm col-black-lighter ml-2">Schedule</p>
         </div>
-        <ng-container formArrayName="lines" *ngFor="let item of controlsArray; index as idx">
+        <ng-container formArrayName="zoneDoorItems" *ngFor="let item of controlsArray; index as idx">
             <div class="flex-center-between" [formGroupName]="idx">
                 <mat-form-field appearance="outline" color="accent" class="w-full mr-2">
                     <mat-label>Zone & Door</mat-label>
-                    <mat-select formControlName="zonedoor" name="zone-door">
-                        <mat-option value="Office 1">Office 1</mat-option>
-                        <mat-option value="Office 2">Office 2</mat-option>
-                        <mat-option value="Office 3">Office 3</mat-option>
+                    <mat-select formControlName="zoneDoor" [compareWith]="objectCompareWith">
+                        <ng-container *ngFor="let zone of zones">
+                            <mat-option [value]="zone">{{zone.name}}</mat-option>
+                        </ng-container>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-form-field appearance="outline" color="accent" class="w-full ml-2">
                     <mat-label>Schedule</mat-label>
-                    <mat-select formControlName="schedule" name="schedule">
-                        <mat-option value="9am-11am">9am-11am</mat-option>
-                        <mat-option value="All day">All day</mat-option>
-                        <mat-option value="Weekend">Weekend</mat-option>
-                        <mat-option value="Sunday">Sunday</mat-option>
-                        <mat-option value="9am-5pm">9am-5pm</mat-option>
+                    <mat-select formControlName="schedule" [compareWith]="objectCompareWith">
+                        <ng-container *ngFor="let schedule of schedules">
+                            <mat-option [value]="schedule">{{schedule.name}}</mat-option>
+                        </ng-container>
                     </mat-select>
                 </mat-form-field>
             </div>
@@ -51,14 +50,15 @@
         </ng-container>
 
 
-        <button class="btn secondary-outline-btn px-2 mt-6" (click)="addLine()">
+        <button class="btn secondary-outline-btn px-2 mt-6" (click)="addLine()" [class.disable]="!addLineCheck"
+                [matTooltip]="addLineTooltip" matTooltipPosition="right">
             <mat-icon>add</mat-icon> ADD LINE
         </button>
     </div>
 </div>
 
 <div class="dialog-footer">
-    <button class="btn secondary-outline-btn px-2 mr-auto" (click)="gotoStep(1)">
+    <button class="btn secondary-outline-btn px-2 mr-auto" (click)="gotoStep(1)" [class.disable]="!addCustomCheck">
         <mat-icon>add</mat-icon> ADD CUSTOM ACCESS
     </button>
     <button class="btn secondary-btn w-24 mr-3" (click)="close()">Cancel</button>

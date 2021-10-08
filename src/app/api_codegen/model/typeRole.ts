@@ -10,11 +10,14 @@
  * Do not edit the class manually.
  */
 
-export type TypeRole = 'GUEST' | 'MEMBER' | 'TIER_ADMIN' | 'ADMIN';
+export type TypeRole = 'GUEST' | 'MEMBER' | 'SECURITY' | 'USER_MANAGER' | 'FRONT_DESK' | 'ADMIN' | 'SUPER_ADMIN';
 
 export const TypeRole = {
     GUEST: 'GUEST' as TypeRole,
     MEMBER: 'MEMBER' as TypeRole,
-    TIERADMIN: 'TIER_ADMIN' as TypeRole,
-    ADMIN: 'ADMIN' as TypeRole
+    SECURITY: 'SECURITY' as TypeRole,
+    USERMANAGER: 'USER_MANAGER' as TypeRole,
+    FRONTDESK: 'FRONT_DESK' as TypeRole,
+    ADMIN: 'ADMIN' as TypeRole,
+    SUPERADMIN: 'SUPER_ADMIN' as TypeRole
 };

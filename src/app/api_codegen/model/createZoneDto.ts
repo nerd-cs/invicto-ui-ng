@@ -12,8 +12,8 @@
 
 export interface CreateZoneDto { 
     name: string;
-    description?: string;
-    locationId: number;
     doorIds?: Array<number>;
     zoneIds?: Array<number>;
+    description?: string;
+    locationId: number;
 }

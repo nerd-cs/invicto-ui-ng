@@ -10,9 +10,10 @@
  * Do not edit the class manually.
  */
 
-export type PartialUserStatus = 'INACTIVE' | 'ARCHIVED';
+export type PartialUserStatus = 'INACTIVE' | 'ARCHIVED' | 'ACTIVE';
 
 export const PartialUserStatus = {
     INACTIVE: 'INACTIVE' as PartialUserStatus,
-    ARCHIVED: 'ARCHIVED' as PartialUserStatus
+    ARCHIVED: 'ARCHIVED' as PartialUserStatus,
+    ACTIVE: 'ACTIVE' as PartialUserStatus
 };

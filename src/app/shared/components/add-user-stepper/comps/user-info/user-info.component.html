@@ -25,9 +25,18 @@
         </mat-form-field>
 
         <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Organization</mat-label>
+            <mat-select formControlName="company" [compareWith]="objectCompareWith">
+                <ng-container *ngFor="let company of companyList">
+                    <mat-option [value]="company">{{company.name}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
             <mat-label>Role</mat-label>
             <mat-select formControlName="role">
-                <mat-option value="Guess">Guess</mat-option>
+                <mat-option value="Guest">Guest</mat-option>
                 <mat-option value="Member">Member</mat-option>
                 <mat-option value="Tier-admin">Tier-admin</mat-option>
                 <mat-option value="Admin">Admin</mat-option>

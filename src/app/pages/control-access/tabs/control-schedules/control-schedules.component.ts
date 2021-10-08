@@ -15,23 +15,15 @@ import { RightSideDlgAnimation } from '@app-core/models/common';
 import { ToastrService } from 'ngx-toastr';
 import { ScheduleService } from 'src/app/api_codegen';
 
-export interface ControlSchedule {
-    id: string;
-    name: string;
-    description: string;
-    holidays: string;
-    lastUpdated: Date | string;
-};
-
-const NAMES: string[] = ['Cleaning Team', 'Employee', 'IT service', 'Day to day'];
 @Component({
     selector: 'app-control-schedules',
     templateUrl: './control-schedules.component.html',
     styleUrls: ['./control-schedules.component.scss']
 })
+
 export class ControlSchedulesComponent implements OnInit {
 
-    displayedColumns: string[] = ['nameS', 'description', 'holidays', 'lastUpdated', 'actions'];
+    displayedColumns: string[] = ['nameS', 'description', 'holidays', 'updatedAt', 'actions'];
     dataSource!: MatTableDataSource<any>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -44,21 +36,20 @@ export class ControlSchedulesComponent implements OnInit {
         private confirmService: ConfirmService,
         private shareService: GlobalShareService,
         private toastr: ToastrService,
-        private scheduleService: ScheduleService
+        private scheduleService: ScheduleService,
     ) { }
 
     ngOnInit(): void {
         this.getAllSchedules();
     }
 
-    ngAfterViewInit() {
-
-    }
+    ngAfterViewInit() { }
 
     getAllSchedules() {
-        this.scheduleService.scheduleControllerGetSchedulesList().subscribe(res => {
-            console.log('schedule ---', res);
-            this.dataSource = new MatTableDataSource(res);
+        this.scheduleService.scheduleControllerGetSchedulesPage().subscribe(res => {
+            console.log('all schedule list--------', res);
+            this.shareService.setScheduleList(res);
+            this.dataSource = new MatTableDataSource(res.schedules);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
         })
@@ -76,30 +67,28 @@ export class ControlSchedulesComponent implements OnInit {
         })
     }
 
-    edit(element: ControlSchedule) {
+    async edit(id: any) {
+        const data = await this.scheduleService.scheduleControllerGetScheduleDescription(id).toPromise();
         this.dialog.open(SchedulePanelComponent, {
             disableClose: false,
             panelClass: 'right-side-panel',
             animation: RightSideDlgAnimation,
             position: {
                 rowStart: '1',
+            },
+            data: {
+                schedule: data
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                console.log('schedule edit res---', res);
+                this.getAllSchedules();
             }
         });
     }
-}
 
-function createTableData(id: number): ControlSchedule {
-    const name = NAMES[Math.round(Math.random() * 3)];
-
-    return {
-        id: id.toString(),
-        name: name,
-        description: '24/7 All Floors',
-        holidays: 'Christmas',
-        lastUpdated: moment(new Date()).format('MM-DD-YYYY'),
-    };
+    deleteSchedule(id: number) {
+        this.scheduleService.scheduleControllerDeleteSchedule(id).subscribe(res => {
+            this.getAllSchedules();
+        })
+    }
 }

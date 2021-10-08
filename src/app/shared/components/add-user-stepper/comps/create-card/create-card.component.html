@@ -39,9 +39,9 @@
 </div>
 
 <div class="dialog-footer">
-    <button class="btn secondary-outline-btn px-2" (click)="gotoStep(5)">
+    <button class="btn secondary-outline-btn px-2" (click)="gotoStep(5)" *ngIf="!fromStep3">
         Skip Card Creation
     </button>
-    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="gotoStep(2)">Previous</button>
-    <button class="btn primary-btn w-24" (click)="gotoStep(4)" [disabled]="cardForm.invalid">Next Step</button>
+    <button class="btn secondary-btn w-24 ml-auto mr-4" *ngIf="!fromStep3" (click)="gotoStep(2)">Previous</button>
+    <button class="btn primary-btn w-24" [class.ml-auto]="fromStep3" (click)="nextStep()" [disabled]="cardForm.invalid">Next Step</button>
 </div>

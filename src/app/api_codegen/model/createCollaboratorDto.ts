@@ -9,10 +9,13 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TypeRole } from './typeRole';
+import { TypeTierAdminOption } from './typeTierAdminOption';
+import { TypeUserRole } from './typeUserRole';
 
 export interface CreateCollaboratorDto { 
     email: string;
     fullName: string;
-    role: TypeRole;
+    companyId: number;
+    role: TypeUserRole;
+    roleOption?: TypeTierAdminOption;
 }

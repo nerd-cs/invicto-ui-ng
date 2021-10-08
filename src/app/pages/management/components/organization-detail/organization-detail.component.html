@@ -1,0 +1,79 @@
+<div class="main-container-detail overflow-auto pt-7" [class.collapsed]="sidenavCollapsed" *ngIf="companyData">
+
+    <section class="back w-48 h-10 flex items-center mb-8 cursor-pointer" (click)="gotoCompany()">
+        <span class="material-icons icon-40"> arrow_back </span>
+        <span class="h5 pl-4 col-black">Admin</span>
+    </section>
+
+    <div class="profile bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black">Organization</div>
+            <div class="actions">
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="companyEdit()">
+                    <mat-icon fontSet="material-icons-outlined">edit</mat-icon> EDIT
+                </button>
+            </div>
+        </div>
+        <div class="profile-contents flex flex-wrap items-end">
+            <div class="user-info mr-8 flex">
+                <div class="init-name flex-center">{{companyData.name.charAt(0)}}</div>
+                <!-- <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full"> -->
+                <div class="ml-4 flex flex-col justify-center">
+                    <p class="h6 mb-1 col-black">{{companyData.name}}</p>
+                    <p class="text-body-sm col-black-light">Company Name</p>
+                </div>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">ORGANIZATION NAME</p>
+                <p class="text-title-lg col-black">{{companyData.name}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">STATUS</p>
+                <p class="text-title-lg col-black">{{'Active'}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">ADDRESS</p>
+                <p class="text-title-lg col-black">{{companyData.address}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">CITY</p>
+                <p class="text-title-lg col-black">{{companyData.city}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">CREATED</p>
+                <p class="text-title-lg col-black">{{companyData?.createdAt | date : 'mediumDate'}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">POSTAL CODE</p>
+                <p class="text-title-lg col-black">{{companyData.postalCode}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">STATE</p>
+                <p class="text-title-lg col-black">{{companyData?.state || 'Quebec'}}</p>
+            </div>
+            <div class="item">
+                <p class="text-overline item-label">UPDATED</p>
+                <p class="text-title-lg col-black">{{companyData?.updatedAt | date : 'mediumDate'}}</p>
+            </div>
+            <div class="item mr-8">
+                <p class="text-overline item-label">COUNTRY</p>
+                <p class="text-title-lg col-black">{{companyData.country}}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cards bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">
+        <div class="content-header flex-center-between mb-10">
+            <div class="h6 col-black">Departments</div>
+            <div class="actions">
+                <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="addDepartment()">
+                    <mat-icon>add</mat-icon> Department
+                </button>
+            </div>
+        </div>
+        <app-departments-table (departmentUpdated)="updateDepartmentData($event)" [companyId]="companyId" [departments]="departments">
+        </app-departments-table>
+        <!-- <app-cards-table [cards]="companyData.cards" [userId]="companyData.id" (cardUpdated)="updateCompanyData($event)"></app-cards-table> -->
+    </div>
+
+</div>

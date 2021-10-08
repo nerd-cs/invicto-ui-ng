@@ -1,4 +1,4 @@
-<div class="main-container-detail overflow-auto pt-7" [class.collapsed]="sidenavCollapsed">
+<div class="main-container-detail overflow-auto pt-7" [class.collapsed]="sidenavCollapsed" *ngIf="userData">
 
     <section class="back w-48 h-10 flex items-center mb-8 cursor-pointer" (click)="gotoUserList()">
         <span class="material-icons icon-40"> arrow_back </span>
@@ -19,7 +19,7 @@
                 <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full">
                 <div class="ml-4 flex flex-col justify-center">
                     <p class="h6 mb-1 col-black">{{userData.fullName}}</p>
-                    <p class="text-body-sm col-black-light">{{userData.company}}</p>
+                    <p class="text-body-sm col-black-light">{{userData.company.name}}</p>
                 </div>
             </div>
             <div class="item mr-8">
@@ -36,11 +36,11 @@
             </div>
             <div class="item mr-8">
                 <p class="text-overline item-label">COMPANY</p>
-                <p class="text-title-lg col-black">{{userData.company}}</p>
+                <p class="text-title-lg col-black">{{userData.company.name}}</p>
             </div>
             <div class="item">
                 <p class="text-overline item-label">CREATED</p>
-                <p class="text-title-lg col-black">{{userData.createdAt | date : 'mediumDate'}}</p>
+                <p class="text-title-lg col-black">{{userData?.createdAt | date : 'mediumDate'}}</p>
             </div>
             <div class="item mr-8">
                 <p class="text-overline item-label">MOBILE</p>
@@ -48,11 +48,11 @@
             </div>
             <div class="item mr-8">
                 <p class="text-overline item-label">DEPARTMENT</p>
-                <p class="text-title-lg col-black">{{userData.department}}</p>
+                <p class="text-title-lg col-black">{{userData.department.name}}</p>
             </div>
             <div class="item">
                 <p class="text-overline item-label">UPDATED</p>
-                <p class="text-title-lg col-black">{{userData.updatedAt | date : 'mediumDate'}}</p>
+                <p class="text-title-lg col-black">{{userData?.updatedAt | date : 'mediumDate'}}</p>
             </div>
             <div class="item mr-8">
                 <p class="text-overline item-label">EMPLOYEE NUMBER</p>
@@ -75,7 +75,9 @@
                 </button>
             </div>
         </div>
-        <app-access-groups-table [accessGroups]="userData.accessGroups" [userId]="userData.id" (groupUpdated)="updateUserData($event)"></app-access-groups-table>
+        <app-access-groups-table [accessGroups]="userData.accessGroups" [scheduleList]="scheduleList" [userId]="userData.id"
+                                 (groupUpdated)="updateUserData($event)">
+        </app-access-groups-table>
     </div>
 
     <div class="cards bg-white rounded-md p-10 mb-6 mr-10 xl:mr-30">

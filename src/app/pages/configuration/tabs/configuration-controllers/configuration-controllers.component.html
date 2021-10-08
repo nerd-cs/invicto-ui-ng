@@ -60,7 +60,7 @@
                     <mat-icon [matMenuTriggerFor]="actions">more_vert</mat-icon>
                     <mat-menu #actions="matMenu" class="actions-menu" xPosition="before">
                         <button mat-menu-item (click)="edit(element)">Edit</button>
-                        <button mat-menu-item>Test</button>
+                        <button mat-menu-item (click)="testController(element.id)">Test</button>
                     </mat-menu>
                 </div>
             </td>

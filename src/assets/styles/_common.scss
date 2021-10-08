@@ -33,3 +33,9 @@
 .opacity-87 {
     opacity: 0.87;
 }
+
+.ellipsis {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+}

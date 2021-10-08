@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FilterPipe } from './filter.pipe';
 import { DatesPipe } from './dates.pipe';
 import { LiteralPipe } from './literal.pipe';
+import { InitNamePipe } from './init-name.pipe';
 
 
 
@@ -10,13 +11,14 @@ import { LiteralPipe } from './literal.pipe';
     declarations: [
         FilterPipe,
         DatesPipe,
-        LiteralPipe
+        LiteralPipe,
+        InitNamePipe
     ],
     imports: [
         CommonModule
     ],
     exports: [
-        FilterPipe, DatesPipe, LiteralPipe
+        FilterPipe, DatesPipe, LiteralPipe, InitNamePipe
     ]
 })
 export class PipesModule { }

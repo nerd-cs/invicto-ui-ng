@@ -1,6 +1,6 @@
 <div class="main-nav-container flex flex-col pl-4 h-screen" [class.collapsed]="collapsed">
-    <div class="nav-header flex items-center cursor-pointer pl-4 -ml-4 bg-white">
-        <div class="nav-icon" [routerLink]="['/dashboard']">
+    <div class="nav-header flex items-center cursor-pointer pl-4 -ml-4 bg-white" [routerLink]="['/dashboard']">
+        <div class="nav-icon">
             <img src="/assets/images/Logo.svg" alt="">
         </div>
         <div class="nav-contents">
@@ -34,6 +34,9 @@
                 <button mat-menu-item matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'all-users']">
                     All users
                 </button>
+                <button mat-menu-item matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'guests']">
+                    Guests
+                </button>
                 <button mat-menu-item matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'tier-admins']">
                     Tier Admins
                 </button>
@@ -45,6 +48,9 @@
         <div class="user-types opacity-0 overflow-hidden h-0" [class.show]="dropdownActive">
             <div class="all" matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'all-users']" routerLinkActive="active">
                 All users
+            </div>
+            <div class="guests" matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'guests']" routerLinkActive="active">
+                Guests
             </div>
             <div class="tier-admins" matRipple [matRippleColor]="rippleColor" [routerLink]="['/users', 'tier-admins']" routerLinkActive="active">
                 Tier Admins
@@ -70,10 +76,10 @@
     </div>
 
     <div class="nav-other mt-auto" *ngIf="!hideSide">
-        <div class="nav-item" [routerLink]="['/configuration']" routerLinkActive="active" matRipple [matRippleColor]="rippleColor">
+        <div class="nav-item" [routerLink]="['/hardwares']" routerLinkActive="active" matRipple [matRippleColor]="rippleColor">
             <div class="nav-icon"><img src="/assets/images/nav/grid.svg" alt=""></div>
             <div class="nav-contents">
-                <p class="col-grey text-title-sm">Configuration</p>
+                <p class="col-grey text-title-sm">Hardwares</p>
             </div>
         </div>
         <div class="nav-item" [routerLink]="['/help']" routerLinkActive="active" matRipple [matRippleColor]="rippleColor">
@@ -84,19 +90,19 @@
         </div>
     </div>
 
-    <div class="nav-footer w-full flex items-center justify-start cursor-pointer mx-0 mt-4 mb-7"
-        [matMenuTriggerFor]="userSetting" *ngIf="!hideSide">
-        <div class="account-init flex-center h6 w-10 h-10 my-0 mx-2 rounded-full" style="color: #212121; background-color: #EEEFF0;">
-            {{loggedInUser.fullName.charAt(0)}}
+    <div class="nav-footer" *ngIf="!hideSide">
+        <!-- [matMenuTriggerFor]="userSetting" -->
+        <div class="account-init h6">
+            {{loggedInUser.fullName | initName}}
         </div>
-        <div class="nav-contents account-name flex-center-between">
-            <p class="ml-4 mr-24 col-blue w-available">{{loggedInUser.fullName}}</p>
-            <div class="icon-wrap-40 pr-2 text-title-sm col-black-light">
+        <div class="nav-contents account-name flex-center-between mx-4 w-full" [routerLink]="['/management']">
+            <p class="mr-auto col-blue">{{loggedInUser.company.name}}</p>
+            <div class="icon-wrap-40 w-10 text-title-sm col-black-light">
                 <mat-icon>keyboard_arrow_right</mat-icon>
             </div>
         </div>
 
-        <mat-menu #userSetting="matMenu" [class]="collapsed ? 'user-setting-menu' : 'user-setting-menu expand-menu'">
+        <!-- <mat-menu #userSetting="matMenu" [class]="collapsed ? 'user-setting-menu' : 'user-setting-menu expand-menu'">
             <button mat-menu-item class="mb-2" matRipple [matRippleColor]="rippleColor" [routerLink]="['/management', 'user-management']">
                 User management <mat-icon class="ml-auto">person_outline</mat-icon>
             </button>
@@ -106,33 +112,33 @@
             <button mat-menu-item class="mb-2" matRipple [matRippleColor]="rippleColor">
                 Workspaces <mat-icon class="ml-auto" fontSet="material-icons-outlined">dashboard</mat-icon>
             </button>
-        </mat-menu>
+        </mat-menu> -->
     </div>
 </div>
 
 <div class="main-section pl-10 overflow-hidden" [class.collapsed]="collapsed">
     <div class="top-nav flex items-center -ml-10 bg-white" [class.pl-10]="!hideSide">
-        <p class="app-name text-2xl font-semibold col-grey ml-3 cursor-pointer" *ngIf="hideSide" [routerLink]="['/']">
+        <!-- <p class="app-name text-2xl font-semibold col-grey ml-3 cursor-pointer" *ngIf="hideSide" [routerLink]="['/']">
             Invicto
-        </p>
+        </p> -->
         <div class="icon-wrap-40 mr-12" *ngIf="!hideSide">
             <mat-icon class="font-medium cursor-pointer" (click)="expandNav()">menu</mat-icon>
         </div>
-        <div class="search flex items-center mr-auto pl-4 rounded-md h-12" *ngIf="!hideSide">
+        <div class="search flex items-center mr-auto pl-4 rounded-md h-12" *ngIf="!hideSide" [class.border-4]="focused">
             <mat-icon>search</mat-icon>
             <input class="search-input pl-4 bg-transparent col-black-light w-96" (keyup)="applyFilter($event)"
-                [(ngModel)]="filterKey" placeholder="Search" #input>
+                [(ngModel)]="filterKey" placeholder="Search" #input (focus)="focused = true" (blur)="focused = false">
         </div>
         <div class="icon-wrap-40 mr-3" [class.ml-auto]="hideSide">
-            <mat-icon class="font-medium cursor-pointer" fontSet="material-icons-outlined">notifications</mat-icon>
+            <mat-icon class="font-medium cursor-pointer" fontSet="material-icons-outlined" (click)="openNotifications()">notifications</mat-icon>
         </div>
-        <div class="icon-wrap-40" [class.ml-auto]="hideSide">
+        <div class="icon-wrap-40">
             <mat-icon class="font-medium cursor-pointer" fontSet="material-icons-outlined">settings</mat-icon>
         </div>
         <div class="user-info flex items-center mr-10 ml-3 rounded-3xl h-12 cursor-pointer"
             (click)="openAccount($event)">
             <div class="name-role ml-2">
-                <div class="name h-6 font-grey text-title-sm">{{loggedInUser.fullName}}</div>
+                <div class="name h-6 font-grey text-title-sm whitespace-nowrap">{{loggedInUser.fullName}}</div>
                 <div class="role font-black-light h-4 text-caption text-right" style="color: rgba(18,18,18,0.38);">{{role}}
                 </div>
             </div>

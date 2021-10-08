@@ -1,0 +1,38 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Add Department </div>
+    <mat-icon (click)="cancel()">close</mat-icon>
+</div>
+<div class="dialog-content p-10 flex flex-col">
+    <div [formGroup]="departmentForm">
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Cost Center</mat-label>
+            <input matInput placeholder="Cost Center" formControlName="costCenter" required>
+            <mat-error *ngIf="departmentForm.controls['costCenter'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <ng-container formArrayName="departmentItems" *ngFor="let item of departmentArray; index as idx" class="flex flex-col-reverse">
+            <div [formGroupName]="idx" class="access-form-array">
+                <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+                    <mat-label>Name</mat-label>
+                    <input matInput placeholder="Department Name" formControlName="name" required>
+                    <mat-error *ngIf="item.invalid">{{'This field is required'}}</mat-error>
+                </mat-form-field>
+
+                <button class="btn remove-btn px-2 ml-auto mb-1" (click)="removeItem(idx)" *ngIf="departmentArray && departmentArray.length > 1">
+                    remove
+                </button>
+            </div>
+        </ng-container>
+
+        <button class="btn secondary-outline-btn px-2 mr-auto my-3" (click)="addItem()">
+            <mat-icon>add</mat-icon> ADD DEPARTMENT
+        </button>
+
+    </div>
+</div>
+
+<div class="dialog-footer">
+    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="cancel()">Cancel</button>
+    <button class="btn primary-btn w-24" (click)="save()">Save</button>
+</div>

@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AccessGroupService, LocationResponse } from 'src/app/api_codegen';
+import { LocationService } from 'src/app/api_codegen/api/location.service';
 
 @Component({
     selector: 'app-add-access-group',
@@ -10,34 +12,24 @@ export class AddAccessGroupComponent implements OnInit {
 
     @Output() cancel: EventEmitter<boolean> = new EventEmitter<boolean>();
     @Output() stepUpdate: EventEmitter<number> = new EventEmitter<number>();
+    @Output() locationGroup: EventEmitter<any> = new EventEmitter<any>();
     @Input() fromStep2 = false;
 
     accessForm: FormGroup = new FormGroup({});
     accessItems: FormArray = new FormArray([]);
-    locations: string[] = [
-        'location 1',
-        'location 2',
-        'location 3',
-        'location 4',
-        'location 5',
-        'location 6',
-        'location 7',
-        'location 8'
-    ];
-    groups: any[] = [
-        '24/7 All doors',
-        'Lobby',
-        'Terrasse',
-        'Garage',
-        'C Level Offices',
-        'Weekend',
-        'Shower',
-        'Gym'
-    ];
+    locations: LocationResponse[] = [];
+    groups: any[] = [];
 
     constructor(
-        private fb: FormBuilder
-    ) { }
+        private fb: FormBuilder,
+        private locationService: LocationService,
+        private accessGroupService: AccessGroupService,
+    ) {
+        this.locationService.locationControllerGetAllForCompany().subscribe(res => {
+            this.locations = res;
+            console.log('locations-------', res);
+        })
+    }
 
     ngOnInit(): void {
         this.accessForm = this.fb.group({
@@ -45,17 +37,23 @@ export class AddAccessGroupComponent implements OnInit {
         });
     }
 
+    saveAccessGroup() {
+        this.locationGroup.emit(this.accessForm.value);
+    }
+
     gotoStep(step: number) {
+        this.locationGroup.emit(this.accessForm.value);
         this.stepUpdate.emit(step);
     }
+
     close() {
         this.cancel.emit(true);
     }
 
     createItem() {
         return this.fb.group({
-            location: ['', Validators.required],
-            group: [{value: '', disabled: true}, Validators.required]
+            location: [null, Validators.required],
+            group: [{value: '', disabled: true}, Validators.required],
         });
     }
     addItem() {
@@ -82,9 +80,29 @@ export class AddAccessGroupComponent implements OnInit {
         formGroup.controls['group'].setValue(newGroups);
     }
 
-    setLocation(idx: number) {
+    async setLocation(idx: number) {
         const formGroup = this.controlsArray[idx] as FormGroup;
-        console.log('TODO:');
+        const locationId = formGroup.value.location.id
+        const groups = await this.accessGroupService.accessGroupControllerGetAllForLocation(locationId).toPromise();
+        console.log('TODO:', locationId, groups);
+
+        if (!this.groups.some((element) => (element.locationId === locationId))) {
+            const item = {locationId: locationId, groups: groups}
+            this.groups.push(item);
+        }
+        console.log(this.groups, '====================')
         formGroup.controls['group'].enable();
+    }
+
+    getGroupList(idx: number) {
+        let index;
+        const formGroup = this.controlsArray[idx] as FormGroup;
+        const locationId = formGroup.value?.location?.id;
+        index = this.groups.map(g => g.locationId).indexOf(locationId);
+        if (index !== -1) {
+            return this.groups[index].groups;
+        } else {
+            return null
+        }
     }
 }

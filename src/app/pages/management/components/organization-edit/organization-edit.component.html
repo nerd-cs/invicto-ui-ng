@@ -1,0 +1,49 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Edit</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="companyForm" class="px-4">
+
+        <p class="text-title-sm col-black pl-2 pb-2">Information</p>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Name</mat-label>
+            <input matInput placeholder="John Doe" formControlName="name" required>
+            <mat-error *ngIf="companyForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Address</mat-label>
+            <input matInput placeholder="Address" formControlName="address" required>
+            <mat-error *ngIf="companyForm.controls['address'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>City</mat-label>
+            <input matInput placeholder="City" formControlName="city" required>
+            <mat-error *ngIf="companyForm.controls['city'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Postal Code</mat-label>
+            <input matInput placeholder="Postal Code" formControlName="postalCode" required>
+            <mat-error *ngIf="companyForm.controls['postalCode'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Country</mat-label>
+            <input matInput placeholder="Country" formControlName="country" required>
+            <mat-error *ngIf="companyForm.controls['country'].invalid">{{'This field is required'}}</mat-error>
+        </mat-form-field>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button class="btn secondary-outline-btn pl-1 pr-2" (click)="delete()">
+            <mat-icon>delete_outline</mat-icon> Delete Organization
+        </button>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="updateCompany()">SAVE</button>
+    </div>
+</div>

@@ -38,6 +38,7 @@ import { ActivitiesTableComponent } from './all-users/user-detail/components/act
 import { EditGroupPanelComponent } from './all-users/user-detail/components/edit-group-panel/edit-group-panel.component';
 import { CardEditComponent } from './all-users/user-detail/components/card-edit/card-edit.component';
 import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
+import { GuestsComponent } from './guests/guests.component';
 
 @NgModule({
     declarations: [
@@ -52,7 +53,8 @@ import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
         AccessGroupsTableComponent,
         ActivitiesTableComponent,
         EditGroupPanelComponent,
-        CardEditComponent
+        CardEditComponent,
+        GuestsComponent
     ],
     imports: [
         CommonModule,

@@ -1,0 +1,11 @@
+<div class="stepper-container" [ngSwitch]="true">
+    <div *ngSwitchCase="step === 1">
+        <app-name-location [locations]="locations" (cancel)="cancel($event)" (step)="stepUpdate($event)"></app-name-location>
+    </div>
+    <div *ngSwitchCase="step === 2">
+        <app-zone-door></app-zone-door>
+    </div>
+    <div *ngSwitchCase="step === 3">
+        <app-zone-confirm [stepThreeData]="stepThreeData" (cancel)="cancel($event)" (save)="save($event)"></app-zone-confirm>
+    </div>
+</div>

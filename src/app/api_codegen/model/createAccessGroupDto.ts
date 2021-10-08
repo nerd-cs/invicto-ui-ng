@@ -9,11 +9,12 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
+import { CreateCustomAccessDto } from './createCustomAccessDto';
 import { LinkScheduleZoneDto } from './linkScheduleZoneDto';
 
 export interface CreateAccessGroupDto { 
     name: string;
-    description?: string;
     locationId: number;
     zoneSchedules: Array<LinkScheduleZoneDto>;
+    custom?: Array<CreateCustomAccessDto>;
 }

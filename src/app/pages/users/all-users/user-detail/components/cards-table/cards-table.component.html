@@ -24,7 +24,14 @@
         <ng-container matColumnDef="validity">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Validity </th>
             <td mat-cell *matCellDef="let element">
-                <div class="validity grey-col">{{element.activationDate | date : 'mediumDate'}} - {{element.expirationDate ?? 'Never' | date : 'mediumDate'}}</div>
+                <div class="validity grey-col">{{element?.activationDate | date : 'mediumDate'}} -
+                    <ng-container *ngIf="element?.expirationDate; else never">
+                        {{element?.expirationDate | date : 'mediumDate'}}
+                    </ng-container>
+                    <ng-template #never>
+                        Never
+                    </ng-template>
+                </div>
             </td>
         </ng-container>
 

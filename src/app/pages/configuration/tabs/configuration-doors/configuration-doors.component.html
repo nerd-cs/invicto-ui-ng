@@ -2,7 +2,7 @@
     <table mat-table [dataSource]="dataSource" matSort class="w-full mb-auto">
 
         <ng-container matColumnDef="nameSS">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Controllers </th>
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Doors </th>
             <td mat-cell *matCellDef="let element">
                 <p class="name">{{element.name}}</p>
             </td>
@@ -11,7 +11,7 @@
         <ng-container matColumnDef="locations">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Locations </th>
             <td mat-cell *matCellDef="let element">
-                <div class="locations grey-col">{{element.locations}}</div>
+                <div class="locations grey-col">{{element.location}}</div>
             </td>
         </ng-container>
 
@@ -25,7 +25,7 @@
         <ng-container matColumnDef="lastModified">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last Modified </th>
             <td mat-cell *matCellDef="let element">
-                <div class="last-activity grey-col">{{element.lastModified}}</div>
+                <div class="last-activity grey-col">{{element.updatedAt | date: 'mediumDate'}}</div>
             </td>
         </ng-container>
 
@@ -34,15 +34,15 @@
             <td mat-cell *matCellDef="let element">
                 <div class="status flex items-center">
                     <div class="icon flex-center">
-                        <ng-container *ngIf="element.status === 'Paired' else pending">
+                        <ng-container *ngIf="element.status === 'PAIRED' else pending">
                             <mat-icon class="check">check</mat-icon>
                         </ng-container>
                         <ng-template #pending>
-                            <ng-container *ngIf="element.status === 'Pending' else noSignal">
+                            <ng-container *ngIf="element.status === 'PENDING' else notPaired">
                                 <mat-icon class="pending">change_history</mat-icon>
                             </ng-container>
                         </ng-template>
-                        <ng-template #noSignal>
+                        <ng-template #notPaired>
                             <mat-icon class="no-signal">change_history</mat-icon>
                         </ng-template>
                     </div>
@@ -60,7 +60,7 @@
                     <mat-icon [matMenuTriggerFor]="actions">more_vert</mat-icon>
                     <mat-menu #actions="matMenu" class="actions-menu" xPosition="before">
                         <button mat-menu-item (click)="edit(element)">Edit</button>
-                        <button mat-menu-item>Test</button>
+                        <button mat-menu-item (click)="testDoor(element.id)">Test</button>
                     </mat-menu>
                 </div>
             </td>

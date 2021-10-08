@@ -10,7 +10,7 @@ const routes: Routes = [
             { path: 'users', loadChildren: () => import('../../pages/users/users.module').then(m => m.UsersModule) },
             { path: 'control-access', loadChildren: () => import('../../pages/control-access/control-access.module').then(m => m.ControlAccessModule) },
             { path: 'activities', loadChildren: () => import('../../pages/activities/activities.module').then(m => m.ActivitiesModule) },
-            { path: 'configuration', loadChildren: () => import('../../pages/configuration/configuration.module').then(m => m.ConfigurationModule) },
+            { path: 'hardwares', loadChildren: () => import('../../pages/configuration/configuration.module').then(m => m.ConfigurationModule) },
             { path: 'help', loadChildren: () => import('../../pages/help/help.module').then(m => m.HelpModule) },
             { path: 'management', loadChildren: () => import('../../pages/management/management.module').then(m => m.ManagementModule) }
         ]

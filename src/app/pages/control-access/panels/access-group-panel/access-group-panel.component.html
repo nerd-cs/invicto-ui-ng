@@ -13,9 +13,8 @@
                 <mat-error *ngIf="accessGroupForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
             </mat-form-field>
             <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 ml-1">
-                <mat-label>Description</mat-label>
-                <input matInput placeholder="" formControlName="description" required>
-                <mat-error *ngIf="accessGroupForm.controls['description'].invalid">{{'This field is required'}}</mat-error>
+                <mat-label>Location</mat-label>
+                <input matInput placeholder="" formControlName="location" readonly>
             </mat-form-field>
         </div>
 
@@ -26,19 +25,19 @@
                 <div class="flex-center-between">
                     <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 mr-1">
                         <mat-label>Zone & Door</mat-label>
-                        <mat-select formControlName="zoneDoor">
-                            <mat-option value="Office 1">Office 1</mat-option>
-                            <mat-option value="Office 2">Office 2</mat-option>
-                            <mat-option value="Office 3">Office 3</mat-option>
+                        <mat-select formControlName="zoneDoor" [compareWith]="objectCompareWith">
+                            <ng-container *ngFor="let zone of zones">
+                                <mat-option [value]="zone">{{zone.name}}</mat-option>
+                            </ng-container>
                         </mat-select>
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" color="accent" class="w-48 mb-1 ml-1">
                         <mat-label>Schedule</mat-label>
-                        <mat-select formControlName="schedule">
-                            <mat-option value="9am-11am">9am-11am</mat-option>
-                            <mat-option value="10am-11am">10am-11am</mat-option>
-                            <mat-option value="8am-10am">8am-10am</mat-option>
+                        <mat-select formControlName="schedule" [compareWith]="objectCompareWith">
+                            <ng-container *ngFor="let schedule of schedules">
+                                <mat-option [value]="schedule">{{schedule.name}}</mat-option>
+                            </ng-container>
                         </mat-select>
                     </mat-form-field>
                 </div>
@@ -59,6 +58,6 @@
             <mat-icon>delete_outline</mat-icon> Delete
         </button>
         <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
-        <button class="btn primary-btn w-20 ml-4" [disabled]="!accessGroupForm.valid">Save</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="!accessGroupForm.valid" (click)="update()">Save</button>
     </div>
 </div>

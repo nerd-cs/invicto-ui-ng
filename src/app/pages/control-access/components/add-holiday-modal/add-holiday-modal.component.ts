@@ -43,8 +43,8 @@ export class AddHolidayModalComponent implements OnInit {
         this.holidayForm = this.fb.group({
             name: ['', Validators.required],
             recurrence: ['', Validators.required],
-            startDate: [new Date()],
-            endDate: [new Date()],
+            startDate: [],
+            endDate: [],
         });
         this.holidayForm.controls['startDate'].valueChanges.pipe(takeUntil(this.destroy$)).subscribe(res => {
             if (res) {
@@ -71,8 +71,9 @@ export class AddHolidayModalComponent implements OnInit {
             endDate: this.holidayForm.controls['endDate'].value
         }
         this.holidayService.holidayControllerCreateHoliday(body).subscribe(res => {
+            console.log('new holiday', res)
             this.toastr.success('Holiday Created')
-            this.dialogRef.close(true);
+            this.dialogRef.close(res);
         })
     }
 

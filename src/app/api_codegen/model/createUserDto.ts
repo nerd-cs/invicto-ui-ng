@@ -11,13 +11,16 @@
  */
 import { AssignLocationDto } from './assignLocationDto';
 import { CreateCardDto } from './createCardDto';
-import { TypeRole } from './typeRole';
+import { TypeTierAdminOption } from './typeTierAdminOption';
+import { TypeUserRole } from './typeUserRole';
 
 export interface CreateUserDto { 
     email: string;
     fullName: string;
     phoneNumber: string;
-    role: TypeRole;
+    companyId: number;
+    role: TypeUserRole;
+    roleOption?: TypeTierAdminOption;
     allowSso?: boolean;
     locations: Array<AssignLocationDto>;
     cards?: Array<CreateCardDto>;

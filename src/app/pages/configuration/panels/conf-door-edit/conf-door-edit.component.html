@@ -11,12 +11,73 @@
             <input matInput placeholder="" formControlName="name" required>
             <mat-error *ngIf="doorForm.controls['name'].invalid">{{'This field is required'}}</mat-error>
         </mat-form-field>
-
-        <button class="btn primary-outline-btn w-full mb-8">TEST DOOR</button>
     </div>
 
+    <div class="weekdays px-4">
+        <p class="text-title-sm col-black mb-2">Unlocking time</p>
+        <div class="list-header flex pb-4 border-b border-black border-opacity-10">
+            <p class="w-20 text-title-sm">Week Days</p>
+            <p class="w-11 text-title-sm mr-2">Status</p>
+            <p class="text-title-sm flex"> Schedule
+                <span class="material-icons text-sm cursor-pointer -mt-1 ml-2" matTooltip="SHIFT + SCROLL ♻" matTooltipPosition="right"> help_outline </span>
+            </p>
+        </div>
+
+        <div class="list-contents flex flex-col">
+            <div class="item flex items-center h-12 border-b border-black border-opacity-10"
+                 *ngFor="let weekday of weekdays; index as idx">
+                <p class="w-20 text-body-sm day">{{weekday.day}}</p>
+                <mat-slide-toggle (change)="toogleChange($event, weekday, idx, 'weekday')" [(ngModel)]="weekday.status" name="weekdayStatus" class="w-11 mr-2 status"></mat-slide-toggle>
+                <div class="overflow-x-auto flex items-center time-wrap cursor-pointer">
+                    <ng-container *ngFor="let schedule of weekday.schedules; index as slot">
+                        <div class="schedule-item col-black" [class.disable]="!weekday.status" (click)="editTimeSlot(idx, slot, schedule, 'weekday')">
+                            {{schedule.startTime}} to {{schedule.endTime}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="ml-auto">
+                    <span class="material-icons icon-40 cursor-pointer col-blue" (click)="addTimeSlot(idx, 'weekday')"
+                          [class.pointer-events-none]="!weekday.status" [class.opacity-38]="!weekday.status">
+                        add
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="holidays mt-8 px-4">
+        <div class="list-header flex pb-4 border-b border-black border-opacity-10">
+            <p class="w-32 text-title-sm">Holidays</p>
+            <p class="w-11 text-title-sm mr-2"></p>
+            <p class="text-title-sm flex"> Schedule
+                <span class="material-icons text-sm cursor-pointer -mt-1 ml-2" matTooltip="SHIFT + SCROLL ♻" matTooltipPosition="right"> help_outline </span>
+            </p>
+        </div>
+        <div class="list-contents flex flex-col" *ngFor="let holiday of holidays; index as idx">
+            <div class="item flex items-center h-12 border-b border-black border-opacity-10">
+                <p class="w-32 text-body-sm day" style="min-width: 128px;">{{holiday.holiday}}</p>
+                <mat-slide-toggle (change)="toogleChange($event, holiday, idx, 'holiday')" [(ngModel)]="holiday.status" name="holidayStatus" class="w-11 mr-2 status"></mat-slide-toggle>
+                <div class="overflow-x-auto flex items-center time-wrap cursor-pointer">
+                    <ng-container *ngFor="let schedule of holiday.schedules; index as slot">
+                        <div class="schedule-item col-black" [class.disable]="!holiday.status" (click)="editTimeSlot(idx, slot, schedule, 'holiday')">
+                            {{schedule.startTime}} to {{schedule.endTime}}
+                        </div>
+                    </ng-container>
+                </div>
+                <div class="ml-auto">
+                    <span *ngIf="holiday.status" class="material-icons icon-40 cursor-pointer col-blue" (click)="addTimeSlot(idx, 'holiday')"> add </span>
+                    <span *ngIf="!holiday.status" (click)="deleteHoliday(idx)" class="material-icons-outlined icon-40 cursor-pointer col-black"> delete </span>
+                </div>
+            </div>
+        </div>
+        <button class="btn secondary-outline-btn px-2 mr-auto my-3" (click)="addHoliday()">
+            <mat-icon>add</mat-icon> ADD HOLIDAY
+        </button>
+    </div>
+
+    <button class="btn primary-outline-btn w-full mb-8 px-4 mt-3" (click)="testDoor()">TEST DOOR</button>
     <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
         <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
-        <button class="btn primary-btn w-20 ml-4" [disabled]="!doorForm.valid">Save</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="!doorForm.valid" (click)="updateDoor()">Save</button>
     </div>
 </div>

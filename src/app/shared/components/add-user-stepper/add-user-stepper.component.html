@@ -1,12 +1,12 @@
 <div class="stepper-container" [ngSwitch]="true">
     <div *ngSwitchCase="step === 1">
-        <app-user-info [role]="role" (stepUpdate)="stepUpdate($event)" (userInfo)="setUserInfo($event)" (cancel)="cancel($event)"></app-user-info>
+        <app-user-info [userInfoData]="userInfo" (stepUpdate)="stepUpdate($event)" (userInfo)="setUserInfo($event)" (cancel)="cancel($event)"></app-user-info>
     </div>
     <div *ngSwitchCase="step === 2">
-        <app-add-access-group [fromStep2]="fromStep2" (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-add-access-group>
+        <app-add-access-group [fromStep2]="fromStep2" (locationGroup)="setLocationGroup($event)" (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-add-access-group>
     </div>
     <div *ngSwitchCase="step === 3">
-        <app-create-card (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-create-card>
+        <app-create-card [fromStep3]="fromStep3" (cardData)="setCardData($event)" (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-create-card>
     </div>
     <div *ngSwitchCase="step === 4">
         <app-pair-card (stepUpdate)="stepUpdate($event)" (cancel)="cancel($event)"></app-pair-card>

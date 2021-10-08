@@ -13,7 +13,7 @@
                 <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
                     <mat-label>Select location</mat-label>
                     <mat-select formControlName="location">
-                        <mat-option *ngFor="let loc of locations" [value]="loc" (click)="setLocation(idx)">{{loc}}</mat-option>
+                        <mat-option *ngFor="let loc of locations" [value]="loc" (click)="setLocation(idx)">{{loc.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -21,19 +21,20 @@
                     <mat-label>Add Access Group</mat-label>
                     <mat-select formControlName="group" multiple class="group-select" panelClass="panel-group">
                         <mat-select-trigger>
-                            {{accessItemsArray(idx) ? accessItemsArray(idx)[0] : ''}}
+                            {{accessItemsArray(idx) ? accessItemsArray(idx)[0]?.name : ''}}
                             <span *ngIf="accessItemsArray(idx)?.length > 1">
                                 (+{{accessItemsArray(idx).length - 1}}
                                 {{accessItemsArray(idx)?.length === 2 ? 'other' : 'others'}})
                             </span>
                         </mat-select-trigger>
-                        <mat-option class="flex flex-row-reverse" *ngFor="let gp of groups" [value]="gp">{{gp}}</mat-option>
+
+                        <mat-option class="flex flex-row-reverse" *ngFor="let gp of getGroupList(idx)" [value]="gp">{{gp.name}}</mat-option>
                     </mat-select>
                 </mat-form-field>
 
                 <mat-chip-list>
                     <mat-chip *ngFor="let item of accessItemsArray(idx)" removable selectable>
-                        {{item}} <mat-icon class="col-grey ml-2 mi-18" (click)="removeChip(item, idx)">cancel</mat-icon>
+                        {{item.name}} <mat-icon class="col-grey ml-2 mi-18" (click)="removeChip(item, idx)">cancel</mat-icon>
                     </mat-chip>
                 </mat-chip-list>
             </div>
@@ -45,5 +46,6 @@
         <mat-icon>add</mat-icon> ADD LOCATION
     </button>
     <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="gotoStep(1)" *ngIf="!fromStep2">Previous</button>
-    <button class="btn primary-btn w-24" (click)="gotoStep(3)" [disabled]="accessForm.invalid">Next Step</button>
+    <button class="btn primary-btn w-24" (click)="gotoStep(3)" [disabled]="accessForm.invalid" *ngIf="!fromStep2">Next Step</button>
+    <button class="btn primary-btn w-24" (click)="saveAccessGroup()" [disabled]="accessForm.invalid" *ngIf="fromStep2">Save</button>
 </div>

@@ -23,6 +23,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { ConfControllerEditComponent } from './panels/conf-controller-edit/conf-controller-edit.component';
 import { ConfDoorEditComponent } from './panels/conf-door-edit/conf-door-edit.component';
+import { ConfirmService } from '@app-core/services/confirm.service';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 
 @NgModule({
     declarations: [
@@ -49,10 +52,13 @@ import { ConfDoorEditComponent } from './panels/conf-door-edit/conf-door-edit.co
         MatTableModule,
         MatDialogModule,
         MatSnackBarModule,
+        MatSlideToggleModule,
+        MatDatepickerModule,
         DirectivesModule
     ],
     providers: [
-        NgDialogAnimationService
+        NgDialogAnimationService,
+        ConfirmService
     ]
 })
 export class ConfigurationModule { }

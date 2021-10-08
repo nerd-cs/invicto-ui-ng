@@ -15,15 +15,6 @@ import { RightSideDlgAnimation } from '@app-core/models/common';
 import { HolidayService } from 'src/app/api_codegen';
 import { ToastrService } from 'ngx-toastr';
 
-export interface ControlHoliday {
-    id: string;
-    name: string;
-    fromToDate: string | Date;
-    recurrence: string;
-    lastUpdated: Date | string;
-};
-
-const NAMES: string[] = ['Canada Day', 'St-Jean', 'Jesus Birthday'];
 @Component({
     selector: 'app-control-holidays',
     templateUrl: './control-holidays.component.html',
@@ -31,7 +22,7 @@ const NAMES: string[] = ['Canada Day', 'St-Jean', 'Jesus Birthday'];
 })
 export class ControlHolidaysComponent implements OnInit {
 
-    displayedColumns: string[] = ['nameS', 'fromToDate', 'recurrence', 'lastUpdated', 'actions'];
+    displayedColumns: string[] = ['nameS', 'fromToDate', 'recurrence', 'updatedAt', 'actions'];
     dataSource!: MatTableDataSource<any>;
 
     @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -49,7 +40,6 @@ export class ControlHolidaysComponent implements OnInit {
 
     ngOnInit(): void {
         this.holidayService.holidayControllerGetAllHolidays().subscribe(holidays => {
-            console.log('holidays---', holidays);
             this.dataSource = new MatTableDataSource(holidays);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;

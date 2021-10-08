@@ -1,4 +1,4 @@
-<div class="main-container-detail overflow-auto pt-7">
+<div class="main-container-detail overflow-auto pt-7" *ngIf="account">
 
     <section class="back w-48 h-10 flex items-center mb-8 mt-10 cursor-pointer" (click)="location.back()">
         <span class="material-icons icon-40"> arrow_back </span>
@@ -49,7 +49,7 @@
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>
-            <div class="h-16 item-wrap px-3 flex justify-between">
+            <div class="h-16 item-wrap px-3 flex justify-between" (click)="googleAccount()">
                 <div class="flex flex-col justify-center">
                     <p class="item-label text-overline">PASSWORD</p>
                     <p class="item-value text-title-lg">.........</p>
@@ -58,7 +58,7 @@
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>
-            <div class="h-16 item-wrap px-3 flex justify-between" (click)="googleAccount()">
+            <div class="h-16 item-wrap px-3 flex justify-between">
                 <div class="flex flex-col justify-center">
                     <p class="item-label text-overline">LINKED ACCOUNT</p>
                     <p class="item-value text-title-lg">Connected with Google </p>
@@ -127,3 +127,4 @@
         </div>
     </section>
 </div>
+<app-spinner size="sm" *ngIf="isLoading"></app-spinner>

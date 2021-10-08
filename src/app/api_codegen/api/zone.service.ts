@@ -19,6 +19,8 @@ import { Observable }                                        from 'rxjs';
 
 import { CreateZoneDto } from '../model/createZoneDto';
 import { UpdateZoneDto } from '../model/updateZoneDto';
+import { Zone } from '../model/zone';
+import { ZonePage } from '../model/zonePage';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -165,9 +167,9 @@ export class ZoneService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public zoneControllerGetAllForLocation(locationId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public zoneControllerGetAllForLocation(locationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public zoneControllerGetAllForLocation(locationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public zoneControllerGetAllForLocation(locationId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<Zone>>;
+    public zoneControllerGetAllForLocation(locationId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Zone>>>;
+    public zoneControllerGetAllForLocation(locationId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Zone>>>;
     public zoneControllerGetAllForLocation(locationId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (locationId === null || locationId === undefined) {
@@ -188,6 +190,7 @@ export class ZoneService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -198,7 +201,7 @@ export class ZoneService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/zone`,
+        return this.httpClient.request<Array<Zone>>('get',`${this.basePath}/zone`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -217,18 +220,12 @@ export class ZoneService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public zoneControllerGetZonesPage(page: number, limit: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public zoneControllerGetZonesPage(page: number, limit: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public zoneControllerGetZonesPage(page: number, limit: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public zoneControllerGetZonesPage(page: number, limit: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public zoneControllerGetZonesPage(page?: number, limit?: number, observe?: 'body', reportProgress?: boolean): Observable<ZonePage>;
+    public zoneControllerGetZonesPage(page?: number, limit?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ZonePage>>;
+    public zoneControllerGetZonesPage(page?: number, limit?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ZonePage>>;
+    public zoneControllerGetZonesPage(page?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling zoneControllerGetZonesPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling zoneControllerGetZonesPage.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
@@ -247,6 +244,7 @@ export class ZoneService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -257,7 +255,7 @@ export class ZoneService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/zone/list`,
+        return this.httpClient.request<ZonePage>('get',`${this.basePath}/zone/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

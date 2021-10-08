@@ -15,17 +15,17 @@
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="numberOfDoor">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Number of Door </th>
+        <ng-container matColumnDef="location">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Location </th>
             <td mat-cell *matCellDef="let element">
-                <div class="number-door grey-col">{{element.numberOfDoor}}</div>
+                <div class="number-door grey-col">{{element?.location.name}}</div>
             </td>
         </ng-container>
 
-        <ng-container matColumnDef="lastUpdated">
+        <ng-container matColumnDef="updatedAt">
             <th mat-header-cell *matHeaderCellDef mat-sort-header> Last activity </th>
             <td mat-cell *matCellDef="let element">
-                <div class="last-activity grey-col">{{element.lastUpdated}}</div>
+                <div class="last-activity grey-col">{{element.updatedAt | date: 'mediumDate'}}</div>
             </td>
         </ng-container>
 
@@ -36,7 +36,7 @@
                     <mat-icon [matMenuTriggerFor]="actions">more_vert</mat-icon>
                     <mat-menu #actions="matMenu" class="actions-menu" xPosition="before">
                         <button mat-menu-item (click)="edit(element)">Edit</button>
-                        <button mat-menu-item>Delete</button>
+                        <button mat-menu-item (click)="delete(element)">Delete</button>
                     </mat-menu>
                 </div>
             </td>

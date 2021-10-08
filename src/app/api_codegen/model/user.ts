@@ -10,6 +10,7 @@
  * Do not edit the class manually.
  */
 import { Company } from './company';
+import { Department } from './department';
 import { TypeRole } from './typeRole';
 import { TypeUserStatus } from './typeUserStatus';
 
@@ -20,14 +21,15 @@ export interface User {
     email: string;
     profilePicture?: string;
     jobTitle?: string;
-    department?: string;
+    costCenter?: Department;
+    department?: Department;
     city?: string;
     country?: string;
     allowSso?: boolean;
     status: TypeUserStatus;
     roles: Array<TypeRole>;
-    company: Company;
     lastActivity: Date;
     twoStepAuth: any;
     permissions: any;
+    company: Company;
 }

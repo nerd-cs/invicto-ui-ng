@@ -10,12 +10,13 @@
  * Do not edit the class manually.
  */
 
-export type TypeUserStatus = 'PENDING' | 'INCOMPLETE' | 'ACTIVE' | 'INACTIVE' | 'ARCHIVED';
+export type TypeUserStatus = 'PENDING' | 'INCOMPLETE' | 'ACTIVE' | 'INACTIVE' | 'ARCHIVED' | 'INVITATION_NOT_SENT';
 
 export const TypeUserStatus = {
     PENDING: 'PENDING' as TypeUserStatus,
     INCOMPLETE: 'INCOMPLETE' as TypeUserStatus,
     ACTIVE: 'ACTIVE' as TypeUserStatus,
     INACTIVE: 'INACTIVE' as TypeUserStatus,
-    ARCHIVED: 'ARCHIVED' as TypeUserStatus
+    ARCHIVED: 'ARCHIVED' as TypeUserStatus,
+    INVITATIONNOTSENT: 'INVITATION_NOT_SENT' as TypeUserStatus
 };

@@ -3,7 +3,7 @@
     <mat-icon mat-dialog-close>close</mat-icon>
 </div>
 <div class="dialog-content p-10 flex flex-col">
-    <mat-tab-group mat-align-tabs="center" color="accent" class="items-center" dynamicHeight>
+    <mat-tab-group mat-align-tabs="center" color="accent" class="items-center" dynamicHeight [(selectedIndex)]="tabIndex">
         <mat-tab label="LIST">
             <div class="search flex items-center rounded-md h-12 mx-auto px-4 my-6" style="background-color: #EEEFF0;">
                 <mat-icon>search</mat-icon>
@@ -29,9 +29,9 @@
                 <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
                     <mat-label>Recurrence</mat-label>
                     <mat-select formControlName="recurrence">
-                        <mat-option value="Every year">Every year</mat-option>
-                        <mat-option value="test">test</mat-option>
-                        <mat-option value="test">test</mat-option>
+                        <mat-option value="EVERY_YEAR">Every year</mat-option>
+                        <mat-option value="EVERY_MONTH">Every month</mat-option>
+                        <mat-option value="ONCE">Once</mat-option>
                     </mat-select>
                 </mat-form-field>
 
@@ -64,3 +64,4 @@
     <button class="btn secondary-btn w-20 ml-auto mr-4" mat-dialog-close>Close</button>
     <button class="btn primary-btn w-24" (click)="add()">Add</button>
 </div>
+<app-spinner size="sm" *ngIf="isLoading"></app-spinner>

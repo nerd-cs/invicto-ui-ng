@@ -12,5 +12,6 @@
 import { CreateCardDto } from './createCardDto';
 
 export interface CreateUserCardsDto { 
-    cards?: Array<CreateCardDto>;
+    cards: Array<CreateCardDto>;
+    instantlyInvite?: boolean;
 }

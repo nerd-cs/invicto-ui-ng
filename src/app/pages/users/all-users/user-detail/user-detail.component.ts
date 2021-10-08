@@ -15,7 +15,8 @@ import { CustomAccessStepperComponent } from '@app-shared/components/custom-acce
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { ConfirmService } from '@app-core/services/confirm.service';
 import { RightSideDlgAnimation } from '@app-core/models/common';
-import { UsersService } from 'src/app/api_codegen';
+import { AccessGroupService, AssignLocationDto, Company, CompanyService, CreateAccessGroupDto, CreateUserCardsDto, LinkScheduleZoneDto, LocationService, UpdateAccessGroupsDto, UserInfo, UsersService } from 'src/app/api_codegen';
+import { DepartmentService } from '../../../../api_codegen/api/department.service';
 
 @Component({
     selector: 'app-user-detail',
@@ -29,7 +30,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     exportActivitiesData: any;
 
     userId!: number;
-    userData!: any;
+    userData!: UserInfo;
+    companyList: Company[] = [];
+    scheduleList: any[] = [];
 
     constructor(
         private router: Router,
@@ -40,8 +43,11 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         private usersService: UsersService,
         private toastr: ToastrService,
         private json2csvService: Json2CsvService,
-        private confirmService: ConfirmService
-
+        private confirmService: ConfirmService,
+        private companyService: CompanyService,
+        private departmentService: DepartmentService,
+        private accessGroupService: AccessGroupService,
+        private locationService: LocationService
     ) {
         const navigation = this.router.getCurrentNavigation() as any;
         const initialData = navigation.extras.state;
@@ -53,28 +59,47 @@ export class UserDetailComponent implements OnInit, OnDestroy {
     }
 
     ngOnInit(): void {
+        this.companyService.companyControllerGetAllCompanies().subscribe(res => {
+            this.companyList = res;
+        })
         // FIXME: Resolver;
         if (!this.userData) {
-            this.usersService.usersControllerGetUserInfo(this.userId).subscribe(res => {
-                console.log('user Data ---', res);
-                this.userData = res;
-            })
+            this.getUserData();
         }
+
         this.shareService.sidenavCollapsed$.pipe(takeUntil(this.destroy$)).subscribe((res) => {
             this.sidenavCollapsed = res;
         });
     }
 
-    ngOnDestroy() {
+    ngAfterViewInit() {
+        this.shareService.scheduleList$.pipe(
+            takeUntil(this.destroy$)
+        ).subscribe(res => {
+            if (res) {
+                this.scheduleList = res.schedules;
+            }
+        })
+    }
+
+    ngOnDestroy(): void {
         this.destroy$.next();
         this.destroy$.complete();
+    }
+
+    getUserData() {
+        this.usersService.usersControllerGetUserInfo(this.userId).subscribe(res => {
+            console.log('user Data ---', res);
+            this.userData = res;
+        })
     }
 
     gotoUserList() {
         this.router.navigate(['/users', 'all-users']);
     }
 
-    profileEdit() {
+    async profileEdit() {
+        const departmentList = await this.departmentService.departmentControllerGetAllForCompany(this.userData.company.id).toPromise()
         this.dialog.open(ProfileEditComponent, {
             disableClose: false,
             panelClass: 'right-side-panel',
@@ -83,7 +108,9 @@ export class UserDetailComponent implements OnInit, OnDestroy {
                 rowStart: '1',
             },
             data: {
-                userData: this.userData
+                userData: this.userData,
+                companyList: this.companyList,
+                departmentList: departmentList
             }
         }).afterClosed().subscribe(res => {
             if (res) {
@@ -94,6 +121,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
         });
     }
 
+    // FIXME:
     addGroup() {
         this.dialog.open(AddUserStepperComponent, {
             disableClose: false,
@@ -103,11 +131,21 @@ export class UserDetailComponent implements OnInit, OnDestroy {
             }
         }).afterClosed().subscribe(res => {
             console.log('stepper modal response ---', res);
-            if (res && res.send) {
-                this.confirmService.openSnackBar('Group has been added ! 🎉🎉🎉');
-            } else if (res && !res.send) {
-                this.confirmService.openSnackBar('Sorry, we are expecting troubles 🤔');
+            let locations: AssignLocationDto[] = [];
+            res.accessItems.forEach((element: any) => {
+                const item = {
+                    locationId: element.location.id,
+                    accessGroupIds: [...element.group.map((g: any) => g.id)]
+                }
+                locations.push(item);
+            })
+            const body: UpdateAccessGroupsDto = {
+                locations: locations
             }
+            this.usersService.usersControllerUpdateUserAccessGroups(body, this.userData.id).subscribe(res => {
+                this.confirmService.openSnackBar('Access group has been added ! 🎉🎉🎉');
+                this.getUserData();
+            })
         })
     }
 
@@ -116,25 +154,60 @@ export class UserDetailComponent implements OnInit, OnDestroy {
             disableClose: false,
             panelClass: 'add-user-stepper',
             data: {
-                step: 2
+                step: 3
             }
         }).afterClosed().subscribe(res => {
-            if (res && res.send) {
-                this.confirmService.openSnackBar('User has been invited ! 🎉🎉🎉');
-            } else if (res && !res.send) {
-                this.confirmService.openSnackBar('Sorry, we are expecting troubles 🤔');
+            const body: CreateUserCardsDto = {
+                cards: res
             }
+            this.usersService.usersControllerCreateUserCards(body, this.userData.id).subscribe(res => {
+                this.confirmService.openSnackBar('Card has been added ! 🎉🎉🎉');
+                this.getUserData();
+            })
         })
     }
 
-    customAccess() {
+    // customAccess() {
+    //     this.dialog.open(CustomAccessStepperComponent, {
+    //         disableClose: false,
+    //         panelClass: 'custom-access-stepper',
+    //     }).afterClosed().subscribe(res => {
+    //         console.log('stepper modal response ---', res);
+    //         if (res && res.save) {
+    //             this.confirmService.openSnackBar('New Access Group added ! 🎉🎉🎉');
+    //         }
+    //     })
+    // }
+
+    async customAccess() {
+        const locations = await this.locationService.locationControllerGetAllForCompany().toPromise();
         this.dialog.open(CustomAccessStepperComponent, {
-            disableClose: false,
+            disableClose: true,
             panelClass: 'custom-access-stepper',
+            data: {
+                step: 3,
+                locations: locations,
+                schedules: this.scheduleList
+            }
         }).afterClosed().subscribe(res => {
-            console.log('stepper modal response ---', res);
             if (res && res.save) {
-                this.confirmService.openSnackBar('New Access Group added ! 🎉🎉🎉');
+                // TODO: SAVE ACCESS GROUP API ACTION HERE
+                const data = res.save.data;
+                let linkScheduleZoneArray: Array<LinkScheduleZoneDto> = [];
+                data.zoneDoorItems.forEach((zs: any) => {
+                    const item = { zoneId: zs.zoneDoor.id, scheduleId: zs.schedule.id };
+                    linkScheduleZoneArray.push(item);
+                })
+                const body: CreateAccessGroupDto = {
+                    name: data.name,
+                    locationId: data.location.id,
+                    zoneSchedules: linkScheduleZoneArray
+                }
+
+                this.accessGroupService.accessGroupControllerCreateAccessGroup(body).subscribe(res => {
+                    this.confirmService.openSnackBar('New Access Group added ! 🎉🎉🎉');
+                    this.getUserData()
+                })
             }
         })
     }

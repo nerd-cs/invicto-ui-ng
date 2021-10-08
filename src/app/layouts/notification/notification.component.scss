@@ -1,0 +1,10 @@
+::ng-deep {
+    .notification-panel {
+        position: absolute !important;
+        top: 100px;
+        width: 370px;
+        height: max-content;
+        margin-right: 40px;
+        max-height: 80vh;
+    }
+}

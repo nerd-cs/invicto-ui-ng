@@ -28,7 +28,7 @@ export class AllUsersComponent implements OnInit, OnDestroy {
     private destroy$ = new Subject();
     sidenavCollapsed!: boolean;
 
-    displayedColumns: string[] = ['name', 'lastActivity', 'accessGroups', 'status', 'actions'];
+    displayedColumns: string[] = ['name', 'createdAt', 'company', 'accessGroups', 'status', 'actions'];
     dataSource: MatTableDataSource<User> = new MatTableDataSource();
     totalUsers: number = 0;
     today = new Date();
@@ -51,7 +51,6 @@ export class AllUsersComponent implements OnInit, OnDestroy {
             this.sidenavCollapsed = res;
         });
 
-        this.isLoading = true;
         this.getUserData();
         this.shareService.searchKey$.pipe(
             debounceTime(500),
@@ -74,14 +73,18 @@ export class AllUsersComponent implements OnInit, OnDestroy {
     }
 
     getUserData() {
-        this.usersService.usersControllerGetAll().subscribe((users: User[]) => {
+        this.isLoading = true;
+        this.usersService.usersControllerGetUsersPage().subscribe(users => {
             console.log('Users ---', users);
-            this.totalUsers = users.length;
-            this.dataSource = new MatTableDataSource(users);
+            this.totalUsers = users.total;
+            this.dataSource = new MatTableDataSource(users.users as any);
             this.dataSource.paginator = this.paginator;
             this.dataSource.sort = this.sort;
             this.isLoading = false;
-        })
+        }, err => {
+            this.isLoading = false;
+            this.toastr.error('Fetching User Data Failed')
+         })
     }
 
     openFilters() {
@@ -125,6 +128,7 @@ export class AllUsersComponent implements OnInit, OnDestroy {
         }).afterClosed().subscribe(res => {
             console.log('stepper modal response ---', res);
             if (res && res.send) {
+                this.getUserData();
                 this.confirmService.openSnackBar('User has been invited ! 🎉🎉🎉');
             } else if (res && !res.send) {
                 this.confirmService.openSnackBar('Sorry, we are expecting troubles 🤔');
@@ -135,6 +139,7 @@ export class AllUsersComponent implements OnInit, OnDestroy {
     async gotoUserDetail(element: User) {
         const id = element.id;
         const userData = await this.usersService.usersControllerGetUserInfo(id).toPromise();
+        console.log('hey userData', '===============', userData)
         this.router.navigate(['user-detail'], { queryParams: { id: id }, relativeTo: this.route, state: userData });
     }
 
@@ -150,11 +155,12 @@ export class AllUsersComponent implements OnInit, OnDestroy {
             console.log('user status changed --', res);
             if (res && status === 'ARCHIVED') {
                 this.toastr.info('User Status Archived');
-                this.getUserData();
             } else if (res && res.status === 'INACTIVE') {
                 this.toastr.info('User Status Inactive');
-                this.getUserData();
+            } else if (res && res.status === 'ACTIVE') {
+                this.toastr.info('User Status ACTIVE');
             }
+            this.getUserData();
         })
     }
 

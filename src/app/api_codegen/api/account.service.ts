@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { AccountResponse } from '../model/accountResponse';
 import { UpdateAccountDto } from '../model/updateAccountDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -104,9 +105,9 @@ export class AccountService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public accountControllerGetAccountInfo(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public accountControllerGetAccountInfo(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public accountControllerGetAccountInfo(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public accountControllerGetAccountInfo(observe?: 'body', reportProgress?: boolean): Observable<AccountResponse>;
+    public accountControllerGetAccountInfo(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<AccountResponse>>;
+    public accountControllerGetAccountInfo(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<AccountResponse>>;
     public accountControllerGetAccountInfo(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -120,6 +121,7 @@ export class AccountService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -130,7 +132,7 @@ export class AccountService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/account`,
+        return this.httpClient.request<AccountResponse>('get',`${this.basePath}/account`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

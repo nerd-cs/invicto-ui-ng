@@ -1,10 +1,11 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
 import { MatMenuTrigger } from '@angular/material/menu';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { AuthenticationService } from '@app-core/services/authentication.service';
 import { GlobalShareService } from '@app-core/services/global-share.service';
 import { AccountModalComponent } from '@app-layouts/account-modal/account-modal.component';
+import { NotificationComponent } from '@app-layouts/notification/notification.component';
+import { NgDialogAnimationService } from 'ng-dialog-animation';
 import { Subject } from 'rxjs';
 import { filter, finalize, takeUntil } from 'rxjs/operators';
 import { User } from 'src/app/api_codegen';
@@ -18,6 +19,7 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
     destroy$ = new Subject();
     collapsed = false;
+    focused = false;
     dropdownActive = true;
     @ViewChild('userTrigger') protected userTrigger!: MatMenuTrigger;
     rippleColor = `rgba(2,145,255,0.1)`;
@@ -31,8 +33,8 @@ export class MainNavComponent implements OnInit, OnDestroy {
         public router: Router,
         private route: ActivatedRoute,
         private shareService: GlobalShareService,
-        private dialog: MatDialog,
-        private authService: AuthenticationService
+        private dialog: NgDialogAnimationService,
+        private authService: AuthenticationService,
     ) {
         this.shareService.sidenavCollapsed$.next(this.collapsed);
         this.route.data.subscribe(res => {
@@ -96,6 +98,33 @@ export class MainNavComponent implements OnInit, OnDestroy {
 
             }
         })
-
     }
+
+    openNotifications() {
+        this.dialog.open(NotificationComponent, {
+            disableClose: false,
+            panelClass: 'notification-panel',
+            animation: {
+                to: 'bottom',
+                incomingOptions: {
+                    keyframeAnimationOptions: {
+                        duration: 300
+                    }
+                },
+                outgoingOptions: {
+                    keyframeAnimationOptions: {
+                        duration: 150
+                    }
+                }
+            },
+            position: {
+                rowStart: '1',
+            },
+        }).afterClosed().subscribe(res => {
+            if (res) {
+                console.log('notification res---', res);
+            }
+        });
+    }
+
 }

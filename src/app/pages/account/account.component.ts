@@ -5,7 +5,7 @@ import { ConfirmService } from '@app-core/services/confirm.service';
 import { NgDialogAnimationService } from 'ng-dialog-animation';
 import { AccountEditPanelComponent } from './panels/account-edit-panel/account-edit-panel.component';
 import { GoogleEditPanelComponent } from './panels/google-edit-panel/google-edit-panel.component';
-import { AccountService } from 'src/app/api_codegen';
+import { AccountService } from 'src/app/api_codegen/api/account.service';
 
 @Component({
     selector: 'app-account',
@@ -14,19 +14,23 @@ import { AccountService } from 'src/app/api_codegen';
 })
 export class AccountComponent implements OnInit {
 
-    account!: any;
+    account: any;
+    isLoading = false;
 
     constructor(
         private dialog: NgDialogAnimationService,
         private confirmService: ConfirmService,
         public location: Location,
         private accountService: AccountService
-    ) { }
+    ) {
+    }
 
     ngOnInit(): void {
-        this.accountService.accountControllerGetAccountInfo().subscribe(res => {
+        this.isLoading = true;
+        this.accountService.accountControllerGetAccountInfo().subscribe((res: any) => {
             this.account = res;
             console.log('account info---', this.account);
+            this.isLoading = false;
         })
     }
 
@@ -43,8 +47,8 @@ export class AccountComponent implements OnInit {
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                this.accountService.accountControllerGetAccountInfo().subscribe(res => {
-                    this.account = res;
+                this.accountService.accountControllerGetAccountInfo().subscribe(response => {
+                    this.account = response;
                 })
                 this.confirmService.openSnackBar('Information updated ! 🎉🎉🎉');
             }
@@ -61,8 +65,8 @@ export class AccountComponent implements OnInit {
             }
         }).afterClosed().subscribe(res => {
             if (res) {
-                this.accountService.accountControllerGetAccountInfo().subscribe(res => {
-                    this.account = res;
+                this.accountService.accountControllerGetAccountInfo().subscribe((response: any) => {
+                    this.account = response;
                 })
                 this.confirmService.openSnackBar('Information updated ! 🎉🎉🎉');
             }

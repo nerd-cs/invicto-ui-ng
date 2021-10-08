@@ -1,11 +1,13 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MomentDateAdapter, MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_LOCALE, MAT_DATE_FORMATS } from '@angular/material/core';
-import { MatDialogRef } from '@angular/material/dialog';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { MY_FORMATS } from '@app-core/models/common';
+import { ToastrService } from 'ngx-toastr';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
+import { CreateHolidayDto, HolidayService } from 'src/app/api_codegen';
 import { CustomCalendarHeaderComponent } from '../custom-calendar-header/custom-calendar-header.component';
 
 @Component({
@@ -24,33 +26,52 @@ import { CustomCalendarHeaderComponent } from '../custom-calendar-header/custom-
 
 export class AddingHolidayTabComponent implements OnInit, OnDestroy {
 
+    isLoading = false;
     searchKey: any;
     private destroy$ = new Subject();
     customCalendarHeader = CustomCalendarHeaderComponent;
 
     holidays: any[] = [
-        { name: 'Christmas', checked: false },
-        { name: 'Easter', checked: false },
-        { name: 'National Day', checked: false },
-        { name: 'Workers Day', checked: false },
-        { name: 'Other Holiday', checked: false },
-        { name: 'Other Holiday', checked: false },
-        { name: 'Other Holiday', checked: false },
-        { name: 'Other Holiday', checked: false },
+        // { name: 'Christmas', checked: false },
     ]
     holidayForm!: FormGroup;
     startMinDate = null;
     endMinDate = new Date();
 
+    tabIndex = 0;
+    preSelected: any = [];
+
     constructor(
         private dialogRef: MatDialogRef<AddingHolidayTabComponent>,
-        private fb: FormBuilder
-    ) { }
+        @Inject(MAT_DIALOG_DATA) public data: any,
+        private fb: FormBuilder,
+        private holidayService: HolidayService,
+        private toastr: ToastrService
+    ) {
+        if (data && data.selectedHoliday) {
+            this.preSelected = data.selectedHoliday.map((item: any) => item.id)
+        }
+        console.log('this.preSelected---', this.preSelected);
+    }
 
     ngOnInit(): void {
+        this.isLoading = true;
+        this.holidayService.holidayControllerGetAllHolidays().subscribe(holidays => {
+            holidays.forEach((element: any) => {
+                if (this.preSelected.includes(element.id)) {
+                    const ele = {...element, checked: true}
+                    this.holidays.push(ele)
+                } else {
+                    const ele = {...element, checked: false}
+                    this.holidays.push(ele)
+                }
+            });
+            this.isLoading = false;
+            console.log(this.holidays, '--------HOL----')
+        })
         this.holidayForm = this.fb.group({
-            name: ['Christmas', Validators.required],
-            recurrence: ['Every year', Validators.required],
+            name: ['', Validators.required],
+            recurrence: ['ONCE', Validators.required],
             startDate: [new Date()],
             endDate: [new Date()],
         });
@@ -68,6 +89,20 @@ export class AddingHolidayTabComponent implements OnInit, OnDestroy {
     }
 
     add() {
-        this.dialogRef.close(true);
+        if (this.tabIndex === 1) {
+            const body: CreateHolidayDto = {
+                name: this.holidayForm.controls['name'].value,
+                recurrence: this.holidayForm.controls['recurrence'].value,
+                startDate: this.holidayForm.controls['startDate'].value,
+                endDate: this.holidayForm.controls['endDate'].value
+            }
+            this.holidayService.holidayControllerCreateHoliday(body).subscribe(res => {
+                this.toastr.success('Holiday Created');
+                this.holidays.push({...res, checked: false});
+                this.tabIndex = 0;
+            })
+        } else if (this.tabIndex === 0) {
+            this.dialogRef.close(this.holidays.filter(item => item.checked));
+        }
     }
 }

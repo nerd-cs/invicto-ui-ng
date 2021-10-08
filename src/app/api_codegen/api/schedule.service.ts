@@ -18,6 +18,9 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 import { Observable }                                        from 'rxjs';
 
 import { CreateScheduleDto } from '../model/createScheduleDto';
+import { Schedule } from '../model/schedule';
+import { ScheduleDescription } from '../model/scheduleDescription';
+import { SchedulePage } from '../model/schedulePage';
 import { UpdateScheduleDto } from '../model/updateScheduleDto';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
@@ -165,9 +168,9 @@ export class ScheduleService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public scheduleControllerGetScheduleDescription(scheduleId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public scheduleControllerGetScheduleDescription(scheduleId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public scheduleControllerGetScheduleDescription(scheduleId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public scheduleControllerGetScheduleDescription(scheduleId: number, observe?: 'body', reportProgress?: boolean): Observable<ScheduleDescription>;
+    public scheduleControllerGetScheduleDescription(scheduleId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<ScheduleDescription>>;
+    public scheduleControllerGetScheduleDescription(scheduleId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<ScheduleDescription>>;
     public scheduleControllerGetScheduleDescription(scheduleId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (scheduleId === null || scheduleId === undefined) {
@@ -185,6 +188,7 @@ export class ScheduleService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -195,7 +199,7 @@ export class ScheduleService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/schedule/${encodeURIComponent(String(scheduleId))}`,
+        return this.httpClient.request<ScheduleDescription>('get',`${this.basePath}/schedule/${encodeURIComponent(String(scheduleId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -212,9 +216,9 @@ export class ScheduleService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public scheduleControllerGetSchedulesList(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public scheduleControllerGetSchedulesList(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public scheduleControllerGetSchedulesList(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public scheduleControllerGetSchedulesList(observe?: 'body', reportProgress?: boolean): Observable<Array<Schedule>>;
+    public scheduleControllerGetSchedulesList(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<Schedule>>>;
+    public scheduleControllerGetSchedulesList(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<Schedule>>>;
     public scheduleControllerGetSchedulesList(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -228,6 +232,7 @@ export class ScheduleService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -238,7 +243,7 @@ export class ScheduleService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/schedule`,
+        return this.httpClient.request<Array<Schedule>>('get',`${this.basePath}/schedule`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -257,18 +262,12 @@ export class ScheduleService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public scheduleControllerGetSchedulesPage(page: number, limit: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public scheduleControllerGetSchedulesPage(page: number, limit: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public scheduleControllerGetSchedulesPage(page: number, limit: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public scheduleControllerGetSchedulesPage(page: number, limit: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public scheduleControllerGetSchedulesPage(page?: number, limit?: number, observe?: 'body', reportProgress?: boolean): Observable<SchedulePage>;
+    public scheduleControllerGetSchedulesPage(page?: number, limit?: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<SchedulePage>>;
+    public scheduleControllerGetSchedulesPage(page?: number, limit?: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<SchedulePage>>;
+    public scheduleControllerGetSchedulesPage(page?: number, limit?: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling scheduleControllerGetSchedulesPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling scheduleControllerGetSchedulesPage.');
-        }
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
         if (page !== undefined && page !== null) {
@@ -287,6 +286,7 @@ export class ScheduleService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -297,7 +297,7 @@ export class ScheduleService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/schedule/list`,
+        return this.httpClient.request<SchedulePage>('get',`${this.basePath}/schedule/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

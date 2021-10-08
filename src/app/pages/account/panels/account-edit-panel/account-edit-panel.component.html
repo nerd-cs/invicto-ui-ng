@@ -9,7 +9,7 @@
             <img src="/assets/images/avatar.jpg" alt="">
         </div>
         <div class="name-edit">
-            <p class="name col-black h6 mb-1">Chris Stampleton</p>
+            <p class="name col-black h6 mb-1">{{account.fullName}}</p>
             <p class="edit col-blue h-5 cursor-pointer text-body-sm">Delete photo</p>
         </div>
     </div>
@@ -29,7 +29,7 @@
             <mat-error *ngIf="profileForm.controls['jobTitle'].invalid">{{'This field is required'}}</mat-error>
         </mat-form-field>
 
-        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1 pointer-events-none">
             <mat-label>Company</mat-label>
             <input readonly matInput placeholder="" formControlName="company" required>
             <mat-error *ngIf="profileForm.controls['company'].invalid">{{'This field is required'}}</mat-error>

@@ -9,7 +9,8 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { TypeRole } from './typeRole';
+import { TypeTierAdminOption } from './typeTierAdminOption';
+import { TypeUserRole } from './typeUserRole';
 import { UserStatusForUpdate } from './userStatusForUpdate';
 
 export interface UpdateUserDto { 
@@ -18,8 +19,11 @@ export interface UpdateUserDto {
     fullName?: string;
     email?: string;
     status?: UserStatusForUpdate;
-    role?: TypeRole;
+    role?: TypeUserRole;
+    roleOption?: TypeTierAdminOption;
     phoneNumber?: string;
+    companyId?: number;
     employeeNumber?: number;
-    department?: string;
+    departmentId?: number;
+    costCenterId?: number;
 }

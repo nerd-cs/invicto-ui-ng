@@ -14,6 +14,7 @@ export class QuickViewComponent implements OnInit {
     keyCardOn = true;
     mobileCardOn = false;
     userData!: any;
+    prevUserCards: any;
 
     constructor(
         private router: Router,
@@ -24,6 +25,7 @@ export class QuickViewComponent implements OnInit {
         @Inject(MAT_DIALOG_DATA) public data: any
     ) {
         this.userData = data.userData;
+        this.prevUserCards = JSON.parse(JSON.stringify(data.userData.cards));
         console.log('quick view user data', this.userData);
     }
 
@@ -58,15 +60,15 @@ export class QuickViewComponent implements OnInit {
     }
 
     save() {
-        // FIXME:
-        this.userData.cards.forEach((card: any) => {
+        this.userData.cards.forEach((card: any, idx: number) => {
+            if (card.isActive === this.prevUserCards[idx].isActive) {
+                return;
+            }
             const body = { isActive : card.isActive };
             this.usersService.usersControllerChangeCardActiveness(body, this.userData.id, card.id).subscribe(res => {
-                console.log('res--- card status update', res);
                 this.toastr.info(`Card-${card.id} status is updated`);
             }, (err) => {
-                this.toastr.error(`Card-${card.id} status same as before`);
-                console.log('err - no change', err);
+                throw err;
             })
         });
     }

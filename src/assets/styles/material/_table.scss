@@ -110,6 +110,8 @@
     }
 
     .mat-column-cardNumber,
+    .mat-column-updatedAt,
+    .mat-column-createdAt,
     .mat-column-lastActivity {
         width: 180px;
     }
@@ -128,6 +130,7 @@
         }
 
         .mat-column-cardNumber,
+        .mat-column-createdAt,
         .mat-column-lastActivity {
             width: 300px;
         }
@@ -143,6 +146,7 @@
         }
 
         .mat-column-cardNumber,
+        .mat-column-createdAt,
         .mat-column-lastActivity {
             width: 240px;
         }

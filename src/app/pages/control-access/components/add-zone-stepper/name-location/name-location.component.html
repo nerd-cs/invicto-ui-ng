@@ -1,0 +1,35 @@
+<div class="dialog-header">
+    <div class="h6 col-black"> Create Door Group </div>
+    <mat-icon (click)="close()">close</mat-icon>
+</div>
+<div class="dialog-content p-10 flex flex-col pb-5">
+    <div [formGroup]="nameLocation" class="">
+
+        <p class="text-title-sm col-black pl-2 pb-2">Info</p>
+
+        <div class="flex-center-between">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 mr-1 w-48">
+                <mat-label>Name</mat-label>
+                <input matInput placeholder="Zone Name" formControlName="name" required>
+                <mat-error *ngIf="nameLocation.controls['name'].invalid">{{'This field is required'}}</mat-error>
+            </mat-form-field>
+            <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
+                <mat-label>Description</mat-label>
+                <input matInput placeholder="Description" formControlName="description">
+            </mat-form-field>
+        </div>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Location</mat-label>
+            <mat-select formControlName="location">
+                <ng-container *ngFor="let location of locations">
+                    <mat-option [value]="location">{{location.name}}</mat-option>
+                </ng-container>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+<div class="dialog-footer">
+    <button class="btn secondary-btn w-24 ml-auto mr-4" (click)="close()">Cancel</button>
+    <button class="btn primary-btn w-24" (click)="next()">Next</button>
+</div>

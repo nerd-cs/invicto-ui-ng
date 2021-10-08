@@ -1,0 +1,14 @@
+::ng-deep {
+    .mat-select.group-select {
+        padding: 0;
+        border: none;
+        outline: none;
+        line-height: 1.125rem;
+        &:focus {
+            box-shadow: none;
+        }
+    }
+    .zone-door-group {
+        max-height: 80vh !important;
+    }
+}

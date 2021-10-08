@@ -1,0 +1,32 @@
+<div class="filters-panel-container">
+    <div class="top-section flex items-center px-4 pt-3 pb-8">
+        <div class="h6">Filter</div>
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CLEAR</button>
+        <button class="btn primary-btn w-20 ml-4">APPLY</button>
+    </div>
+    <div class="divider -mx-6 overflow-hidden"></div>
+    <div class="search flex items-center rounded-md h-12 mx-auto px-4 mt-10 mb-8">
+        <mat-icon>search</mat-icon>
+        <input class="search-input pl-4 bg-transparent col-black-light w-80" placeholder="Search" #input>
+    </div>
+    <div [formGroup]="filterForm" class="px-4">
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Location(s)</mat-label>
+            <mat-select formControlName="locations">
+                <mat-option value="All">All locations</mat-option>
+                <mat-option value="Location 1">Location 1</mat-option>
+                <mat-option value="Location 2">Location 2</mat-option>
+            </mat-select>
+        </mat-form-field>
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Organization(s)</mat-label>
+            <mat-select formControlName="organizations">
+                <mat-option value="All">All Organizations</mat-option>
+                <mat-option value="Organization 1">Organization 1</mat-option>
+                <mat-option value="Organization 2">Organization 2</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>

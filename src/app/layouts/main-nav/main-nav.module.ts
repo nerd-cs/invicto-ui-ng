@@ -14,6 +14,7 @@ import { ConfirmService } from '@app-core/services/confirm.service';
 import { GoogleLoginProvider, SocialAuthServiceConfig, SocialLoginModule } from 'angularx-social-login';
 import { environment } from 'src/environments/environment';
 import { TranslateModule } from '@ngx-translate/core';
+import { PipesModule } from '../../shared/pipes/pipes.module';
 
 
 
@@ -32,7 +33,8 @@ import { TranslateModule } from '@ngx-translate/core';
         MatRippleModule,
         MatDialogModule,
         SocialLoginModule,
-        TranslateModule
+        TranslateModule,
+        PipesModule
     ],
     providers: [
         NgDialogAnimationService,

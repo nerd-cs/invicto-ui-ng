@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { LocationResponse } from '../model/locationResponse';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -60,9 +61,9 @@ export class LocationService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public locationControllerGetAllForCompany(observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public locationControllerGetAllForCompany(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public locationControllerGetAllForCompany(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public locationControllerGetAllForCompany(observe?: 'body', reportProgress?: boolean): Observable<Array<LocationResponse>>;
+    public locationControllerGetAllForCompany(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<LocationResponse>>>;
+    public locationControllerGetAllForCompany(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<LocationResponse>>>;
     public locationControllerGetAllForCompany(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -76,6 +77,7 @@ export class LocationService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -86,7 +88,7 @@ export class LocationService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/location`,
+        return this.httpClient.request<Array<LocationResponse>>('get',`${this.basePath}/location`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

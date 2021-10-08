@@ -32,11 +32,11 @@
             <div class="item flex items-center h-12 border-b border-black border-opacity-10"
                  *ngFor="let weekday of weekdays; index as idx">
                 <p class="w-20 text-body-sm day">{{weekday.day}}</p>
-                <mat-slide-toggle [(ngModel)]="weekday.status" name="status" class="w-11 mr-2 status"></mat-slide-toggle>
+                <mat-slide-toggle (change)="toogleChange($event, weekday, idx, 'weekday')" [(ngModel)]="weekday.status" name="status" class="w-11 mr-2 status"></mat-slide-toggle>
                 <div class="overflow-x-auto flex items-center time-wrap cursor-pointer">
                     <ng-container *ngFor="let schedule of weekday.schedules; index as slot">
                         <div class="schedule-item col-black" [class.disable]="!weekday.status" (click)="editTimeSlot(idx, slot, schedule, 'weekday')">
-                            {{schedule.from}} to {{schedule.to}}
+                            {{schedule.startTime}} to {{schedule.endTime}}
                         </div>
                     </ng-container>
                 </div>
@@ -51,7 +51,7 @@
     </div>
     <div class="holidays mt-8 px-4">
         <div class="list-header flex pb-4 border-b border-black border-opacity-10">
-            <p class="w-20 text-title-sm">Holidays</p>
+            <p class="w-32 text-title-sm">Holidays</p>
             <p class="w-11 text-title-sm mr-2"></p>
             <p class="text-title-sm flex"> Schedule
                 <span class="material-icons text-sm cursor-pointer -mt-1 ml-2" matTooltip="SHIFT + SCROLL ♻" matTooltipPosition="right"> help_outline </span>
@@ -59,12 +59,12 @@
         </div>
         <div class="list-contents flex flex-col" *ngFor="let holiday of holidays; index as idx">
             <div class="item flex items-center h-12 border-b border-black border-opacity-10">
-                <p class="w-20 text-body-sm day">{{holiday.holiday}}</p>
-                <mat-slide-toggle [(ngModel)]="holiday.status" name="status" class="w-11 mr-2 status"></mat-slide-toggle>
+                <p class="w-32 text-body-sm day" style="min-width: 128px;">{{holiday.holiday}}</p>
+                <mat-slide-toggle (change)="toogleChange($event, holiday, idx, 'holiday')" [(ngModel)]="holiday.status" name="status" class="w-11 mr-2 status"></mat-slide-toggle>
                 <div class="overflow-x-auto flex items-center time-wrap cursor-pointer">
                     <ng-container *ngFor="let schedule of holiday.schedules; index as slot">
                         <div class="schedule-item col-black" [class.disable]="!holiday.status" (click)="editTimeSlot(idx, slot, schedule, 'holiday')">
-                            {{schedule.from}} to {{schedule.to}}
+                            {{schedule.startTime}} to {{schedule.endTime}}
                         </div>
                     </ng-container>
                 </div>
@@ -84,6 +84,6 @@
             <mat-icon>delete_outline</mat-icon> Delete
         </button>
         <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">Cancel</button>
-        <button class="btn primary-btn w-20 ml-4" [disabled]="!scheduleForm.valid">Save</button>
+        <button class="btn primary-btn w-20 ml-4" [disabled]="!scheduleForm.valid" (click)="updateSchedule()">Save</button>
     </div>
 </div>

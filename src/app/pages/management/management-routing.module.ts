@@ -1,10 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { UserManagementComponent } from './user-management/user-management.component';
+import { ManagementComponent } from './management.component';
+import { OrganizationDetailComponent } from './components/organization-detail/organization-detail.component';
 
 const routes: Routes = [
     {
-        path: 'user-management', component: UserManagementComponent
+        path: '', component: ManagementComponent
+    },
+    {
+        path: 'company-detail', component: OrganizationDetailComponent
     }
 ];
 

@@ -17,6 +17,7 @@ import { CustomHttpUrlEncodingCodec }                        from '../encoder';
 
 import { Observable }                                        from 'rxjs';
 
+import { AccessGroupPerLocation } from '../model/accessGroupPerLocation';
 import { ChangeActivenessDto } from '../model/changeActivenessDto';
 import { ChangeUserStatusDto } from '../model/changeUserStatusDto';
 import { CompleteRegistrationDto } from '../model/completeRegistrationDto';
@@ -24,11 +25,14 @@ import { CreateCollaboratorDto } from '../model/createCollaboratorDto';
 import { CreateUserCardsDto } from '../model/createUserCardsDto';
 import { CreateUserDto } from '../model/createUserDto';
 import { ResetPasswordDto } from '../model/resetPasswordDto';
-import { TypeRole } from '../model/typeRole';
+import { TypeFilterRole } from '../model/typeFilterRole';
 import { UpdateAccessGroupsDto } from '../model/updateAccessGroupsDto';
 import { UpdateUserCardDto } from '../model/updateUserCardDto';
 import { UpdateUserDto } from '../model/updateUserDto';
 import { User } from '../model/user';
+import { UserInfo } from '../model/userInfo';
+import { UserPage } from '../model/userPage';
+import { UserResponse } from '../model/userResponse';
 
 import { BASE_PATH, COLLECTION_FORMATS }                     from '../variables';
 import { Configuration }                                     from '../configuration';
@@ -197,7 +201,7 @@ export class UsersService {
     }
 
     /**
-     * Archive or deactivate user
+     * Archive, activate or deactivate user
      * 
      * @param body 
      * @param userId 
@@ -579,9 +583,9 @@ export class UsersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersControllerGetAll(observe?: 'body', reportProgress?: boolean): Observable<Array<User>>;
-    public usersControllerGetAll(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<User>>>;
-    public usersControllerGetAll(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<User>>>;
+    public usersControllerGetAll(observe?: 'body', reportProgress?: boolean): Observable<Array<UserResponse>>;
+    public usersControllerGetAll(observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<UserResponse>>>;
+    public usersControllerGetAll(observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<UserResponse>>>;
     public usersControllerGetAll(observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -606,7 +610,7 @@ export class UsersService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<Array<User>>('get',`${this.basePath}/users`,
+        return this.httpClient.request<Array<UserResponse>>('get',`${this.basePath}/users`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -624,9 +628,9 @@ export class UsersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersControllerGetUserAccessGroups(userId: number, observe?: 'body', reportProgress?: boolean): Observable<User>;
-    public usersControllerGetUserAccessGroups(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<User>>;
-    public usersControllerGetUserAccessGroups(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<User>>;
+    public usersControllerGetUserAccessGroups(userId: number, observe?: 'body', reportProgress?: boolean): Observable<Array<AccessGroupPerLocation>>;
+    public usersControllerGetUserAccessGroups(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<Array<AccessGroupPerLocation>>>;
+    public usersControllerGetUserAccessGroups(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<Array<AccessGroupPerLocation>>>;
     public usersControllerGetUserAccessGroups(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (userId === null || userId === undefined) {
@@ -655,7 +659,7 @@ export class UsersService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<User>('get',`${this.basePath}/users/${encodeURIComponent(String(userId))}/accessgroups`,
+        return this.httpClient.request<Array<AccessGroupPerLocation>>('get',`${this.basePath}/users/${encodeURIComponent(String(userId))}/accessgroups`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -673,9 +677,9 @@ export class UsersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersControllerGetUserInfo(userId: number, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public usersControllerGetUserInfo(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public usersControllerGetUserInfo(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
+    public usersControllerGetUserInfo(userId: number, observe?: 'body', reportProgress?: boolean): Observable<UserInfo>;
+    public usersControllerGetUserInfo(userId: number, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserInfo>>;
+    public usersControllerGetUserInfo(userId: number, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserInfo>>;
     public usersControllerGetUserInfo(userId: number, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
         if (userId === null || userId === undefined) {
@@ -693,6 +697,7 @@ export class UsersService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -703,7 +708,7 @@ export class UsersService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/users/${encodeURIComponent(String(userId))}`,
+        return this.httpClient.request<UserInfo>('get',`${this.basePath}/users/${encodeURIComponent(String(userId))}`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,
@@ -723,18 +728,12 @@ export class UsersService {
      * @param observe set whether or not to return the data Observable as the body, response or events. defaults to returning the body.
      * @param reportProgress flag to report request and response progress.
      */
-    public usersControllerGetUsersPage(page: number, limit: number, role?: TypeRole, observe?: 'body', reportProgress?: boolean): Observable<any>;
-    public usersControllerGetUsersPage(page: number, limit: number, role?: TypeRole, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<any>>;
-    public usersControllerGetUsersPage(page: number, limit: number, role?: TypeRole, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<any>>;
-    public usersControllerGetUsersPage(page: number, limit: number, role?: TypeRole, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
+    public usersControllerGetUsersPage(page?: number, limit?: number, role?: TypeFilterRole, observe?: 'body', reportProgress?: boolean): Observable<UserPage>;
+    public usersControllerGetUsersPage(page?: number, limit?: number, role?: TypeFilterRole, observe?: 'response', reportProgress?: boolean): Observable<HttpResponse<UserPage>>;
+    public usersControllerGetUsersPage(page?: number, limit?: number, role?: TypeFilterRole, observe?: 'events', reportProgress?: boolean): Observable<HttpEvent<UserPage>>;
+    public usersControllerGetUsersPage(page?: number, limit?: number, role?: TypeFilterRole, observe: any = 'body', reportProgress: boolean = false ): Observable<any> {
 
-        if (page === null || page === undefined) {
-            throw new Error('Required parameter page was null or undefined when calling usersControllerGetUsersPage.');
-        }
 
-        if (limit === null || limit === undefined) {
-            throw new Error('Required parameter limit was null or undefined when calling usersControllerGetUsersPage.');
-        }
 
 
         let queryParameters = new HttpParams({encoder: new CustomHttpUrlEncodingCodec()});
@@ -757,6 +756,7 @@ export class UsersService {
 
         // to determine the Accept header
         let httpHeaderAccepts: string[] = [
+            'application/json'
         ];
         const httpHeaderAcceptSelected: string | undefined = this.configuration.selectHeaderAccept(httpHeaderAccepts);
         if (httpHeaderAcceptSelected != undefined) {
@@ -767,7 +767,7 @@ export class UsersService {
         const consumes: string[] = [
         ];
 
-        return this.httpClient.request<any>('get',`${this.basePath}/users/list`,
+        return this.httpClient.request<UserPage>('get',`${this.basePath}/users/list`,
             {
                 params: queryParameters,
                 withCredentials: this.configuration.withCredentials,

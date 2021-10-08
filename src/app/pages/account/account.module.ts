@@ -13,6 +13,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
 import { GoogleEditPanelComponent } from './panels/google-edit-panel/google-edit-panel.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
 
 
 
@@ -32,7 +33,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
         MatSelectModule,
         MatInputModule,
         MatDialogModule,
-        MatSnackBarModule
+        MatSnackBarModule,
+        SpinnerModule
     ],
     providers: [
         NgDialogAnimationService,

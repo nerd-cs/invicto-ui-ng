@@ -30,11 +30,20 @@
                 </td>
             </ng-container>
 
-            <ng-container matColumnDef="lastActivity">
-                <th mat-header-cell *matHeaderCellDef mat-sort-header> Last activity </th>
+            <ng-container matColumnDef="createdAt">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Date of Creation </th>
                 <td mat-cell *matCellDef="let user">
                     <div class="last-activity grey-col">
-                        {{user.lastActivity ?? today | dates : 'MM-DD-YYYY [at] hh:mm a'}}
+                        {{user.createdAt ?? today | dates : 'MM-DD-YYYY [at] hh:mm a'}}
+                    </div>
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="company">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Organization </th>
+                <td mat-cell *matCellDef="let user">
+                    <div class="company-name grey-col">
+                        {{user.company.name}}
                     </div>
                 </td>
             </ng-container>
@@ -86,7 +95,8 @@
                             <mat-icon [matMenuTriggerFor]="actions">more_vert</mat-icon>
                             <mat-menu #actions="matMenu" class="actions-menu" xPosition="before">
                                 <button mat-menu-item (click)="resetPassword(user.id)">Reset password</button>
-                                <button mat-menu-item (click)="changeUserStatus(user, 'INACTIVE')">Deactivate</button>
+                                <button mat-menu-item *ngIf="user.status === 'ACTIVE'" (click)="changeUserStatus(user, 'INACTIVE')">Deactivate</button>
+                                <button mat-menu-item *ngIf="user.status === 'INACTIVE'" (click)="changeUserStatus(user, 'ACTIVE')">Activate</button>
                                 <button mat-menu-item (click)="changeUserStatus(user, 'ARCHIVED')">Archive</button>
                             </mat-menu>
                         </div>

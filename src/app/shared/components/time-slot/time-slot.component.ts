@@ -27,7 +27,7 @@ import { CustomCalendarHeaderComponent } from '../custom-calendar-header/custom-
 })
 export class TimeSlotComponent implements OnInit, OnDestroy {
 
-    options:string[] = [];
+    options: string[] = [];
 
     private destroy$ = new Subject();
     customCalendarHeader = CustomCalendarHeaderComponent;
@@ -45,28 +45,29 @@ export class TimeSlotComponent implements OnInit, OnDestroy {
         private dialogRef: MatDialogRef<TimeSlotComponent>,
         @Inject(MAT_DIALOG_DATA) public data: any,
     ) {
+        for (let hour = 0; hour < 12; hour++) {
+            this.options.push(_moment({ hour }).format('hh:mm'));
+            this.options.push(_moment({ hour, minute: 15 }).format('hh:mm'));
+            this.options.push(_moment({ hour, minute: 30 }).format('hh:mm'));
+            this.options.push(_moment({ hour, minute: 45 }).format('hh:mm'));
+        }
+        // console.log(this.options);
+        console.log(this.data, 'data---time slot')
         this.type = data.type;
         this.mode = data.mode;
-        if (data.schedule) {
-            // this.starting = data.schedule.from
-            // this.ending = data.schedule.to
-            this.starting = "04.00"
-            this.ending = "07.30"
-            this.sPeriod = 'AM'
-            this.ePeriod = 'PM'
+        if (this.mode === 'edit') {
+            const startTime = data.schedule.startTime;
+            const endTime = data.schedule.endTime;
+            this.starting = startTime.split(' ')[0];
+            this.ending = endTime.split(' ')[0];
+            this.sPeriod = startTime.slice(-2)
+            this.ePeriod = endTime.slice(-2)
         } else {
-            this.starting = "04.00"
-            this.ending = "05.30"
+            this.starting = "12:00"
+            this.ending = "11:45"
             this.sPeriod = 'AM'
             this.ePeriod = 'PM'
         }
-        for (let hour = 0; hour < 12; hour++) {
-            this.options.push(_moment({hour}).format('hh.mm'));
-            this.options.push(_moment({hour, minute: 15}).format('hh.mm'));
-            this.options.push(_moment({hour, minute: 30}).format('hh.mm'));
-            this.options.push(_moment({hour, minute: 45}).format('hh.mm'));
-        }
-        console.log(this.options);
     }
 
     ngOnInit(): void {
@@ -85,9 +86,10 @@ export class TimeSlotComponent implements OnInit, OnDestroy {
 
     save() {
         const timeSlot = {
-            from: '05.00 am', to: '11.30 pm'
+            startTime: this.timeSlotForm.controls['starting'].value + ' ' + this.timeSlotForm.controls['sPeriod'].value,
+            endTime: this.timeSlotForm.controls['ending'].value + ' ' + this.timeSlotForm.controls['ePeriod'].value,
         }
-        this.dialogRef.close(timeSlot);
+        this.dialogRef.close({ timeSlot: timeSlot, mode: this.mode });
     }
     cancel() {
         this.dialogRef.close(false);

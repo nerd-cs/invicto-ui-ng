@@ -6,7 +6,9 @@ import { HttpClient } from '@angular/common/http';
 import { AccessGroupService } from './api/accessGroup.service';
 import { AccountService } from './api/account.service';
 import { AuthService } from './api/auth.service';
+import { CompanyService } from './api/company.service';
 import { ControllerService } from './api/controller.service';
+import { DepartmentService } from './api/department.service';
 import { DoorService } from './api/door.service';
 import { HolidayService } from './api/holiday.service';
 import { LocationService } from './api/location.service';
@@ -22,7 +24,9 @@ import { ZoneService } from './api/zone.service';
     AccessGroupService,
     AccountService,
     AuthService,
+    CompanyService,
     ControllerService,
+    DepartmentService,
     DoorService,
     HolidayService,
     LocationService,

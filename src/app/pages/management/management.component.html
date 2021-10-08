@@ -1,0 +1,27 @@
+<div class="main-container overflow-y-auto overflow-x-hidden pr-10 pt-7 pb-4 relative"
+    [class.collapsed]="sidenavCollapsed">
+    <div class="top-section flex-center-between h-12 mb-9">
+        <div class="h5 col-black"> User management </div>
+        <div class="down-filter flex items-center">
+            <div class="icon-wrap-40 cursor-pointer pr-4">
+                <mat-icon fontSet="material-icons-outlined"> file_download </mat-icon>
+            </div>
+            <div class="filter h-10 rounded cursor-pointer flex items-center justify-around" (click)="openFilters()">
+                <span class="h-6 col-black text-title-lg">Filter</span>
+                <mat-icon>filter_list</mat-icon>
+            </div>
+        </div>
+    </div>
+
+    <div class="main-contents">
+        <mat-tab-group mat-align-tabs="center" color="accent" class="items-center management-tab" animationDuration="0ms"
+            [selectedIndex]="selected" (selectedIndexChange)="selectedIndexChange($event)">
+            <mat-tab label="Users">
+                <app-user-manage></app-user-manage>
+            </mat-tab>
+            <mat-tab label="Organizations">
+                <app-organization-manage></app-organization-manage>
+            </mat-tab>
+        </mat-tab-group>
+    </div>
+</div>

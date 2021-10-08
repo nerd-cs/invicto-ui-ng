@@ -9,7 +9,7 @@
  * https://github.com/swagger-api/swagger-codegen.git
  * Do not edit the class manually.
  */
-import { AssignHolidayDto } from './assignHolidayDto';
+import { UpdateScheduleHolidayDto } from './updateScheduleHolidayDto';
 import { UpdateTimetableDto } from './updateTimetableDto';
 
 export interface UpdateScheduleDto { 
@@ -17,5 +17,5 @@ export interface UpdateScheduleDto {
     name?: string;
     description?: string;
     timetables?: Array<UpdateTimetableDto>;
-    holidays?: Array<AssignHolidayDto>;
+    holidays?: Array<UpdateScheduleHolidayDto>;
 }
