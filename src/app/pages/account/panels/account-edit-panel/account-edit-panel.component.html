@@ -5,8 +5,9 @@
     </div>
 
     <div class="user flex items-center ml-4 mb-10">
-        <div class="user-avatar w-24 h-24 mr-4">
-            <img src="/assets/images/avatar.jpg" alt="">
+        <div class="user-avatar w-24 h-24 mr-4 profile-avatar h4">
+            <!-- <img src="/assets/images/avatar.jpg" alt=""> -->
+            {{account.fullName | initName}}
         </div>
         <div class="name-edit">
             <p class="name col-black h6 mb-1">{{account.fullName}}</p>

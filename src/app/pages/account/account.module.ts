@@ -11,17 +11,25 @@ import { ConfirmService } from '@app-core/services/confirm.service';
 import { NgDialogAnimationService } from 'ng-dialog-animation';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDialogModule } from '@angular/material/dialog';
-import { GoogleEditPanelComponent } from './panels/google-edit-panel/google-edit-panel.component';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
-
-
+import { PasswordEditPanelComponent } from './panels/password-edit-panel/password-edit-panel.component';
+import { PhoneEditPanelComponent } from './panels/phone-edit-panel/phone-edit-panel.component';
+import { NgxMaskModule } from 'ngx-mask';
+import { TwoStepPanelComponent } from './panels/two-step-panel/two-step-panel.component';
+import { CommunicationEditPanelComponent } from './panels/communication-edit-panel/communication-edit-panel.component';
+import { SettingEditPanelComponent } from './panels/setting-edit-panel/setting-edit-panel.component';
+import { PipesModule } from '../../shared/pipes/pipes.module';
 
 @NgModule({
     declarations: [
         AccountComponent,
         AccountEditPanelComponent,
-        GoogleEditPanelComponent
+        PasswordEditPanelComponent,
+        PhoneEditPanelComponent,
+        TwoStepPanelComponent,
+        CommunicationEditPanelComponent,
+        SettingEditPanelComponent
     ],
     imports: [
         CommonModule,
@@ -34,7 +42,9 @@ import { SpinnerModule } from '@app-layouts/spinner/spinner.module';
         MatInputModule,
         MatDialogModule,
         MatSnackBarModule,
-        SpinnerModule
+        SpinnerModule,
+        PipesModule,
+        NgxMaskModule.forRoot()
     ],
     providers: [
         NgDialogAnimationService,

@@ -12,6 +12,7 @@ import { TranslateModule } from '@ngx-translate/core';
 import { SigninStepComponent } from './signin-step/signin-step.component';
 import { AccountModalComponent } from './account-modal/account-modal.component';
 import { NotificationComponent } from './notification/notification.component';
+import { PipesModule } from '../shared/pipes/pipes.module';
 
 
 
@@ -25,7 +26,8 @@ import { NotificationComponent } from './notification/notification.component';
         MatFormFieldModule,
         MatSelectModule,
         SocialLoginModule,
-        TranslateModule
+        TranslateModule,
+        PipesModule
     ],
     exports: [
         SigninStepComponent

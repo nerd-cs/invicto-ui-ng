@@ -16,7 +16,8 @@
         </div>
         <div class="profile-contents flex flex-wrap items-end">
             <section class="user-info mb-6 flex w-full">
-                <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full">
+                <!-- <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full"> -->
+                <div class="profile-avatar h4 w-20 h-20">{{account.fullName | initName}}</div>
                 <div class="ml-4 flex flex-col justify-center">
                     <p class="h6 mb-1 col-black w-max">{{account.fullName}} </p>
                     <p class="text-body-sm col-blue">Update Photo</p>
@@ -49,7 +50,7 @@
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>
-            <div class="h-16 item-wrap px-3 flex justify-between" (click)="googleAccount()">
+            <div class="h-16 item-wrap px-3 flex justify-between" (click)="updatePassword()">
                 <div class="flex flex-col justify-center">
                     <p class="item-label text-overline">PASSWORD</p>
                     <p class="item-value text-title-lg">.........</p>
@@ -58,19 +59,29 @@
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>
-            <div class="h-16 item-wrap px-3 flex justify-between">
+
+            <div class="h-16 item-wrap px-3 flex justify-between" (click)="updatePhone()">
                 <div class="flex flex-col justify-center">
-                    <p class="item-label text-overline">LINKED ACCOUNT</p>
-                    <p class="item-value text-title-lg">Connected with Google </p>
+                    <p class="item-label text-overline">PHONE</p>
+                    <p class="item-value text-title-lg">{{account.phoneNumber}} </p>
                 </div>
                 <div class="flex-center">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
             </div>
-            <div class="h-16 item-wrap px-3 flex justify-between">
+            <div class="h-16 item-wrap px-3 flex justify-between" (click)="updateTwoStep()">
                 <div class="flex flex-col justify-center">
                     <p class="item-label text-overline">TWO STEPS AUTHENTICATION</p>
                     <p class="item-value text-title-lg">{{account.twoStepAuth ? 'Activated' : 'Deactivated'}} </p>
+                </div>
+                <div class="flex-center">
+                    <mat-icon>keyboard_arrow_right</mat-icon>
+                </div>
+            </div>
+            <!-- <div class="h-16 item-wrap px-3 flex justify-between">
+                <div class="flex flex-col justify-center">
+                    <p class="item-label text-overline">LINKED ACCOUNT</p>
+                    <p class="item-value text-title-lg">Connected with Google </p>
                 </div>
                 <div class="flex-center">
                     <mat-icon>keyboard_arrow_right</mat-icon>
@@ -84,11 +95,18 @@
                 <div class="flex-center">
                     <mat-icon>keyboard_arrow_right</mat-icon>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div>
             <div class="border-login-com p-10 rounded-md bg-white">
-                <div class="h6 col-black mb-10">Communication</div>
+                <div class="content-header flex-center-between mb-10">
+                    <div class="h6 col-black">Communication</div>
+                    <div class="actions">
+                        <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="communicationEdit()">
+                            <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+                        </button>
+                    </div>
+                </div>
                 <div class="h-16 item-wrap px-3 flex justify-between">
                     <div class="flex flex-col justify-center">
                         <p class="item-label text-overline">FREQUENCE </p>
@@ -110,7 +128,14 @@
             </div>
 
             <div class="border-login-com p-10 mt-10 rounded-md bg-white">
-                <div class="h6 col-black mb-10">Settings</div>
+                <div class="content-header flex-center-between mb-10">
+                    <div class="h6 col-black">Settings</div>
+                    <div class="actions">
+                        <button class="btn secondary-outline-btn pl-1 pr-2 border border-black border-opacity-10" (click)="settingEdit()">
+                            <mat-icon fontSet="material-icons-outlined">edit</mat-icon>
+                        </button>
+                    </div>
+                </div>
                 <div class="h-16 item-wrap px-3 flex justify-between">
                     <div class="flex flex-col justify-center">
                         <p class="item-label text-overline">LANGUAGE </p>

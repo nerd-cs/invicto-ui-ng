@@ -1,0 +1,21 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Login & Security</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div class="px-4">
+        <p class="text-title-sm col-black mb-2">2-step validation</p>
+
+        <button class="btn primary-outline-btn w-full mt-4 mb-8">DEACTIVATE</button>
+
+        <p class="text-body-sm col-black mb-2">
+            If you disable the 2-step validation, your account will be protected only by your password.
+        </p>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="update()">UPDATE</button>
+    </div>
+</div>

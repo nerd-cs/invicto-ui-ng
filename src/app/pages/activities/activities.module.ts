@@ -20,6 +20,7 @@ import { ActivitiesComponent } from './activities.component';
 import { ActivitiesRoutingModule } from './activities-routing.module';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
+import { PipesModule } from '../../shared/pipes/pipes.module';
 
 
 
@@ -34,6 +35,7 @@ import { MatInputModule } from '@angular/material/input';
         FormsModule,
         ReactiveFormsModule,
         DirectivesModule,
+        PipesModule,
         MatIconModule,
         MatTableModule,
         MatPaginatorModule,

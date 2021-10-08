@@ -1,0 +1,36 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Communication</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="communicationForm" class="px-4">
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Frequence</mat-label>
+            <mat-select formControlName="frequence">
+                <mat-option value="Monthly">Monthly</mat-option>
+                <mat-option value="Weekly">Weekly</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Preference</mat-label>
+            <mat-select formControlName="preference">
+                <mat-option value="Email">Email</mat-option>
+                <mat-option value="Phone">Phone</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Newsletter</mat-label>
+            <mat-select formControlName="newsletter">
+                <mat-option [value]="true">Yes</mat-option>
+                <mat-option [value]="false">No</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="update()">UPDATE</button>
+    </div>
+</div>

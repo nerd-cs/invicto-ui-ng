@@ -4,3 +4,9 @@
         border: 1px solid rgba(0, 0, 0, 0.38);
     }
 }
+
+.profile-avatar {
+    color: #212121;
+    background-color: #EEEFF0;
+    @apply flex items-center justify-center rounded-full;
+}

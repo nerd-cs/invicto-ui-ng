@@ -157,4 +157,12 @@
             width: 260px;
         }
     }
+
+    .init-name {
+        width: 40px;
+        height: 40px;
+        border-radius: 100%;
+        background-color: #E0E0E0;
+        @include app-font(16px, 20px, 500, 0.15px);
+    }
 }

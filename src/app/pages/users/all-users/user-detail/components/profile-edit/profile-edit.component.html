@@ -5,9 +5,10 @@
     </div>
 
     <div class="user flex items-center ml-4 mb-10">
-        <div class="user-avatar w-24 h-24 mr-4">
+        <!-- <div class="user-avatar w-24 h-24 mr-4">
             <img src="/assets/images/avatar.jpg" alt="">
-        </div>
+        </div> -->
+        <div class="user-avatar profile-avatar h4 w-24 h-24 mr-4">{{userData.fullName | initName}}</div>
         <div class="name-edit">
             <p class="name col-black h6 mb-1">{{userData.fullName}}</p>
             <p class="edit col-blue h-5 cursor-pointer text-body-sm">Delete photo</p>
@@ -55,7 +56,7 @@
                     placeHolderCharacter="#" required>
                 <mat-error *ngIf="profileForm.controls['phone'].invalid">{{'Phone number is required'}}</mat-error>
             </mat-form-field>
-            <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48">
+            <mat-form-field appearance="outline" color="accent" class="mb-1 ml-1 w-48 pointer-events-none">
                 <mat-label>Company</mat-label>
                 <!-- <input matInput placeholder="Invicto" formControlName="company" required> -->
                 <mat-select formControlName="company" [compareWith]="objectCompareWith">

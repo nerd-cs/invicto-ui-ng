@@ -1,0 +1,22 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Login & Security</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="phoneForm" class="px-4">
+        <p class="text-title-sm col-black mb-2">Phone</p>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Mobile Number</mat-label>
+            <input matInput formControlName="phone" mask="(000) 000-0000" prefix="+1 " [showMaskTyped]="true"
+                placeHolderCharacter="#" required>
+            <mat-error *ngIf="phoneForm.controls['phone'].invalid">{{'Phone number is required'}}</mat-error>
+        </mat-form-field>
+        <p class="text-body-sm col-black mb-2">This phone number has been added to your Invicto Account. If you change this phone number, you will have to authenticate this number again.</p>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="update()">UPDATE</button>
+    </div>
+</div>

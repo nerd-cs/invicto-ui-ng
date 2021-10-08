@@ -93,7 +93,7 @@
     <div class="nav-footer" *ngIf="!hideSide">
         <!-- [matMenuTriggerFor]="userSetting" -->
         <div class="account-init h6">
-            {{loggedInUser.fullName | initName}}
+            {{loggedInUser.company.name.charAt(0)}}
         </div>
         <div class="nav-contents account-name flex-center-between mx-4 w-full" [routerLink]="['/management']">
             <p class="mr-auto col-blue">{{loggedInUser.company.name}}</p>

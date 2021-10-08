@@ -20,7 +20,8 @@
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> User </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="photo-name flex flex-row">
-                        <img [src]="element.avatar" alt="">
+                        <!-- <img [src]="element.avatar" alt=""> -->
+                        <div class="init-name flex-center">{{element.name | initName}}</div>
                         <div class="name-role flex flex-col justify-center items-start ml-4">
                             <p class="name h-6 text-title-sm col-grey">{{element.name}}</p>
                             <p class="role font-black-light h-4 text-body-sm">{{'User'}}</p>

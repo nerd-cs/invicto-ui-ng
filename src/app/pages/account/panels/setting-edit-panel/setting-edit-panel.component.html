@@ -1,0 +1,31 @@
+<div class="profile-edit-container">
+    <div class="top-section flex-center-between mb-10 mx-4">
+        <div class="view h-6 col-black h6 mt-4">Settings</div>
+        <mat-icon class="cursor-pointer col-black-light" mat-dialog-close>close</mat-icon>
+    </div>
+
+    <div [formGroup]="settingForm" class="px-4">
+
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Language</mat-label>
+            <mat-select formControlName="language">
+                <mat-option value="Français">Français</mat-option>
+                <mat-option value="English">English</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" color="accent" class="w-full mb-1">
+            <mat-label>Time zone</mat-label>
+            <mat-select formControlName="timezone">
+                <mat-option value="EDT">EDT</mat-option>
+                <mat-option value="CDT">CDT</mat-option>
+                <mat-option value="MDT">MDT</mat-option>
+                <mat-option value="PDT">PDT</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <div class="btn-group pt-10 mx-4 flex items-center border-t border-black border-opacity-10">
+        <button mat-dialog-close class="btn secondary-btn w-24 ml-auto">CANCEL</button>
+        <button class="btn primary-btn w-20 ml-4" (click)="update()">UPDATE</button>
+    </div>
+</div>

@@ -16,7 +16,8 @@
         </div>
         <div class="profile-contents flex flex-wrap items-end">
             <div class="user-info mr-8 flex">
-                <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full">
+                <!-- <img src="assets/images/avatar.jpg" alt="" class="w-20 h-20 rounded-full"> -->
+                <div class="profile-avatar h4 w-20 h-20">{{userData.fullName | initName}}</div>
                 <div class="ml-4 flex flex-col justify-center">
                     <p class="h6 mb-1 col-black">{{userData.fullName}}</p>
                     <p class="text-body-sm col-black-light">{{userData.company.name}}</p>
