@@ -3,7 +3,8 @@
         <p class="text-caption">This account is managed by {{company}}</p>
     </div>
     <div class="profile flex-center flex-col">
-        <img src="/assets/images/avatar.jpg" alt="" class="profile-avatar">
+        <!-- <img src="/assets/images/avatar.jpg" alt="" class="profile-avatar"> -->
+        <div class="profile-avatar h4 w-20 h-20">{{user.fullName | initName}}</div>
         <p class="name text-title-lg mt-3">{{user.fullName}}</p>
         <p class="email text-caption">{{user.email}}</p>
     </div>

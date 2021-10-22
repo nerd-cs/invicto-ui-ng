@@ -15,8 +15,9 @@ import { CustomAccessStepperComponent } from '@app-shared/components/custom-acce
 import { ProfileEditComponent } from './components/profile-edit/profile-edit.component';
 import { ConfirmService } from '@app-core/services/confirm.service';
 import { RightSideDlgAnimation } from '@app-core/models/common';
-import { AccessGroupService, AssignLocationDto, Company, CompanyService, CreateAccessGroupDto, CreateUserCardsDto, LinkScheduleZoneDto, LocationService, UpdateAccessGroupsDto, UserInfo, UsersService } from 'src/app/api_codegen';
+import { AccessGroupService, AssignLocationDto, Company, CompanyService, CreateAccessGroupDto, CreateUserCardsDto, LinkScheduleZoneDto, LocationService, UpdateAccessGroupsDto, UsersService } from 'src/app/api_codegen';
 import { DepartmentService } from '../../../../api_codegen/api/department.service';
+import { UserInfo } from 'src/app/api_codegen/model/userInfo';
 
 @Component({
     selector: 'app-user-detail',
@@ -123,6 +124,7 @@ export class UserDetailComponent implements OnInit, OnDestroy {
 
     // FIXME:
     addGroup() {
+        console.log(this.userData.accessGroups, 'wow----')
         this.dialog.open(AddUserStepperComponent, {
             disableClose: false,
             panelClass: 'add-user-stepper',
@@ -130,8 +132,16 @@ export class UserDetailComponent implements OnInit, OnDestroy {
                 step: 2
             }
         }).afterClosed().subscribe(res => {
+            if (!res) { return }
             console.log('stepper modal response ---', res);
             let locations: AssignLocationDto[] = [];
+            console.log(res.accessItems, 'wow----')
+            this.userData.accessGroups.forEach(ag => {
+                locations.push({
+                    locationId: ag.location.id,
+                    accessGroupIds: [ag.id]
+                })
+            })
             res.accessItems.forEach((element: any) => {
                 const item = {
                     locationId: element.location.id,
